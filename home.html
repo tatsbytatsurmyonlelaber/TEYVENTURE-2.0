@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeyVenture Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="top">
+
+    <section class="landingpage">
+
+        <video class="landing-video" autoplay muted loop playsinline>
+            <source src="videos/landingpage.mp4" type="video/mp4">
+        </video>
+        <div class="landing-shadow"></div>
+
+        <div class="landing-content">
+
+            <nav class="navbar">
+                <a href="#top" class="logo">
+                    <img src="images/logo.png" alt="TeyVenture logo">
+                </a>
+
+                <div class="nav-titles">
+                    <a href="#top" class="active">HOME</a>
+                    <a href="#about">ABOUT</a>
+                    <a href="#contact">CONTACT</a>
+                    <a href="#faq">FAQs</a>
+                    <div class="nav-dropdown">
+                        <a href="#destinations">DESTINATION <span class="arrow">&#9662;</span></a>
+                        <div class="dropdown-menu">
+                            <a href="mondstadt.html">Mondstadt</a>
+                            <a href="liyue.html">Liyue</a>
+                            <a href="inazuma.html">Inazuma</a>
+                            <a href="sumeru.html">Sumeru</a>
+                            <a href="natlan.html">Natlan</a>
+                            <a href="fontaine.html">Fontaine</a>
+                            <a href="snezhnaya.html">Snezhnaya</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#contact" class="inquirebtn">INQUIRE NOW!</a>
+            </nav>
+
+            <div class="hero container">
+
+                <div class="hero-text">
+                    <h1>WHERE EVERY NATION TELLS A STORY.</h1>
+                    <p>
+                        The world is waiting, and your next adventure is closer than you think.
+                        Let TeyVenture take you beyond the ordinary and into unforgettable experiences.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form class="search-bar" action="#">
+
+                <div class="search-field">
+                    <label for="destination">Destination</label>
+                    <div class="field-box">
+                        <span class="field-icon"><img src="images/locationhome.png" alt="price"></span>
+                        <input type="text" id="destination" placeholder="Where to?">
+                    </div>
+                </div>
+
+                <div class="search-field">
+                    <label for="price">Average Price</label>
+                    <div class="field-box">
+                        <span class="field-icon"><img src="images/price icon.png" alt="price"></span>
+                        <input type="text" id="price" placeholder="$800 - $1000">
+                    </div>
+                </div>
+
+                <div class="search-field">
+                    <label for="date">Travel Date</label>
+                    <div class="field-box">
+                        <span class="field-icon"><img src="images/time.png" alt="price"></span>
+                        <input type="date" id="date">
+                    </div>
+                </div>
+
+                <button type="submit" class="search-btn">Search now</button>
+
+            </form>
+
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-bg"></div>
+        <img class="about-logo" src="images/aboutlogo.png" alt="About Us">
+        <div class="container">
+
+            <div class="about-heading">
+                <h1>Your journey.<br>Your adventure.<br><span class="about-gold">Your Teyventure.</span></h1>
+            </div>
+
+            <div class="about-content">
+                <p>
+                    Teyventure is a travel agency that helps travelers discover exciting destinations and create unforgettable experiences.
+                    We make travel planning simple, convenient, and enjoyable by offering destinations and travel experiences suited to different interests.
+                </p>
+
+                <p>
+                    Whether you are looking for a relaxing getaway, a fun adventure, or a memorable trip with family and friends,
+                    Teyventure is here to help you plan your journey. We believe that every trip is an opportunity to explore new places,
+                    experience different cultures, and create lasting memories.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="destinations" id="destinations">
+
+        <div class="destinations-shadow"></div>
+
+        <div class="destinations-content container">
+
+            <h1>DESTINATIONS</h1>
+            <p>Explore new horizons and cultures around the world.</p>
+            <div class="destination-slider">
+
+                <button type="button" class="slider-btn prev" aria-label="Previous destinations">
+                    <img src="images/arrow.png" alt="">
+                </button>
+
+                <div class="destination-row">
+
+                <a href="mondstadt.html" class="destination-card">
+                    <img src="images/mondstadt.png" alt="Mondstadt">
+                    <span class="destination-name">Mondstadt</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/mondstadticon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Mondstadt</span>
+                            <span class="dh-desc">The city of freedom, where wind-swept meadows, rolling vineyards and lively taverns await.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="liyue.html" class="destination-card">
+                    <img src="images/liyue.png" alt="Liyue">
+                    <span class="destination-name">Liyue</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/liyueicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Liyue</span>
+                            <span class="dh-desc">A grand harbor of towering cliffs, golden markets and centuries of tradition.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="inazuma.html" class="destination-card">
+                    <img src="images/inazuma.png" alt="Inazuma">
+                    <span class="destination-name">Inazuma</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/inazumaicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Inazuma</span>
+                            <span class="dh-desc">A beautiful island nation of thunder, shrines and cherry blossoms rich in culture.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="sumeru.html" class="destination-card">
+                    <img src="images/sumeru.png" alt="Sumeru">
+                    <span class="destination-name">Sumeru</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/sumeruicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Sumeru</span>
+                            <span class="dh-desc">Lush rainforests and vast deserts, home to scholars and ancient wonders.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="natlan.html" class="destination-card">
+                    <img src="images/natlan.png" alt="Natlan">
+                    <span class="destination-name">Natlan</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/natlanicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Natlan</span>
+                            <span class="dh-desc">A land of fiery spirit, where tribes and warriors celebrate with passion.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="fontaine.html" class="destination-card">
+                    <img src="images/fontaine.png" alt="Fontaine">
+                    <span class="destination-name">Fontaine</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/fontainicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Fontaine</span>
+                            <span class="dh-desc">An elegant city of waterways, grand theatres and dramatic justice.</span>
+                        </span>
+                    </span>
+                </a>
+
+                <a href="snezhnaya.html" class="destination-card">
+                    <img src="images/snezhnaya.png" alt="Snezhnaya">
+                    <span class="destination-name">Snezhnaya</span>
+                    <span class="destination-hover">
+                        <span class="dh-top"><img src="images/snezhnayaicon.png" alt=""></span>
+                        <span class="dh-bottom">
+                            <span class="dh-name">Snezhnaya</span>
+                            <span class="dh-desc">A frozen northern realm of icy landscapes, mystery and quiet strength.</span>
+                        </span>
+                    </span>
+                </a>
+
+                </div>
+
+                <button type="button" class="slider-btn next" aria-label="Next destinations">
+                    <img src="images/arrow.png" alt="">
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- DIRECTOR SECTION -->
+    <section class="director-section" id="director">
+        <div class="director-container">
+
+            <div class="director-card">
+                <img src="images/director-photo.png" alt="Paimon, Director of Teyventure">
+                <h1 class="director-name">Paimon</h1>
+            </div>
+
+            <div class="director-content">
+                <span class="director-label">MEET THE</span>
+                <h1>DIRECTOR</h1>
+                <div class="director-divider"></div>
+
+                <p>
+                    I am the founder and director of Teyventure, a travel agency created from my passion for exploring the world.
+                    Before becoming a business owner, I was an ordinary traveler who explored all seven nations of Teyvat with curiosity and a backpack.
+                    My journeys allowed me to experience breathtaking landscapes, unique cultures, and historic landmarks, from the peaceful streets of Mondstadt to the vibrant waters of Fontaine.
+                </p>
+
+                <p>
+                    Along the way, I noticed that many travelers dream of exploring Teyvat but struggle with planning their trips.
+                    Researching destinations, creating itineraries, managing logistics, and avoiding common tourist traps can make travel stressful and overwhelming.
+                    This inspired me to establish Teyventure, where travelers can enjoy a smoother and more peaceful journey.
+                    My goal is to make exploring Teyvat effortless and authentic, helping travelers focus less on planning and more on discovering meaningful experiences, creating lasting memories together, and enjoying the beauty of every destination.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section" id="faq">
+
+        <div class="faq-shadow"></div>
+
+        <div class="faq-container">
+
+            <h1 class="faq-title">FREQUENTLY ASKED QUESTIONS</h1>
+
+            <img class="faq-logo" src="images/faqheaderlogo.png" alt="">
+
+            <div class="faq-grid">
+
+                <details class="faq-item" name="faq">
+                    <summary>How much do Teyventure tour packages cost?</summary>
+                    <p>Our tour packages have different base prices depending on the destination and duration of the trip. Each package is designed to provide clear and convenient travel options for different types of travelers.</p>
+                </details>
+
+                <details class="faq-item" name="faq">
+                    <summary>Do you accept group bookings?</summary>
+                    <p>Yes! We welcome group bookings for families, friends, and other organized groups. Group arrangements can be discussed with our team based on your preferred destination and itinerary.</p>
+                </details>
+
+                <details class="faq-item" name="faq">
+                    <summary>How far in advance should I book a tour?</summary>
+                    <p>We recommend booking at least 2 months before your actual travel date to allow enough time for proper planning and arrangements. Bookings made only 1 week before the travel date are automatically non-refundable.</p>
+                </details>
+
+                <details class="faq-item" name="faq">
+                    <summary>How can I inquire about a tour?</summary>
+                    <p>You can contact Teyventure through the inquiry details provided on our website. Tell us your preferred destination, travel dates, group size, and interests, and we'll help you explore your options.</p>
+                </details>
+
+                <details class="faq-item" name="faq">
+                    <summary>What is your cancellation policy?</summary>
+                    <p>If you cancel 2 months before the actual travel date, 50% of the full payment is refundable. Cancellations made 1 month before the travel date are non-refundable, and bookings made only 1 week before the travel date are also automatically non-refundable.</p>
+                </details>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="footer">
+
+        <a href="#top" class="footer-logo">
+            <span class="footer-line-top"></span>
+            <img src="images/logo.png" alt="TeyVenture logo">
+        </a>
+
+        <p class="footer-tagline">Discover places. Create memories.</p>
+
+        <div class="footer-links">
+            <a href="#top">Home</a>
+            <a href="#destinations">Destination</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#faq">FAQs</a>
+        </div>
+
+        <div class="footer-socials">
+            <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="images/Email.png" alt="Email"></a>
+            <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+            <a href="#"><img src="images/whatsapp.png" alt="WhatsApp"></a>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <p class="footer-copy">&copy; 2026 TEYVENTURE. All Rights Reserved.</p>
+
+    </footer>
+
+</body>
+</html>
