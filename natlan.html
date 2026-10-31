@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
 </head>
 <body>
 
@@ -41,16 +42,14 @@
                     <a href="#package">PACKAGES</a>
                 </div>
 
-                <a href="#contact" class="inquirebtn">INQUIRE NOW!</a>
+                <a href="login.html" class="authbtn">LOGIN / SIGN UP</a>
             </nav>
 
             <div class="hero container">
                 <div class="dest-text">
                     <p class="dest-tagline">The Land of Ash, Hot Springs, and Valor</p>
-                    <p class="dest-label"><span class="dest-line"></span>DESTINATION SPOTLIGHT</p>
                     <h1 class="dest-title">NATLAN</h1>
                     <p class="dest-desc">Welcome to Natlan, the fiery Land of Fire, and endless adventure.</p>
-                    <a href="#about" class="dest-btn">EXPLORE NATLAN</a>
                 </div>
             </div>
 
@@ -110,99 +109,138 @@
     <section class="dest-package" id="package">
         <div class="pkg-wrap">
 
+            <!-- Title -->
             <div class="pkg-top">
                 <div>
-                    <p class="pkg-label"><span></span>TOUR PACKAGES</p>
+                    <p class="pkg-label">TOUR PACKAGES</p>
                     <h2 class="pkg-title">NATLAN</h2>
                     <p class="pkg-sub">THE LAND OF ASH, HOT SPRINGS, AND VALOR</p>
                 </div>
-
-                <div class="pkg-tag">SOLO PACKAGE <span class="pkg-tag-line"></span> NATL-06</div>
             </div>
 
-            <div class="pkg-main">
+            <!-- Travel cards (solo + group) with the itinerary beside them -->
+            <div class="pkg-showcase">
 
-                <img class="pkg-photo" src="images/natlan.png" alt="Natlan">
+                <div class="pkg-cards">
 
-                <div class="pkg-details">
+                <div class="trv-cell">
+                    <article class="trv-card trv-solo">
+                        <div class="trv-media">
+                            <img src="images/natlan-solo.jpg" alt="Natlan Volcano Escape" loading="lazy">
+                            <span class="trv-badge">4 DAYS / 3 NIGHTS</span>
+                            <span class="trv-code">SOLO<i></i>NATL-06</span>
+                        </div>
+                        <h3 class="trv-title">Ember Wanderer</h3>
+                        <p class="trv-desc">An energetic adventure featuring dramatic volcanic landscapes, therapeutic thermal springs, and a vibrant tribal festival.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;16,500 <small>PER PAX</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    <p class="pkg-days">
-                        <img src="images/icon-calendar.png" alt="">
-                        4 DAYS / 3 NIGHTS
-                        <span class="pkg-days-line"></span>
-                    </p>
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/natlan-gp01.jpg" alt="Volcanic Duo Adventure" loading="lazy">
+                            <span class="trv-badge">2 PERSONS</span>
+                            <span class="trv-code">NATL-GP01</span>
+                        </div>
+                        <h3 class="trv-title">Blazing Horizon</h3>
+                        <p class="trv-desc">An exciting adventure for two travelers featuring volcanic landscapes, hot springs, cultural sites, and outdoor activities.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;32,000 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    <p class="pkg-desc">
-                        An energetic adventure featuring dramatic volcanic landscapes, therapeutic thermal springs, and a vibrant tribal festival.
-                    </p>
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/natlan-gp02.jpg" alt="Valor Squad Expedition" loading="lazy">
+                            <span class="trv-badge">3-5 PERSONS</span>
+                            <span class="trv-code">NATL-GP02</span>
+                        </div>
+                        <h3 class="trv-title">Flame Heart Expedition</h3>
+                        <p class="trv-desc">An energetic group adventure perfect for friends and active travelers who want to experience Natlan's dramatic landscapes and exciting activities.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;46,500 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    <div class="pkg-stops">
-                        <h3><img src="images/icon-pin.png" alt="">FEATURED STOPS</h3>
-                        <ul>
-                            <li>Tepeac Stadium</li>
-                            <li>Children of the Echoes</li>
-                            <li>The People of the Springs Basin</li>
-                        </ul>
-                    </div>
-
-                    <div class="pkg-price">
-                        <p class="pkg-small">FROM</p>
-                        <p class="pkg-amount">&#8369;16,500</p>
-                        <p class="pkg-small">PER PAX</p>
-                        <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                    </div>
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/natlan-gp03.jpg" alt="Grand Natlan Adventure" loading="lazy">
+                            <span class="trv-badge">6-10 PERSONS</span>
+                            <span class="trv-code">NATL-GP03</span>
+                        </div>
+                        <h3 class="trv-title">Grand Voyage of Valor</h3>
+                        <p class="trv-desc">A large group expedition filled with outdoor exploration, scenic destinations, hot springs, and cultural experiences across Natlan.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;90,000 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
                 </div>
 
                 <div class="pkg-side">
 
-                    <div class="pkg-card pkg-info">
-                        <div class="pkg-info-item">
-                            <img src="images/accommodation.png" alt="">
-                            <div>
-                                <h4>Accommodation</h4>
-                                <p>Natlan Adventure Lodge</p>
-                            </div>
-                        </div>
-                        <div class="pkg-info-item">
-                            <img src="images/transportation.png" alt="">
-                            <div>
-                                <h4>Transportation</h4>
-                                <p>Private Tour Vehicle &amp; Regional Shuttle</p>
-                            </div>
-                        </div>
-                        <div class="pkg-info-item">
-                            <img src="images/meals.png" alt="">
-                            <div>
-                                <h4>Meals Included</h4>
-                                <p>Breakfast &amp; Selected Local Meals</p>
-                            </div>
-                        </div>
-                        <div class="pkg-info-item">
-                            <img src="images/recommended.png" alt="">
-                            <div>
-                                <h4>Recommended For</h4>
-                                <p>Adventure Seekers, Groups of Friends &amp; Active Travelers</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="pkg-card pkg-itin" data-dest="natlan">
 
-                    <div class="pkg-card">
-                        <h3>INCLUSIONS</h3>
-                        <ul>
-                            <li>Accommodation</li>
-                            <li>Transportation</li>
-                            <li>Tour Guide</li>
-                            <li>Activity Fees</li>
-                        </ul>
-                    </div>
+                        <div class="itin-head">
+                            <h3>ITINERARY</h3>
+                        </div>
 
-                    <div class="pkg-card">
-                        <h3>EXCLUSIONS</h3>
-                        <ul>
-                            <li>Airfare</li>
-                            <li>Optional Activities</li>
-                        </ul>
+                        <div class="itin-nav" role="group" aria-label="Choose a day"></div>
+
+                        <div class="itin-body" tabindex="0" role="region" aria-label="Day itinerary" aria-live="polite"></div>
+
+                        <div class="itin-foot">
+                            <div class="itin-rec">
+                                <img src="images/recommended.png" alt="">
+                                <div>
+                                    <h4>Recommended For</h4>
+                                    <p>Adventure Seekers, Groups of Friends &amp; Active Travelers</p>
+                                </div>
+                            </div>
+                            <div class="itin-lists">
+                                <div>
+                                    <h3>INCLUSIONS</h3>
+                                    <ul>
+                                    <li>Accommodation</li>
+                                    <li>Transportation</li>
+                                    <li>Tour Guide</li>
+                                    <li>Activity Fees</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3>EXCLUSIONS</h3>
+                                    <ul>
+                                    <li>Airfare</li>
+                                    <li>Optional Activities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -213,70 +251,6 @@
     </section>
 
 
-    <!-- GROUP PACKAGES -->
-    <section class="grp-section" id="group">
-        <div class="pkg-wrap">
-
-            <p class="pkg-label"><span></span>GROUP PACKAGES</p>
-            <h2 class="grp-title">Explore Natlan Together</h2>
-
-            <div class="grp-row">
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">2 PERSONS</p>
-                    <p class="grp-code">NATL-GP01</p>
-                </div>
-                <h3>Volcanic Duo Adventure</h3>
-                <p class="grp-desc">An exciting adventure for two travelers featuring volcanic landscapes, hot springs, cultural sites, and outdoor activities.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;32,000</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">3-5 PERSONS</p>
-                    <p class="grp-code">NATL-GP02</p>
-                </div>
-                <h3>Valor Squad Expedition</h3>
-                <p class="grp-desc">An energetic group adventure perfect for friends and active travelers who want to experience Natlan's dramatic landscapes and exciting activities.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;46,500</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">6-10 PERSONS</p>
-                    <p class="grp-code">NATL-GP03</p>
-                </div>
-                <h3>Grand Natlan Adventure</h3>
-                <p class="grp-desc">A large group expedition filled with outdoor exploration, scenic destinations, hot springs, and cultural experiences across Natlan.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;90,000</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            </div>
-
-        </div>
-    </section>
 
     <footer id="contact" class="footer">
 
@@ -307,6 +281,9 @@
         <p class="footer-copy">&copy; 2026 TEYVENTURE. All Rights Reserved.</p>
 
     </footer>
+
+    <script src="scripts/itinerary.js"></script>
+    <script src="scripts/booking.js"></script>
 
 </body>
 </html>

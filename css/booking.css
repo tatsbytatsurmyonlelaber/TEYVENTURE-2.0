@@ -1,0 +1,1571 @@
+/* ==========================================================
+   TeyVenture booking pop-up  (opens from the package cards)
+   Steps: Travelers -> Departure -> Billing and Payments
+   ========================================================== */
+
+.tv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20,38,59,.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: tvFade .25s ease;
+}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .tv-overlay {
+    background: rgba(20,38,59,.82);
+  }
+}
+
+@keyframes tvFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tvPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tv-dialog {
+  position: relative;
+  width: min(880px,100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: #FFFEFB;
+  border: 2px solid #C9A85C;
+  border-radius: 36px;
+  box-shadow: 0 30px 80px -20px rgba(10,20,40,.6);
+  animation: tvPop .3s ease;
+  color: #1F3A5A;
+  font-family: 'Poppins',sans-serif;
+  overflow: hidden;
+}
+
+.tv-dialog button,
+.tv-dialog input,
+.tv-dialog select {
+  font-family: 'Poppins',sans-serif;
+}
+
+/* ---------- hero ---------- */
+.tv-hero {
+  position: relative;
+  flex: none;
+  height: clamp(130px,24vh,220px);
+  border-radius: 26px;
+  overflow: hidden;
+  background: #24476B;
+  color: #fff;
+}
+
+.tv-hero>img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.tv-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,rgba(20,38,59,.9) 0%,rgba(20,38,59,.45) 45%,rgba(20,38,59,0) 100%);
+}
+
+.tv-tag {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1.5px solid #C9A85C;
+  font: 600 12px 'Poppins',sans-serif;
+  color: #1F3A5A;
+}
+
+.tv-hbtns {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.tv-ib {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(20,38,59,.25);
+}
+
+.tv-ib svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #24476B;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-ib.is-on svg {
+  fill: #C9A85C;
+  stroke: #24476B;
+}
+
+.tv-htitle {
+  position: absolute;
+  left: 28px;
+  bottom: 20px;
+  right: 170px;
+}
+
+.tv-dest {
+  display: block;
+  font: 500 11px 'Poppins',sans-serif;
+  letter-spacing: .14em;
+  color: #E3C887;
+  margin-bottom: 2px;
+}
+
+.tv-htitle h2 {
+  font-family: 'Cormorant Garamond',serif;
+  font-weight: 600;
+  font-size: clamp(26px,4.4vw,38px);
+  line-height: 1.1;
+  color: #fff;
+  margin: 0;
+}
+
+.tv-rate {
+  position: absolute;
+  right: 26px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font: 600 14px 'Poppins',sans-serif;
+}
+
+.tv-rate svg {
+  width: 18px;
+  height: 18px;
+  fill: #E3C887;
+  stroke: #E3C887;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.tv-rate b {
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+/* ---------- step tracker ---------- */
+.tv-steps {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 52px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: #24476B;
+  color: #fff;
+}
+
+.tv-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 16px 'Cormorant Garamond',serif;
+  color: #EEF3FA;
+  white-space: nowrap;
+}
+
+/* steps that are still ahead have a slightly softer label */
+.tv-lab {
+  opacity: .75;
+}
+
+.tv-step.is-cur .tv-lab,
+.tv-step.is-done .tv-lab {
+  opacity: 1;
+}
+
+.tv-dot {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid #C9A85C;
+  background: #E3E2DD;
+  color: #24476B;
+  display: grid;
+  place-items: center;
+  font: 600 15px 'Poppins',sans-serif;
+}
+
+/* the step you are on: same circle plus a soft gold ring */
+.tv-step.is-cur .tv-dot {
+  box-shadow: 0 0 0 3px rgba(201,168,92,.35);
+}
+
+.tv-step.is-done .tv-dot {
+  background: #2F8F5B;
+  border: 2px solid #fff;
+}
+
+.tv-dot svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-line {
+  flex: 1;
+  height: 1px;
+  background: #fff;
+  opacity: .5;
+}
+
+.tv-line.is-done {
+  height: 2px;
+  background: #5FD08F;
+  opacity: 1;
+}
+
+/* ---------- scrolling body ---------- */
+.tv-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 6px 8px;
+  outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: #C9A85C transparent;
+}
+
+.tv-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tv-body::-webkit-scrollbar-thumb {
+  background: #C9A85C;
+  border-radius: 8px;
+}
+
+.tv-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tv-h {
+  font-family: 'Cormorant Garamond',serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #24476B;
+  margin: 0 0 4px;
+}
+
+.tv-sub {
+  font-size: 13px;
+  color: #4A5D72;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.tv-banner {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #FBEAE8;
+  border: 1.5px solid #B3261E;
+  color: #8C1D18;
+  font-size: 13px;
+}
+
+/* ---------- step 1: travelers ---------- */
+.tv-slotbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 12px 18px;
+  border: 1.5px solid #C9A85C;
+  border-radius: 20px;
+  background: #FDFAF2;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tv-count {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tv-count b {
+  min-width: 28px;
+  text-align: center;
+  font: 600 24px 'Cormorant Garamond',serif;
+  color: #24476B;
+}
+
+.tv-circ {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid #C9A85C;
+  background: #fff;
+  color: #1F3A5A;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.tv-circ:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.tv-tcard {
+  margin-bottom: 14px;
+  padding: 18px 20px 20px;
+  border: 1.5px solid #E1D8BF;
+  border-radius: 24px;
+  background: #FDFAF2;
+}
+
+.tv-tname {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font: 600 19px 'Cormorant Garamond',serif;
+  color: #24476B;
+}
+
+.tv-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #24476B;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font: 600 13px 'Poppins',sans-serif;
+}
+
+.tv-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.tv-f {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 210px;
+  min-width: 0;
+}
+
+.tv-f label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A5D72;
+}
+
+.tv-req {
+  color: #B3261E;
+}
+
+.tv-f input,
+.tv-f select {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 14px;
+  color: #1F3A5A;
+}
+
+.tv-f input:focus-visible,
+.tv-f select:focus-visible,
+.tv-dialog button:focus-visible,
+.tv-chk input:focus-visible {
+  outline: 2px solid #1F3A5A;
+  outline-offset: 2px;
+}
+
+.tv-f [aria-invalid="true"] {
+  border-color: #B3261E;
+  background: #FFF8F7;
+}
+
+.tv-err {
+  font-size: 12px;
+  color: #B3261E;
+}
+
+/* ---------- step 2: calendar ---------- */
+.tv-titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.tv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1.5px solid #C9A85C;
+  border-radius: 999px;
+  background: #FDFAF2;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tv-pill svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: #1F3A5A;
+  stroke-width: 1.8;
+}
+
+.tv-cal {
+  padding: 18px 20px 16px;
+  border: 1.5px solid #C9A85C;
+  border-radius: 24px;
+  background: #FDFAF2;
+  margin-bottom: 14px;
+}
+
+.tv-calhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tv-calhead strong {
+  font: 600 22px 'Cormorant Garamond',serif;
+  color: #24476B;
+}
+
+.tv-nav {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid #C9A85C;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.tv-nav svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #1F3A5A;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-nav:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.tv-grid {
+  display: grid;
+  grid-template-columns: repeat(7,minmax(0,1fr));
+  gap: 6px;
+}
+
+.tv-wd {
+  padding: 4px 0;
+  text-align: center;
+  font: 600 11px 'Poppins',sans-serif;
+  letter-spacing: .08em;
+  color: #4A5D72;
+}
+
+.tv-plain {
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: #5B6572;
+}
+
+.tv-day {
+  height: 42px;
+  padding: 0;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #1F3A5A;
+  background: #E9F5EE;
+  border: 1.5px solid #1F6B46;
+}
+
+.tv-day.is-short {
+  background: #FBF0D9;
+  border: 1.5px dashed #8A5A14;
+}
+
+.tv-day.is-sold {
+  background: #ECEEF1;
+  border: 1.5px solid #8B95A1;
+  color: #5B6572;
+  text-decoration: line-through;
+}
+
+.tv-day.is-sel {
+  background: #24476B;
+  border: 1.5px solid #24476B;
+  color: #fff;
+}
+
+.tv-day.is-focus {
+  box-shadow: 0 0 0 2px #24476B;
+}
+
+.tv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #E8E0C9;
+  font-size: 12px;
+  color: #4A5D72;
+}
+
+.tv-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tv-legend i {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+}
+
+.tv-detail {
+  display: flex;
+  align-items: center;
+  gap: 14px 34px;
+  flex-wrap: wrap;
+  min-height: 80px;
+  padding: 16px 26px;
+  border-radius: 22px;
+  background: #FDFAF2;
+  border: 1.5px solid #E1D8BF;
+}
+
+.tv-detail.is-ok {
+  background: #24476B;
+  border-color: #24476B;
+  color: #fff;
+}
+
+.tv-dk {
+  display: block;
+  font: 500 10px 'Poppins',sans-serif;
+  letter-spacing: .08em;
+  color: #4A5D72;
+}
+
+.tv-dv {
+  display: block;
+  margin-top: 2px;
+  font: 600 20px 'Cormorant Garamond',serif;
+  color: #5B6572;
+}
+
+.tv-detail.is-ok .tv-dk {
+  color: #D4E1EE;
+}
+
+.tv-detail.is-ok .tv-dv {
+  color: #fff;
+}
+
+.tv-arrow {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* "Guaranteed departure · 2 travelers" */
+.tv-note {
+  flex: 0 1 150px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4A5D72;
+}
+
+.tv-detail.is-ok .tv-note {
+  color: #D4E1EE;
+}
+
+/* "8 places available" */
+.tv-stat {
+  flex: 1 1 180px;
+}
+
+.tv-stat strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #5B6572;
+}
+
+.tv-stat strong svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-detail.is-ok .tv-stat strong {
+  color: #9FE5BD;
+}
+
+.tv-detail.is-short .tv-stat strong {
+  color: #8A5A14;
+}
+
+.tv-wl {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1.5px solid #C9A85C;
+  background: #fff;
+  color: #1F3A5A;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- step 3: billing ---------- */
+.tv-pay {
+  display: grid;
+  grid-template-columns: 270px minmax(0,1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.tv-side,
+.tv-panel {
+  padding: 16px;
+  border: 1.5px solid #C9A85C;
+  border-radius: 28px;
+  background: #FDFAF2;
+}
+
+.tv-panel {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tv-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tv-m {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 0 16px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 18px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1F3A5A;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tv-m svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  fill: none;
+  stroke: #1F3A5A;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-m[aria-pressed="true"],
+.tv-tile[aria-pressed="true"] {
+  border: 2px solid #C9A85C;
+  background: #FBF3DC;
+}
+
+.tv-hr {
+  height: 1px;
+  margin: 6px 0 2px;
+  background: #D9CFB4;
+}
+
+.tv-cap {
+  font: 600 11px 'Poppins',sans-serif;
+  letter-spacing: .08em;
+  color: #4A5D72;
+}
+
+.tv-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: #4A5D72;
+}
+
+.tv-row b {
+  font-weight: 500;
+  color: #1F3A5A;
+  text-align: right;
+}
+
+.tv-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6px;
+  padding: 14px 18px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 18px;
+  background: #fff;
+  font-family: 'Cormorant Garamond',serif;
+  color: #24476B;
+}
+
+.tv-total span {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tv-total b {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.tv-pv {
+  display: flex;
+  justify-content: center;
+  perspective: 900px;
+  padding: 6px 0 8px;
+}
+
+.tv-pvf {
+  width: 300px;
+  max-width: 100%;
+  aspect-ratio: 300/189;
+  animation: tvFloat 4s ease-in-out infinite;
+}
+
+@keyframes tvFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.tv-flip {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.4,.2,.2,1);
+}
+
+.tv-flip.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.tv-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  color: #fff;
+  background: #24476B;
+  box-shadow: 0 16px 30px rgba(36,71,107,.3);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.tv-face::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: -90px;
+  width: 60px;
+  background: rgba(255,255,255,.14);
+  transform: skewX(-20deg);
+  animation: tvShine 5s ease-in-out infinite;
+}
+
+@keyframes tvShine {
+  0%,
+  55% {
+    left: -90px;
+  }
+
+  100% {
+    left: 360px;
+  }
+}
+
+.tv-back {
+  transform: rotateY(180deg);
+  padding: 20px 0;
+}
+
+.tv-ring {
+  position: absolute;
+  right: -40px;
+  bottom: -60px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(227,200,135,.45);
+}
+
+.tv-fr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tv-brand {
+  font: 600 15px 'Cormorant Garamond',serif;
+  color: #E3C887;
+}
+
+.tv-pnum {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tv-lb {
+  font: 500 9px 'Poppins',sans-serif;
+  letter-spacing: .1em;
+  color: #E3C887;
+}
+
+.tv-pv-v {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .05em;
+}
+
+.tv-stripe {
+  height: 38px;
+  background: #14263B;
+}
+
+.tv-cvcbox {
+  margin: 0 20px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 6px;
+  background: #fff;
+  color: #1F3A5A;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .12em;
+}
+
+.tv-chk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #1F3A5A;
+}
+
+.tv-chk input {
+  width: 18px;
+  height: 18px;
+  accent-color: #24476B;
+  flex: none;
+}
+
+.tv-panel>.tv-f {
+  flex: 0 0 auto;
+}
+
+.tv-panel h3 {
+  font-family: 'Cormorant Garamond',serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: #24476B;
+  margin: 0;
+}
+
+.tv-panel p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4A5D72;
+}
+
+.tv-tile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 84px;
+  padding: 0 20px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 20px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  color: #1F3A5A;
+}
+
+.tv-tile i {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  background: #24476B;
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+
+.tv-tile i svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-tile strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.tv-tile small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #4A5D72;
+}
+
+.tv-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 16px 18px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.tv-bank hr {
+  border: 0;
+  height: 1px;
+  background: #E8E0C9;
+  margin: 0;
+}
+
+.tv-bank .tv-big {
+  font: 700 22px 'Cormorant Garamond',serif;
+  color: #24476B;
+}
+
+.tv-drop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px;
+  border: 1.5px dashed #C9A85C;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tv-drop input {
+  font-size: 13px;
+  color: #4A5D72;
+}
+
+/* ---------- footer ---------- */
+.tv-foot {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  border-top: 1px solid #D9CFB4;
+}
+
+.tv-ghost,
+.tv-gold {
+  height: 52px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F3A5A;
+  cursor: pointer;
+  padding: 0 28px;
+  min-width: 170px;
+}
+
+.tv-ghost {
+  border: 1.5px solid #C9A85C;
+  background: #fff;
+}
+
+.tv-gold {
+  border: 0;
+  background: #C9A85C;
+}
+
+.tv-gold:hover {
+  background: #D3B46C;
+}
+
+.tv-gold:disabled {
+  background: #E6DCC0;
+  cursor: not-allowed;
+}
+
+/* ---------- done (confirmation card) ---------- */
+.tv-foot:empty {
+  display: none;
+}
+
+.tv-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 18px 10px 8px;
+}
+
+/* green check in a mint circle */
+.tv-done .tv-ok {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #D9F5EB;
+  border: 3px solid #8FE3CC;
+  display: grid;
+  place-items: center;
+  animation: tvPop .5s ease;
+}
+
+.tv-done .tv-ok svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: #1F9D78;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-done .tv-done-title {
+  margin: 4px 0 0;
+  font: 700 28px/1.2 'Cinzel',serif;
+  letter-spacing: .02em;
+  color: #1F3A5A;
+}
+
+.tv-done .tv-sub--done {
+  max-width: 560px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6B7A8C;
+}
+
+/* ---------- receipt card (separate from the confirmation card) ---------- */
+.tv-rwrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  animation: tvFade .25s ease;
+}
+
+/* the booking card closes as soon as the receipt pops out */
+.tv-overlay.has-receipt .tv-dialog {
+  display: none;
+}
+
+.tv-rcard {
+  box-sizing: border-box;
+  width: min(520px,100%);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 28px 24px;
+  background: #FFFEFB;
+  border: 2px solid #C9A85C;
+  border-radius: 32px;
+  box-shadow: 0 30px 80px -20px rgba(10,20,40,.6);
+  animation: tvPop .35s ease;
+  color: #1F3A5A;
+  font-family: 'Poppins',sans-serif;
+  text-align: center;
+}
+
+.tv-rcard button {
+  font-family: 'Poppins',sans-serif;
+}
+
+.tv-rcard button:focus-visible {
+  outline: 3px solid #21867A;
+  outline-offset: 2px;
+}
+
+.tv-rcard .tv-ok {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #D9F5EB;
+  border: 3px solid #8FE3CC;
+  display: grid;
+  place-items: center;
+  animation: tvPop .5s ease;
+}
+
+.tv-rcard .tv-ok svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: #1F9D78;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-rtitle {
+  margin: 0;
+  font: 700 24px/1.2 'Cinzel',serif;
+  letter-spacing: .02em;
+  color: #1F3A5A;
+}
+
+.tv-done-hr {
+  width: 100%;
+  margin: 4px 0;
+  border: 0;
+  border-top: 1px solid #D9CFB4;
+}
+
+.tv-receipt {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px 22px;
+  border: 1.5px solid #D9CFB4;
+  border-radius: 24px;
+  background: rgba(255,255,255,.6);
+  text-align: left;
+}
+
+.tv-receipt hr {
+  margin: 4px 0;
+  border: 0;
+  border-top: 1px solid #E6DCC0;
+}
+
+.tv-rr {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 14px;
+  color: #1F3A5A;
+}
+
+.tv-rr b {
+  font-weight: 400;
+  text-align: right;
+}
+
+.tv-rr--bold b {
+  font-weight: 600;
+}
+
+.tv-rr--ref span {
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #A39B88;
+}
+
+.tv-rr--ref b {
+  font: 500 15px ui-monospace,Menlo,Consolas,monospace;
+  letter-spacing: .05em;
+  color: #1F9D78;
+}
+
+.tv-rr--pay b {
+  font: 700 15px 'Cinzel',serif;
+  color: #1F9D78;
+}
+
+.tv-rr--pay.is-pending b {
+  color: #8A5A14;
+}
+
+.tv-vbtns {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.tv-dialog .tv-vbtn,
+.tv-rcard .tv-vbtn {
+  flex: 1;
+  min-width: 0;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font: 700 13px 'Cinzel',serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tv-vbtn svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tv-dialog .tv-vbtn--line,
+.tv-rcard .tv-vbtn--line {
+  border: 1.5px solid #C9A85C;
+  background: transparent;
+  color: #A9822F;
+}
+
+.tv-dialog .tv-vbtn--teal,
+.tv-rcard .tv-vbtn--teal {
+  border: 0;
+  background: #21867A;
+  color: #fff;
+}
+
+.tv-dialog .tv-vbtn--teal:hover,
+.tv-rcard .tv-vbtn--teal:hover {
+  background: #1B7268;
+}
+
+/* ---------- modifiers ---------- */
+html.tv-lock {
+  overflow: hidden;
+}
+
+.tv-h--flush {
+  margin: 0;
+}
+
+.tv-hint {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tv-banner--tight {
+  margin: 12px 0 0;
+}
+
+.tv-fr--end {
+  align-items: flex-end;
+}
+
+.tv-lb--cvc {
+  margin: 0 20px 4px;
+  text-align: right;
+}
+
+.tv-brand--small {
+  margin: 0 20px;
+  font-size: 12px;
+}
+
+.tv-row--base {
+  align-items: baseline;
+}
+
+.tv-total--flush {
+  margin: 0;
+}
+
+.tv-total--flush span {
+  font-size: 16px;
+}
+
+.tv-total--flush b {
+  font-size: 24px;
+}
+
+.tv-sw {
+  border: 1.5px solid transparent;
+}
+
+.tv-sw--ok {
+  background: #E9F5EE;
+  border-color: #1F6B46;
+}
+
+.tv-sw--short {
+  background: #FBF0D9;
+  border: 1.5px dashed #8A5A14;
+}
+
+.tv-sw--sold {
+  background: #ECEEF1;
+  border-color: #8B95A1;
+}
+
+.tv-sw--sel {
+  background: #24476B;
+}
+
+/* ---------- small screens ---------- */
+@media (max-width:760px) {
+  .tv-overlay {
+    padding: 0;
+  }
+
+  .tv-dialog {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border-width: 0;
+    padding: 14px;
+  }
+
+  .tv-pay {
+    grid-template-columns: 1fr;
+  }
+
+  .tv-step .tv-lab {
+    display: none;
+  }
+
+  .tv-step.is-cur .tv-lab {
+    display: inline;
+  }
+
+  .tv-htitle {
+    right: 20px;
+    bottom: 44px;
+  }
+
+  .tv-rate {
+    left: 28px;
+    right: auto;
+    bottom: 16px;
+  }
+
+  .tv-ghost,
+  .tv-gold {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .tv-overlay,
+  .tv-dialog,
+  .tv-pvf,
+  .tv-face::after,
+  .tv-done .tv-ok,
+  .tv-rcard .tv-ok {
+    animation: none;
+  }
+
+  .tv-flip {
+    transition: none;
+  }
+}
+
+@media (max-width:760px) {
+  .tv-vbtns {
+    flex-direction: column;
+  }
+}
+
+/* "Download / Print Voucher": print only the receipt card */
+@media print {
+  body > *:not(.tv-overlay) {
+    display: none !important;
+  }
+
+  html.tv-lock {
+    overflow: visible;
+  }
+
+  .tv-overlay {
+    position: static;
+    display: block;
+    padding: 0;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    animation: none;
+  }
+
+  .tv-dialog {
+    width: 100%;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    animation: none;
+    overflow: visible;
+  }
+
+  .tv-hero,
+  .tv-steps,
+  .tv-foot,
+  .tv-vbtns {
+    display: none !important;
+  }
+
+  .tv-body {
+    overflow: visible;
+  }
+
+  .tv-overlay.has-receipt .tv-dialog {
+    display: none !important;
+  }
+
+  .tv-rwrap {
+    position: static;
+    padding: 0;
+    background: none;
+    animation: none;
+    overflow: visible;
+  }
+
+  .tv-rcard {
+    width: 100%;
+    border: 0;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .tv-rcard .tv-vbtns {
+    display: none !important;
+  }
+}

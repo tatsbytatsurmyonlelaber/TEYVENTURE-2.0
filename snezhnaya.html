@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/booking.css">
 </head>
 <body>
 
@@ -41,16 +42,14 @@
                     <a href="#package">PACKAGES</a>
                 </div>
 
-                <a href="#contact" class="inquirebtn">INQUIRE NOW!</a>
+                <a href="login.html" class="authbtn">LOGIN / SIGN UP</a>
             </nav>
 
             <div class="hero container">
                 <div class="dest-text">
                     <p class="dest-tagline">The Eternal White Tundra</p>
-                    <p class="dest-label"><span class="dest-line"></span>DESTINATION SPOTLIGHT</p>
                     <h1 class="dest-title">SNEZHNAYA</h1>
                     <p class="dest-desc">Welcome to Snezhnaya, The eternal white tundra.</p>
-                    <a href="#about" class="dest-btn">EXPLORE SNEZHNAYA</a>
                 </div>
             </div>
 
@@ -111,108 +110,139 @@
     <section class="dest-package" id="package">
         <div class="pkg-wrap">
 
-            <!-- Top: title + package tag -->
+            <!-- Title -->
             <div class="pkg-top">
                 <div>
-                    <p class="pkg-label"><span></span>TOUR PACKAGES</p>
+                    <p class="pkg-label">TOUR PACKAGES</p>
                     <h2 class="pkg-title">SNEZHNAYA</h2>
                     <p class="pkg-sub">THE ETERNAL WHITE TUNDRA</p>
                 </div>
-
-                <div class="pkg-tag">SOLO PACKAGE <span class="pkg-tag-line"></span> SNEZ-07</div>
             </div>
 
-            <!-- 3 columns: picture | details | side cards -->
-            <div class="pkg-main">
+            <!-- Travel cards (solo + group) with the itinerary beside them -->
+            <div class="pkg-showcase">
 
-                <!-- Column 1: picture -->
-                <img class="pkg-photo" src="images/snezhnaya.png" alt="Snezhnaya">
+                <div class="pkg-cards">
 
-                <!-- Column 2: details -->
-                <div class="pkg-details">
+                <div class="trv-cell">
+                    <article class="trv-card trv-solo">
+                        <div class="trv-media">
+                            <img src="images/snezhnaya-solo.jpg" alt="Snezhnaya Aurora Escape" loading="lazy">
+                            <span class="trv-badge">5 DAYS / 4 NIGHTS</span>
+                            <span class="trv-code">SOLO<i></i>SNEZ-07</span>
+                        </div>
+                        <h3 class="trv-title">Frostbound Wanderer</h3>
+                        <p class="trv-desc">A majestic winter expedition exploring frosted architectural marvels, grand palaces, and cozy alpine chalets under the aurora.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;22,000 <small>PER PAX</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    <p class="pkg-days">
-                        <img src="images/icon-calendar.png" alt="">
-                        5 DAYS / 4 NIGHTS
-                        <span class="pkg-days-line"></span>
-                    </p>
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/snezhnaya-gp01.jpg" alt="Frostbound Duo Escape" loading="lazy">
+                            <span class="trv-badge">2 PERSONS</span>
+                            <span class="trv-code">SNEZ-GP01</span>
+                        </div>
+                        <h3 class="trv-title">Winter's Embrace</h3>
+                        <p class="trv-desc">A winter escape for two travelers featuring snowy landscapes, frozen valleys, grand architecture, and peaceful alpine scenery.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;43,000 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    <p class="pkg-desc">
-                       A majestic winter expedition exploring frosted architectural marvels, grand palaces, and
-                       cozy alpine chalets under the aurora.
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/snezhnaya-gp02.jpg" alt="Winterbound Duo Escape" loading="lazy">
+                            <span class="trv-badge">3-5 PERSONS</span>
+                            <span class="trv-code">SNEZ-GP02</span>
+                        </div>
+                        <h3 class="trv-title">Frostfire Expedition</h3>
+                        <p class="trv-desc">A winter adventure for small groups featuring scenic snow covered destinations, cultural landmarks, and exciting cold-weather experiences.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;63,000 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
-                    </p>
-
-                    <div class="pkg-stops">
-                        <h3><img src="images/icon-pin.png" alt="">FEATURED STOPS</h3>
-                        <ul>
-                            <li>Zapolyarny Palace Outskirts</li>
-                            <li>Frost-bound Valleys</li>
-                            <li>Glacial Outposts</li>
-                        </ul>
-                    </div>
-
-                    <div class="pkg-price">
-                        <p class="pkg-small">FROM</p>
-                        <p class="pkg-amount">&#8369;22,000</p>
-                        <p class="pkg-small">PER PAX</p>
-                        <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                    </div>
+                <div class="trv-cell">
+                    <article class="trv-card trv-group">
+                        <div class="trv-media">
+                            <img src="images/snezhnaya-gp03.jpg" alt="Eternal Tundra Expedition" loading="lazy">
+                            <span class="trv-badge">6-10 PERSONS</span>
+                            <span class="trv-code">SNEZ-GP03</span>
+                        </div>
+                        <h3 class="trv-title">	Grand Voyage of the North</h3>
+                        <p class="trv-desc">A large group winter expedition designed for families and friends who want to explore Snezhnaya's frozen landscapes and grand architectural sites together.</p>
+                        <div class="trv-foot">
+                            <div class="trv-price">
+                                <p class="trv-for">For Only</p>
+                                <p class="trv-amount">&#8369;123,000 <small>PER GROUP</small></p>
+                            </div>
+                            <a href="#contact" class="trv-btn" aria-label="Inquire now"><img src="images/arrow-up-right.png" alt=""></a>
+                        </div>
+                    </article>
+                </div>
 
                 </div>
 
-                <!-- Column 3: side cards -->
                 <div class="pkg-side">
 
-                    <div class="pkg-card pkg-info">
-                    <div class="pkg-info-item">
-                        <img src="images/accommodation.png" alt="">
-                        <div>
-                            <h4>Accommodation</h4>
-                            <p>Snezhnaya Winter Lodge</p>
-                        </div>
-                    </div>
-                    <div class="pkg-info-item">
-                        <img src="images/transportation.png" alt="">
-                        <div>
-                            <h4>Transportation</h4>
-                            <p>Private Vehicle &amp; Heated Winter Shuttle</p>
-                        </div>
-                    </div>
-                    <div class="pkg-info-item">
-                        <img src="images/meals.png" alt="">
-                        <div>
-                            <h4>Meals Included</h4>
-                            <p>Daily Breakfast</p>
-                            <p>Selected Hot Meals</p>
-                        </div>
-                    </div>
-                    <div class="pkg-info-item">
-                        <img src="images/recommended.png" alt="">
-                        <div>
-                            <h4>Recommended For</h4>
-                            <p>Winter Travelers, Photographers, Adventure Seekers &amp; Couples</p>
-                        </div>
-                    </div>
-                    </div>
+                    <div class="pkg-card pkg-itin" data-dest="snezhnaya">
 
-                    <div class="pkg-card">
-                        <h3>INCLUSIONS</h3>
-                        <ul>
-                        <li>Accommodation</li>
-                        <li>Winter Transportation</li>
-                        <li>Tour Guide</li>
-                        <li>Attraction Fees</li>
-                        </ul>
-                    </div>
+                        <div class="itin-head">
+                            <h3>ITINERARY</h3>
+                        </div>
 
-                    <div class="pkg-card">
-                        <h3>EXCLUSIONS</h3>
-                        <ul>
-                        <li>Airfare</li>
-                        <li>Winter Clothing</li>
-                        <li>Optional Activities</li>
-                        </ul>
+                        <div class="itin-nav" role="group" aria-label="Choose a day"></div>
+
+                        <div class="itin-body" tabindex="0" role="region" aria-label="Day itinerary" aria-live="polite"></div>
+
+                        <div class="itin-foot">
+                            <div class="itin-rec">
+                                <img src="images/recommended.png" alt="">
+                                <div>
+                                    <h4>Recommended For</h4>
+                                    <p>Winter Travelers, Photographers, Adventure Seekers &amp; Couples</p>
+                                </div>
+                            </div>
+                            <div class="itin-lists">
+                                <div>
+                                    <h3>INCLUSIONS</h3>
+                                    <ul>
+                                    <li>Accommodation</li>
+                                    <li>Winter Transportation</li>
+                                    <li>Tour Guide</li>
+                                    <li>Attraction Fees</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3>EXCLUSIONS</h3>
+                                    <ul>
+                                    <li>Airfare</li>
+                                    <li>Winter Clothing</li>
+                                    <li>Optional Activities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -223,70 +253,6 @@
     </section>
 
 
-    <!-- SECTION 5: GROUP PACKAGES -->
-    <section class="grp-section" id="group">
-        <div class="pkg-wrap">
-
-            <p class="pkg-label"><span></span>GROUP PACKAGES</p>
-            <h2 class="grp-title">Explore Snezhnaya Together</h2>
-
-            <div class="grp-row">
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">2 PERSONS</p>
-                    <p class="grp-code">SNEZ-GP01</p>
-                </div>
-                <h3>Frostbound Duo Escape</h3>
-                <p class="grp-desc">A winter escape for two travelers featuring snowy landscapes, frozen valleys, grand architecture, and peaceful alpine scenery.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;43,000</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">3-5 PERSONS</p>
-                    <p class="grp-code">SNEZ-GP02</p>
-                </div>
-                <h3>Winterbound Duo Escape</h3>
-                <p class="grp-desc">A winter adventure for small groups featuring scenic snow covered destinations, cultural landmarks, and exciting cold-weather experiences.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;63,000</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            <div class="grp-card">
-                <div class="grp-top">
-                    <p class="grp-size">6-10 PERSONS</p>
-                    <p class="grp-code">SNEZ-GP03</p>
-                </div>
-                <h3>Eternal Tundra Expedition</h3>
-                <p class="grp-desc">A large group winter expedition designed for families and friends who want to explore Snezhnaya's frozen landscapes and grand architectural sites together.</p>
-                <div class="grp-bottom">
-                    <div>
-                        <p class="pkg-small">GROUP PRICE</p>
-                        <p class="grp-price">&#8369;123,000</p>
-                        <p class="pkg-small">PER GROUP</p>
-                    </div>
-                    <a href="#contact" class="pkg-btn">INQUIRE NOW <span>&rarr;</span></a>
-                </div>
-            </div>
-
-            </div>
-
-        </div>
-    </section>
 
     <!-- MORE SECTIONS WILL GO HERE -->
 
@@ -324,6 +290,9 @@
         <p class="footer-copy">&copy; 2026 TEYVENTURE. All Rights Reserved.</p>
 
     </footer>
+
+    <script src="scripts/itinerary.js"></script>
+    <script src="scripts/booking.js"></script>
 
 </body>
 </html>
