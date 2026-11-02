@@ -45,6 +45,7 @@
                 </div>
 
                 <a href="login.html" class="authbtn">LOGIN / SIGN UP</a>
+                
             </nav>
 
             <div class="hero container">
@@ -55,7 +56,7 @@
                         The world is waiting, and your next adventure is closer than you think.
                         Let TeyVenture take you beyond the ordinary and into unforgettable experiences.
                     </p>
-                    <a href="#contact" class="inquirebtn">INQUIRE NOW!</a>
+                    <a href="#" class="inquirebtn" id="openInquiry">INQUIRE NOW!</a>
                 </div>
 
             </div>
@@ -376,5 +377,311 @@
 
     </footer>
 
+   
+    
+<!-- INQUIRY MODAL -->
+<div class="inquiry-modal" id="inquiryModal">
+
+    <div class="inquiry-container">
+
+        <button type="button" class="close-inquiry" id="closeInquiry">&times;</button>
+
+        <!-- INQUIRY SELECTION -->
+        <div class="inquiry-selection" id="inquirySelection">
+
+            <div class="inquiry-header">
+                <p class="inquiry-label">START YOUR JOURNEY</p>
+                <h2>Choose Your Inquiry</h2>
+                <p>Select the type of inquiry you want to make.</p>
+            </div>
+
+            <div class="inquiry-options">
+
+                <div class="inquiry-option" data-type="tour">
+                    <span class="option-number">01</span>
+                    <div class="option-details">
+                        <h3>Tour Package Inquiry</h3>
+                        <p>Ask about our tour packages.</p>
+                    </div>
+                    <span class="option-check">✓</span>
+                </div>
+
+                <div class="inquiry-option" data-type="general">
+                    <span class="option-number">02</span>
+                    <div class="option-details">
+                        <h3>General Inquiry</h3>
+                        <p>Ask us a general question.</p>
+                    </div>
+                    <span class="option-check">✓</span>
+                </div>
+
+                <div class="inquiry-option" data-type="custom">
+                    <span class="option-number">03</span>
+                    <div class="option-details">
+                        <h3>Custom Itinerary Request</h3>
+                        <p>Plan your own travel experience.</p>
+                    </div>
+                    <span class="option-check">✓</span>
+                </div>
+
+            </div>
+
+            <button type="button" class="inquiry-next" id="inquiryNext" disabled>
+                Next <span>→</span>
+            </button>
+
+        </div>
+
+
+        <!-- TOUR PACKAGE INQUIRY FORM -->
+        <div class="inquiry-form" id="tourInquiryForm" style="display: none;">
+
+            <div class="inquiry-header">
+                <p class="inquiry-label">START YOUR JOURNEY</p>
+                <h2>Tour Package Inquiry</h2>
+                <p>Tell us about your preferred travel experience.</p>
+            </div>
+
+            <form id="tourForm">
+
+                <div class="form-group">
+                    <label for="tourPackage">What tour package are you interested in?</label>
+                    <select id="tourPackage" name="tourPackage" required>
+                        <option value="" disabled selected>Select a package</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tourDate">Preferred Travel Date</label>
+                        <input type="date" id="tourDate" name="tourDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tourPax">Pax</label>
+                        <input type="number" id="tourPax" name="tourPax" min="1" placeholder="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tourName">Full Name</label>
+                    <input type="text" id="tourName" name="tourName" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tourMobile">Mobile Number</label>
+                        <input
+                            type="tel"
+                            id="tourMobile"
+                            name="tourMobile"
+                            placeholder="09XXXXXXXXX"
+                            pattern="09[0-9]{9}"
+                            maxlength="11"
+                            minlength="11"
+                            inputmode="numeric"
+                            title="Enter an 11-digit mobile number starting with 09"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tourEmail">Email Address</label>
+                        <input type="email" id="tourEmail" name="tourEmail" placeholder="Your email address" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tourDetails">Additional Details</label>
+                    <textarea id="tourDetails" name="tourDetails" placeholder="Tell us more about your inquiry"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="inquiry-back">← Back</button>
+                    <button type="submit" class="inquiry-submit">Send Inquiry</button>
+                </div>
+
+            </form>
+        </div>
+
+
+        
+<!-- GENERAL INQUIRY FORM -->
+<div class="inquiry-form" id="generalInquiryForm" style="display: none;">
+
+    <div class="inquiry-header">
+        <p class="inquiry-label">WE'RE HERE TO HELP</p>
+        <h2>General Inquiry</h2>
+        <p>Send us your questions and we'll be happy to assist you.</p>
+    </div>
+
+    <form id="generalForm">
+
+        <div class="form-group">
+            <label for="generalPackage">What tour package are you interested in?</label>
+            <select id="generalPackage" name="generalPackage" required>
+                <option value="" disabled selected>Select a package</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="generalName">Full Name</label>
+            <input type="text" id="generalName" name="generalName" placeholder="Your full name" required>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label for="generalMobile">Mobile Number</label>
+                <input
+                    type="tel"
+                    id="generalMobile"
+                    name="generalMobile"
+                    placeholder="09XXXXXXXXX"
+                    pattern="09[0-9]{9}"
+                    maxlength="11"
+                    minlength="11"
+                    inputmode="numeric"
+                    title="Enter an 11-digit mobile number starting with 09"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="generalEmail">Email Address</label>
+                <input type="email" id="generalEmail" name="generalEmail" placeholder="Your email address" required>
+            </div>
+
+        </div>
+
+        <!-- ADDITIONAL DETAILS -->
+        <div class="form-group">
+            <label for="generalDetails">Additional Details</label>
+            <textarea
+                id="generalDetails"
+                name="generalDetails"
+                placeholder="Tell us more about your inquiry">
+            </textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="inquiry-back">← Back</button>
+            <button type="submit" class="inquiry-submit">Send Inquiry</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+        <!-- CUSTOM ITINERARY REQUEST FORM -->
+        <div class="inquiry-form" id="customInquiryForm" style="display: none;">
+
+            <div class="inquiry-header">
+                <p class="inquiry-label">CREATE YOUR OWN ADVENTURE</p>
+                <h2>Custom Itinerary Request</h2>
+                <p>Let us help you plan a travel experience that suits you.</p>
+            </div>
+
+            <form id="customForm">
+
+                <!-- NATIONS -->
+                <div class="form-group">
+                    <label>Which nation/s interests you?</label>
+
+                    <div class="form-checkbox-grid">
+                        <label><input type="checkbox" name="nations" value="Mondstadt"> Mondstadt</label>
+                        <label><input type="checkbox" name="nations" value="Liyue"> Liyue</label>
+                        <label><input type="checkbox" name="nations" value="Inazuma"> Inazuma</label>
+                        <label><input type="checkbox" name="nations" value="Sumeru"> Sumeru</label>
+                        <label><input type="checkbox" name="nations" value="Fontaine"> Fontaine</label>
+                        <label><input type="checkbox" name="nations" value="Natlan"> Natlan</label>
+                        <label><input type="checkbox" name="nations" value="Snezhnaya"> Snezhnaya</label>
+                    </div>
+                </div>
+
+                <!-- DURATION AND BUDGET -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tripDuration">Preferred Trip Duration</label>
+                        <input type="number" id="tripDuration" name="tripDuration" min="1" placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budgetRange">Budget Range</label>
+                        <input type="number" id="budgetRange" name="budgetRange" min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <!-- TRAVEL INTERESTS -->
+                <div class="form-group">
+                    <label>What are your interests?</label>
+
+                    <div class="form-checkbox-grid">
+                        <label><input type="checkbox" name="interests" value="Nature & Scenery"> Nature & Scenery</label>
+                        <label><input type="checkbox" name="interests" value="Adventure & Outdoor Activities"> Adventure & Outdoor Activities</label>
+                        <label><input type="checkbox" name="interests" value="Food & Culinary"> Food & Culinary</label>
+                        <label><input type="checkbox" name="interests" value="Relaxation & Leisure"> Relaxation & Leisure</label>
+                        <label><input type="checkbox" name="interests" value="Culture & Heritage"> Culture & Heritage</label>
+                        <label><input type="checkbox" name="interests" value="Photography & Sightseeing"> Photography & Sightseeing</label>
+                    </div>
+                </div>
+
+                <!-- TRAVEL DATE AND PAX -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customDate">Preferred Travel Date</label>
+                        <input type="date" id="customDate" name="customDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customPax">Pax</label>
+                        <input type="number" id="customPax" name="customPax" min="1" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customName">Full Name</label>
+                    <input type="text" id="customName" name="customName" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customMobile">Mobile Number</label>
+                        <input
+                            type="tel"
+                            id="customMobile"
+                            name="customMobile"
+                            placeholder="09XXXXXXXXX"
+                            pattern="09[0-9]{9}"
+                            maxlength="11"
+                            minlength="11"
+                            inputmode="numeric"
+                            title="Enter an 11-digit mobile number starting with 09"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customEmail">Email Address</label>
+                        <input type="email" id="customEmail" name="customEmail" placeholder="Your email address" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customDetails">Additional Details</label>
+                    <textarea id="customDetails" name="customDetails" placeholder="Tell us more about your inquiry"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="inquiry-back">← Back</button>
+                    <button type="submit" class="inquiry-submit">Send Inquiry</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/script.js"></script>
 </body>
 </html>
