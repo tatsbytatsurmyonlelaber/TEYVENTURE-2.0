@@ -1,0 +1,912 @@
+/* TeyVenture contact page
+   Same gold / navy palette and gold-outline frame as the FAQ section.
+   Load after style.css. */
+
+/* ---------- hero (shorter than the home hero) ---------- */
+.contact-hero {
+    height: 64vh;
+    min-height: 480px;
+    background: url('../images/faqbg.png') center / cover no-repeat;
+}
+
+.contact-hero .hero {
+    padding-bottom: 0;
+}
+
+.contact-hero-title {
+    margin-top: 6px;
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 3px;
+    color: #C9A85C;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- form section ---------- */
+.contact-section {
+    position: relative;
+    padding: 90px 0 110px;
+    background: linear-gradient(180deg, #24476B 0%, #0b0f54 100%);
+    color: #F9F8F3;
+    scroll-margin-top: 0;
+}
+
+.contact-head {
+    width: 92%;
+    max-width: 915px;
+    margin: 0 auto 34px;
+    text-align: center;
+}
+
+.contact-title {
+    font-size: 35px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #C9A85C;
+    margin-bottom: 10px;
+}
+
+.contact-head p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(249, 248, 243, 0.9);
+}
+
+.ct-frame {
+    width: 88%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 8px;
+    border: 2px solid #C9A85C;
+    border-radius: 16px;
+}
+
+.ct-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.5fr);
+    overflow: hidden;
+    border-radius: 10px;
+    background: #F9F8F3;
+}
+
+/* ---------- left: contact details ---------- */
+.ct-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 40px 32px;
+    background: #24476B;
+    color: #F9F8F3;
+}
+
+.ct-info h3,
+.ct-success h3 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: #C9A85C;
+}
+
+.ct-info h4 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #C9A85C;
+    margin-bottom: 10px;
+}
+
+.ct-info > p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(249, 248, 243, 0.92);
+}
+
+.ct-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 4px 0;
+    list-style: none;
+}
+
+.ct-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.ct-ico {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(249, 248, 243, 0.14);
+    border: 1px solid rgba(249, 248, 243, 0.55);
+    color: #E5D3A7;
+}
+
+.ct-ico svg {
+    width: 22px;
+    height: 22px;
+}
+
+.ct-k {
+    display: block;
+    font-size: 12px;
+    color: #E5D3A7;
+}
+
+.ct-v {
+    display: block;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.ct-map {
+    width: 100%;
+    height: 180px;
+    border: 0;
+    border-radius: 12px;
+}
+
+.ct-socials {
+    display: flex;
+    gap: 12px;
+}
+
+.ct-socials a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(249, 248, 243, 0.14);
+    border: 1px solid rgba(249, 248, 243, 0.55);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.ct-socials a:hover {
+    background: rgba(201, 168, 92, 0.35);
+    border-color: #C9A85C;
+}
+
+.ct-socials a:focus-visible,
+.ct-note a:focus-visible {
+    outline: 2px solid #F9F8F3;
+    outline-offset: 3px;
+}
+
+.ct-socials img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.ct-next {
+    padding-top: 18px;
+    border-top: 1px solid rgba(201, 168, 92, 0.55);
+}
+
+.ct-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    counter-reset: ctstep;
+}
+
+.ct-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(249, 248, 243, 0.92);
+}
+
+.ct-steps li::before {
+    counter-increment: ctstep;
+    content: counter(ctstep);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(249, 248, 243, 0.55);
+    font-size: 12px;
+    color: #E5D3A7;
+}
+
+.ct-note {
+    margin-top: auto;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(249, 248, 243, 0.92);
+}
+
+.ct-note a {
+    color: #C9A85C;
+    font-weight: 500;
+    text-underline-offset: 3px;
+}
+
+.ct-note a:hover {
+    color: #E5D3A7;
+}
+
+/* ---------- right: form ---------- */
+.ct-main {
+    padding: 36px 38px 42px;
+    color: #1F3A5A;
+}
+
+.ct-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.ct-form[hidden],
+.ct-sec[hidden],
+.ct-pkg[hidden],
+.ct-success[hidden],
+.ct-f[hidden] {
+    display: none;
+}
+
+.ct-sec {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.ct-req-note {
+    font-size: 13px;
+    color: #4A5D72;
+}
+
+.ct-req {
+    color: #B3261E;
+}
+
+.ct-opt {
+    font-weight: 400;
+    color: #5C6E82;
+}
+
+.ct-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.ct-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.ct-f {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.ct-f > label,
+.ct-group > legend,
+.ct-types > legend {
+    padding: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #24476B;
+}
+
+.ct-types > legend {
+    margin-bottom: 8px;
+}
+
+.ct-f input[type="text"],
+.ct-f input[type="email"],
+.ct-f input[type="tel"],
+.ct-f input[type="date"],
+.ct-f input[type="number"],
+.ct-f select,
+.ct-f textarea {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1.5px solid #D9CFB4;
+    border-radius: 14px;
+    background: #fff;
+    color: #1F3A5A;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.ct-f textarea {
+    height: auto;
+    min-height: 120px;
+    padding: 12px 14px;
+    line-height: 1.55;
+    resize: vertical;
+}
+
+.ct-f select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238F6A1C' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+}
+
+.ct-f input::placeholder,
+.ct-f textarea::placeholder {
+    color: #7C8A9A;
+}
+
+.ct-f input:hover,
+.ct-f select:hover,
+.ct-f textarea:hover {
+    border-color: #C9A85C;
+}
+
+.ct-f input:focus,
+.ct-f select:focus,
+.ct-f textarea:focus {
+    outline: none;
+    border-color: #C9A85C;
+    box-shadow: 0 0 0 3px rgba(201, 168, 92, 0.35);
+}
+
+.ct-f .is-valid {
+    border-color: #3B7A57;
+}
+
+.ct-f [aria-invalid="true"] {
+    border-color: #B3261E;
+    background: #FFF8F7;
+}
+
+.ct-f [aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.22);
+}
+
+.ct-hint {
+    font-size: 12px;
+    color: #5C6E82;
+}
+
+.ct-err {
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #B3261E;
+}
+
+.ct-under {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ct-count {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: #5C6E82;
+}
+
+.ct-count.is-near {
+    color: #8F6A1C;
+    font-weight: 600;
+}
+
+/* ---------- inquiry type cards ---------- */
+.ct-types {
+    min-width: 0;
+    padding: 0;
+    border: 0;
+}
+
+.ct-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.ct-type {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.ct-type input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.ct-type-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 16px 16px 18px;
+    border: 1.5px solid #D9CFB4;
+    border-radius: 14px;
+    background: #fff;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ct-type:hover .ct-type-box {
+    border-color: #C9A85C;
+}
+
+.ct-type-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #24476B;
+}
+
+.ct-type-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #4A5D72;
+}
+
+.ct-type input:checked + .ct-type-box {
+    border-color: #C9A85C;
+    background: #24476B;
+    box-shadow: 0 0 0 3px rgba(201, 168, 92, 0.35);
+}
+
+.ct-type input:checked + .ct-type-box .ct-type-name {
+    color: #E5D3A7;
+}
+
+.ct-type input:checked + .ct-type-box .ct-type-desc {
+    color: #F9F8F3;
+}
+
+.ct-type input:focus-visible + .ct-type-box {
+    outline: 2px solid #24476B;
+    outline-offset: 3px;
+}
+
+/* ---------- chips (checkbox / radio groups) ---------- */
+.ct-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+}
+
+.ct-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ct-chip {
+    position: relative;
+}
+
+.ct-chip input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.ct-chip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 1.5px solid #D9CFB4;
+    border-radius: 999px;
+    background: #fff;
+    color: #24476B;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ct-chip span:hover {
+    border-color: #C9A85C;
+}
+
+.ct-chip input:checked + span {
+    border-color: #24476B;
+    background: #24476B;
+    color: #F9F8F3;
+}
+
+.ct-chip input:checked + span::before {
+    content: "\2713";
+    font-size: 12px;
+    color: #E5D3A7;
+}
+
+.ct-chip input:focus-visible + span {
+    outline: 2px solid #24476B;
+    outline-offset: 2px;
+}
+
+.ct-group.is-bad .ct-chip span {
+    border-color: #B3261E;
+}
+
+/* ---------- checkbox line ---------- */
+.ct-chk {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3B5D7E;
+    cursor: pointer;
+}
+
+.ct-chk input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #8F6A1C;
+    cursor: pointer;
+}
+
+.ct-chk input:focus-visible {
+    outline: 2px solid #24476B;
+    outline-offset: 2px;
+}
+
+.ct-chk input[aria-invalid="true"] {
+    outline: 2px solid #B3261E;
+    outline-offset: 2px;
+}
+
+.ct-datebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: -6px;
+}
+
+.ct-trip {
+    font-size: 13px;
+    font-weight: 500;
+    color: #8F6A1C;
+}
+
+/* ---------- steppers ---------- */
+.ct-stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ct-f .ct-stepper input[type="number"] {
+    width: 70px;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.ct-stepper input[type="number"]::-webkit-inner-spin-button,
+.ct-stepper input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ct-circ {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid #C9A85C;
+    border-radius: 50%;
+    background: #FDFAF2;
+    color: #8F6A1C;
+    font-family: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ct-circ:hover {
+    background: #8F6A1C;
+    color: #F9F8F3;
+}
+
+.ct-circ:focus-visible {
+    outline: 2px solid #24476B;
+    outline-offset: 2px;
+}
+
+/* ---------- attached package pill ---------- */
+.ct-pkg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    max-width: 100%;
+    padding: 6px 6px 6px 14px;
+    border: 1.5px solid #C9A85C;
+    border-radius: 999px;
+    background: #FDFAF2;
+    font-size: 13px;
+    color: #1F3A5A;
+}
+
+.ct-pkg button {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 50%;
+    background: #24476B;
+    color: #F9F8F3;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ct-pkg button:focus-visible {
+    outline: 2px solid #24476B;
+    outline-offset: 2px;
+}
+
+.ct-banner {
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: #FBEAE8;
+    border: 1.5px solid #B3261E;
+    color: #8C1D18;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* honeypot: off-screen, not display:none */
+.ct-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* gold button look comes from the shared .inquirebtn style; this is size + states */
+.ct-submit {
+    align-self: flex-start;
+    height: 50px;
+    padding: 0 40px;
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.ct-submit[disabled] {
+    opacity: 0.8;
+    cursor: progress;
+    transform: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.ct-submit.is-sending::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(249, 248, 243, 0.4);
+    border-top-color: #F9F8F3;
+    border-radius: 50%;
+    animation: ctSpin 0.8s linear infinite;
+}
+
+@keyframes ctSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- success ---------- */
+.ct-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 40px 10px 10px;
+    text-align: center;
+}
+
+.ct-success:focus {
+    outline: none;
+}
+
+.ct-success h3 {
+    color: #24476B;
+}
+
+.ct-success p {
+    max-width: 440px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #3B5D7E;
+    overflow-wrap: anywhere;
+}
+
+.ct-tick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #8F6A1C;
+    border: 1.5px solid #C9A85C;
+    color: #F9F8F3;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.ct-tick svg {
+    width: 32px;
+    height: 32px;
+}
+
+.ct-pill {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1.5px solid #C9A85C;
+    border-radius: 999px;
+    background: #FDFAF2;
+    font-size: 13px !important;
+    color: #1F3A5A !important;
+}
+
+.ct-s-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.ct-again,
+.ct-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    padding: 0 28px;
+    border: 1.5px solid #24476B;
+    border-radius: 30px;
+    background: transparent;
+    color: #24476B;
+    font-family: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.ct-again:hover,
+.ct-home:hover {
+    background: #24476B;
+    color: #F9F8F3;
+}
+
+.ct-again:focus-visible,
+.ct-home:focus-visible {
+    outline: 2px solid #24476B;
+    outline-offset: 3px;
+}
+
+/* ---------- quick answers (extra bits on top of the home FAQ look) ---------- */
+.contact-more {
+    position: relative;
+    z-index: 1;
+    margin-top: 22px;
+    font-size: 15px;
+    color: #24476B;
+}
+
+.contact-more a {
+    color: #8F6A1C;
+    font-weight: 500;
+    text-underline-offset: 3px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+    .ct-card {
+        grid-template-columns: 1fr;
+    }
+
+    .ct-frame {
+        width: 92%;
+    }
+
+    .ct-info {
+        padding: 32px 26px;
+    }
+
+    .ct-note {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .contact-hero {
+        min-height: 420px;
+    }
+
+    .contact-hero-title {
+        font-size: 48px;
+    }
+
+    .contact-section {
+        padding: 70px 0 80px;
+    }
+
+    .contact-title {
+        font-size: 28px;
+    }
+
+    .ct-main {
+        padding: 28px 18px 32px;
+    }
+
+    .ct-info h3,
+    .ct-success h3 {
+        font-size: 27px;
+    }
+
+    .ct-row,
+    .ct-type-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ct-submit {
+        align-self: stretch;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ct-submit.is-sending::before {
+        animation-duration: 2.4s;
+    }
+
+    .ct-f input,
+    .ct-f select,
+    .ct-f textarea,
+    .ct-type-box,
+    .ct-chip span,
+    .ct-circ,
+    .ct-again,
+    .ct-home,
+    .ct-socials a {
+        transition: none;
+    }
+}

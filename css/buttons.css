@@ -1,0 +1,307 @@
+/* ==========================================================
+   TeyVenture buttons  (lagoon teal accent)
+   Load this LAST, after every other stylesheet.
+
+   Primary   teal   : main action  (Login, Search, Inquire, Next, Pay, Send)
+   Secondary navy   : quiet action (Send another inquiry, Back home)
+   Outline   gold   : cancel / alternate (Go back, Print, Clear search)
+
+   Every state follows the style sheet: default, hover, pressed,
+   keyboard focus ring, disabled.
+   ========================================================== */
+
+:root {
+    --tv-navy: #0B1F3A;
+    --tv-gold: #C9A227;
+    --tv-teal: #1FCFB4;
+
+    --tv-teal-hover: #4EE0CA;
+    --tv-teal-press: #14A892;
+    --tv-teal-glow: rgba(31, 207, 180, 0.45);
+
+    --tv-navy-hover: #16335C;
+    --tv-navy-press: #07152A;
+
+    --tv-gold-tint: #F6EDC9;        /* outline hover on light */
+    --tv-gold-tint-press: #EBDCA0;  /* outline pressed on light */
+    --tv-gold-press: #A8851C;       /* outline pressed on navy */
+
+    --tv-off-bg: #DDE2E8;           /* disabled on light */
+    --tv-off-text: #78808C;
+    --tv-off-bg-dark: #24364F;      /* disabled on navy */
+    --tv-off-text-dark: #7F8DA3;
+
+    --btn-radius: 12px;
+    --btn-ring: var(--tv-navy);     /* focus ring: navy on light backgrounds */
+}
+
+/* on dark backgrounds the focus ring is gold */
+.navbar,
+.search-bar,
+.landingpage,
+.gallery-modal,
+.lightbox {
+    --btn-ring: var(--tv-gold);
+}
+
+/* ---------- shared shape and motion ---------- */
+
+.btn,
+.authbtn,
+.inquirebtn,
+.search-btn,
+.tv-gold,
+.tv-ghost,
+.tv-dialog .tv-vbtn,
+.tv-rcard .tv-vbtn,
+.ct-again,
+.ct-home,
+.sr-edit,
+.sr-clear {
+    border-radius: var(--btn-radius);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-width: 1.5px;
+    border-style: solid;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+                box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.tv-dialog .tv-vbtn,
+.tv-rcard .tv-vbtn {
+    font-weight: 700;       /* these use the Cinzel caps style */
+}
+
+/* generic class for new buttons: <a class="btn btn-primary"> */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 28px;
+    font-family: inherit;
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* ==========================================================
+   PRIMARY  (teal)
+   ========================================================== */
+
+.btn-primary,
+.authbtn,
+.inquirebtn,
+.search-btn,
+.tv-gold,
+.tv-dialog .tv-vbtn--teal,
+.tv-rcard .tv-vbtn--teal,
+.sr-edit,
+.trv-btn,
+.to-top {
+    background: var(--tv-teal);
+    color: var(--tv-navy);
+    border: 1.5px solid var(--tv-teal);
+    box-shadow: none;
+}
+
+:is(.btn-primary, .authbtn, .inquirebtn, .search-btn, .tv-gold,
+    .tv-dialog .tv-vbtn--teal, .tv-rcard .tv-vbtn--teal, .sr-edit, .trv-btn, .to-top):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-teal-hover);
+    border-color: var(--tv-teal-hover);
+    color: var(--tv-navy);
+    box-shadow: 0 8px 22px var(--tv-teal-glow);
+    transform: translateY(-2px);
+}
+
+:is(.btn-primary, .authbtn, .inquirebtn, .search-btn, .tv-gold,
+    .tv-dialog .tv-vbtn--teal, .tv-rcard .tv-vbtn--teal, .sr-edit, .trv-btn, .to-top):active:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-teal-press);
+    border-color: var(--tv-teal-press);
+    color: var(--tv-navy);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+:is(.btn-primary, .authbtn, .inquirebtn, .search-btn, .tv-gold,
+    .tv-dialog .tv-vbtn--teal, .tv-rcard .tv-vbtn--teal, .sr-edit, .trv-btn, .to-top):focus-visible {
+    outline: 3px solid var(--btn-ring);
+    outline-offset: 3px;
+}
+
+:is(.btn-primary, .authbtn, .inquirebtn, .search-btn, .tv-gold,
+    .tv-dialog .tv-vbtn--teal, .tv-rcard .tv-vbtn--teal, .sr-edit):disabled,
+.btn-primary[aria-disabled="true"] {
+    background: var(--tv-off-bg);
+    border-color: var(--tv-off-bg);
+    color: var(--tv-off-text);
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+/* the circle arrow on package cards and the back-to-top button keep their round shape;
+   dark arrow icon on the teal */
+.trv-btn img {
+    filter: brightness(0);
+}
+
+/* "Send inquiry" is disabled while it is sending: keep it teal, show the spinner */
+.ct-submit.is-sending,
+.ct-submit.is-sending[disabled] {
+    background: var(--tv-teal);
+    border-color: var(--tv-teal);
+    color: var(--tv-navy);
+    box-shadow: none;
+    opacity: 0.85;
+    transform: none;
+}
+
+.ct-submit.is-sending::before {
+    border-color: rgba(11, 31, 58, 0.3);
+    border-top-color: var(--tv-navy);
+}
+
+/* ==========================================================
+   SECONDARY  (navy)
+   ========================================================== */
+
+.btn-secondary,
+.ct-again,
+.ct-home {
+    background: var(--tv-navy);
+    color: #fff;
+    border: 1.5px solid var(--tv-navy);
+    box-shadow: none;
+}
+
+:is(.btn-secondary, .ct-again, .ct-home):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-navy-hover);
+    border-color: var(--tv-navy-hover);
+    color: #fff;
+}
+
+:is(.btn-secondary, .ct-again, .ct-home):active:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-navy-press);
+    border-color: var(--tv-navy-press);
+    color: #fff;
+}
+
+:is(.btn-secondary, .ct-again, .ct-home):focus-visible {
+    outline: 3px solid var(--tv-navy);
+    outline-offset: 3px;
+}
+
+:is(.btn-secondary, .ct-again, .ct-home):disabled,
+.btn-secondary[aria-disabled="true"] {
+    background: var(--tv-off-bg);
+    border-color: var(--tv-off-bg);
+    color: var(--tv-off-text);
+    cursor: not-allowed;
+}
+
+/* ==========================================================
+   OUTLINE  (gold) on light backgrounds
+   ========================================================== */
+
+.btn-outline,
+.tv-ghost,
+.tv-dialog .tv-vbtn--line,
+.tv-rcard .tv-vbtn--line,
+.sr-clear {
+    background: transparent;
+    color: var(--tv-navy);
+    border: 1.5px solid var(--tv-gold);
+    box-shadow: none;
+}
+
+:is(.btn-outline, .tv-ghost, .tv-dialog .tv-vbtn--line, .tv-rcard .tv-vbtn--line, .sr-clear):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-gold-tint);
+    border-color: var(--tv-gold);
+    color: var(--tv-navy);
+}
+
+:is(.btn-outline, .tv-ghost, .tv-dialog .tv-vbtn--line, .tv-rcard .tv-vbtn--line, .sr-clear):active:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-gold-tint-press);
+    border-color: var(--tv-gold);
+    color: var(--tv-navy);
+}
+
+:is(.btn-outline, .tv-ghost, .tv-dialog .tv-vbtn--line, .tv-rcard .tv-vbtn--line, .sr-clear):focus-visible {
+    outline: 3px solid var(--tv-navy);
+    outline-offset: 3px;
+}
+
+:is(.btn-outline, .tv-ghost, .tv-dialog .tv-vbtn--line, .tv-rcard .tv-vbtn--line, .sr-clear):disabled,
+.btn-outline[aria-disabled="true"] {
+    background: var(--tv-off-bg);
+    border-color: var(--tv-off-bg);
+    color: var(--tv-off-text);
+    cursor: not-allowed;
+}
+
+/* ==========================================================
+   OUTLINE  (gold) on navy backgrounds: add class "btn-outline-dark"
+   ========================================================== */
+
+.btn-outline-dark {
+    background: transparent;
+    color: var(--tv-gold);
+    border: 1.5px solid var(--tv-gold);
+}
+
+.btn-outline-dark:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-gold);
+    color: var(--tv-navy);
+}
+
+.btn-outline-dark:active:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--tv-gold-press);
+    border-color: var(--tv-gold-press);
+    color: var(--tv-navy);
+}
+
+.btn-outline-dark:focus-visible {
+    outline: 3px solid var(--tv-gold);
+    outline-offset: 3px;
+}
+
+.btn-outline-dark:disabled,
+.btn-outline-dark[aria-disabled="true"] {
+    background: var(--tv-off-bg-dark);
+    border-color: var(--tv-off-bg-dark);
+    color: var(--tv-off-text-dark);
+    cursor: not-allowed;
+}
+
+/* ---------- exceptions ---------- */
+
+/* the home search button stays a pill */
+.search-btn {
+    border-radius: 999px;
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .authbtn,
+    .inquirebtn,
+    .search-btn,
+    .tv-gold,
+    .tv-ghost,
+    .tv-dialog .tv-vbtn,
+    .tv-rcard .tv-vbtn,
+    .ct-again,
+    .ct-home,
+    .sr-edit,
+    .sr-clear {
+        transition: none;
+    }
+
+    :is(.btn-primary, .authbtn, .inquirebtn, .search-btn, .tv-gold,
+        .tv-dialog .tv-vbtn--teal, .tv-rcard .tv-vbtn--teal, .sr-edit, .trv-btn, .to-top):hover {
+        transform: none;
+    }
+}

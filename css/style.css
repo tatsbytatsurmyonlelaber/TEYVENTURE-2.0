@@ -28,8 +28,12 @@ h1 {
     font-family: 'GenFont', serif;
 }
 
-h2, h3, h4 {
+h2 {
     font-family: 'Cinzel', serif;
+}
+
+h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
 }
 
 body {
@@ -626,6 +630,24 @@ body {
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
 }
 
+/* Destination slider button states */
+
+.slider-btn {
+    opacity: 0.85;
+    transition: opacity 0.2s, filter 0.2s;
+}
+
+.slider-btn:hover {
+    opacity: 1;
+    filter: brightness(1.15);
+}
+
+.slider-btn:focus-visible {
+    outline: 2px solid #C9A85C;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
 /* Destination card hover overlay (inside the frame) */
 
 .destination-hover {
@@ -1070,6 +1092,67 @@ body {
 .dest-stop-img {
     display: block;
     width: 100%;
+}
+
+/* Stop gallery: main picture in front, sub pictures fanned out behind it */
+
+.stop-gallery {
+    position: relative;
+    width: 58%;
+    margin: 14px auto 0;
+}
+
+.stop-gallery .dest-stop-img {
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    position: relative;
+    z-index: 3;
+    box-sizing: border-box;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #C9A85C;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s ease;
+}
+
+.stop-sub {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-sizing: border-box;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #C9A85C;
+    border-radius: 24px;
+    opacity: 0.85;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    transition: transform 0.4s ease;
+}
+
+.stop-sub-left {
+    transform: translateX(-12%) rotate(-6deg) scale(0.92);
+}
+
+.stop-sub-right {
+    transform: translateX(12%) rotate(6deg) scale(0.92);
+}
+
+/* On hover the pictures spread out and the main one lifts up */
+.dest-stop:hover .stop-sub-left {
+    transform: translateX(-26%) rotate(-11deg) scale(0.92);
+}
+
+.dest-stop:hover .stop-sub-right {
+    transform: translateX(26%) rotate(11deg) scale(0.92);
+}
+
+.dest-stop:hover .dest-stop-img {
+    transform: translateY(-6px);
 }
 
 /* Packages: solo package */
@@ -2471,4 +2554,91 @@ body {
 /* Nav button: LOGIN / SIGN UP stays on one line */
 .authbtn {
     white-space: nowrap;
+}
+
+/* Destination About
+   Heading on the left, gold-outlined card on the right, with equal space on both sides. */
+
+.dab {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    column-gap: 70px;
+    padding: 100px 4%;
+    background: #F9F8F3;
+}
+
+/* Heading and card sit above the emblem and sparkles */
+.dab-title,
+.dab-card {
+    position: relative;
+    z-index: 1;
+}
+
+.dab-emblem {
+    position: absolute;
+    top: 50%;
+    right: -4%;
+    width: min(38vw, 640px);
+    height: auto;
+    transform: translateY(-50%);
+    opacity: 0.25;
+    pointer-events: none;
+    user-select: none;
+}
+
+.dab .about-sparkle {
+    z-index: 0;
+}
+
+.dab-title {
+    font-family: 'GenFont', serif;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #24476B;
+}
+
+.dab-title span {
+    display: block;
+    white-space: nowrap;
+}
+
+.dab-card {
+    max-width: 700px;
+    padding: 40px;
+    border: 2px solid #C9A85C;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 10px 24px rgba(36, 71, 107, 0.12);
+}
+
+.dab-card p {
+    color: #3B5D7E;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.75;
+}
+
+@media (max-width: 1000px) {
+    .dab {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        row-gap: 36px;
+        padding: 90px 6% 70px;
+        text-align: center;
+    }
+    .dab-title { font-size: 46px; }
+    .dab-emblem { width: 70vw; right: -20%; opacity: 0.2; }
+}
+
+@media (max-width: 640px) {
+    .dab { padding: 64px 5% 56px; }
+    .dab-title { font-size: 32px; }
+    .dab-card { padding: 24px 22px; border-radius: 14px; }
+    .dab-card p { font-size: 15px; line-height: 1.7; }
+    .dab-emblem { width: 95vw; right: -35%; opacity: 0.18; }
 }
