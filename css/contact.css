@@ -1,8 +1,4 @@
-/* TeyVenture contact page
-   Same gold / navy palette and gold-outline frame as the FAQ section.
-   Load after style.css. */
-
-/* ---------- hero (shorter than the home hero) ---------- */
+/* hero */
 .contact-hero {
     height: 64vh;
     min-height: 480px;
@@ -23,7 +19,7 @@
     text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
-/* ---------- form section ---------- */
+/* form section */
 .contact-section {
     position: relative;
     padding: 90px 0 110px;
@@ -70,7 +66,7 @@
     background: #F9F8F3;
 }
 
-/* ---------- left: contact details ---------- */
+/* contact details on left side */
 .ct-info {
     display: flex;
     flex-direction: column;
@@ -240,7 +236,7 @@
     color: #E5D3A7;
 }
 
-/* ---------- right: form ---------- */
+/* right form */
 .ct-main {
     padding: 36px 38px 42px;
     color: #1F3A5A;
@@ -414,7 +410,7 @@
     font-weight: 600;
 }
 
-/* ---------- inquiry type cards ---------- */
+/* inquiry type cards */
 .ct-types {
     min-width: 0;
     padding: 0;
@@ -492,7 +488,7 @@
     outline-offset: 3px;
 }
 
-/* ---------- chips (checkbox / radio groups) ---------- */
+/* chips (checkbox / radio groups) */
 .ct-group {
     display: flex;
     flex-direction: column;
@@ -558,7 +554,7 @@
     border-color: #B3261E;
 }
 
-/* ---------- checkbox line ---------- */
+/* checkbox line */
 .ct-chk {
     display: flex;
     align-items: flex-start;
@@ -604,7 +600,7 @@
     color: #8F6A1C;
 }
 
-/* ---------- steppers ---------- */
+/* steppers */
 .ct-stepper {
     display: flex;
     align-items: center;
@@ -649,7 +645,7 @@
     outline-offset: 2px;
 }
 
-/* ---------- attached package pill ---------- */
+/* attached package pill */
 .ct-pkg {
     display: flex;
     align-items: center;
@@ -701,7 +697,7 @@
     overflow: hidden;
 }
 
-/* gold button look comes from the shared .inquirebtn style; this is size + states */
+/* submit button */
 .ct-submit {
     align-self: flex-start;
     height: 50px;
@@ -731,7 +727,7 @@
     to { transform: rotate(360deg); }
 }
 
-/* ---------- success ---------- */
+/* success inquire */
 .ct-success {
     display: flex;
     flex-direction: column;
@@ -823,7 +819,7 @@
     outline-offset: 3px;
 }
 
-/* ---------- quick answers (extra bits on top of the home FAQ look) ---------- */
+/* quick answers */
 .contact-more {
     position: relative;
     z-index: 1;
@@ -838,7 +834,7 @@
     text-underline-offset: 3px;
 }
 
-/* ---------- responsive ---------- */
+/* responsive */
 @media (max-width: 1000px) {
     .ct-card {
         grid-template-columns: 1fr;

@@ -21,6 +21,11 @@
     monthsAhead: 10,                   // how many months the calendar covers
     // Real availability: window.TEYVENTURE_BOOKING = { departures: { 'INAZ-GP03': { '2027-05-16': 8, '2027-05-30': 0 } } }
     departures: null,
+    // Traveler details are kept in this browser tab (sessionStorage) so closing the pop-up by accident loses nothing.
+    // Card details, terms and uploaded proof are never saved. The draft is wiped after a completed booking.
+    draft: true,                       // false = turn the autosave off
+    draftPassport: true,               // false = never keep passport numbers / expiry dates in the draft
+    draftMaxAgeHours: 12,              // an older draft is ignored and removed
     // Called when the customer presses Pay. Send `booking` to your server here.
     onSubmit: function (booking) { console.log('[TeyVenture] booking to send to your server:', booking); }
   };
@@ -44,6 +49,52 @@
   function todayISO() { var d = new Date(); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973; return h; }
   function total() { return state.pkg.perPax ? state.pkg.price * state.count : state.pkg.price; }
+
+  /* ---------- draft: keep the traveler details for this browser tab ---------- */
+  var DRAFT_KEY = 'teyventure-booking-draft', T_FIELDS = ['given', 'sur', 'dob', 'nat', 'pass', 'exp'], draftTimer = null;
+  function draftStore() { try { return window.sessionStorage; } catch (e) { return null; } }
+  function slotFilled(t) { return T_FIELDS.some(function (k) { return t[k] !== ''; }); }
+  function saveDraft() {
+    clearTimeout(draftTimer); draftTimer = null;
+    var ss = draftStore(); if (!CFG.draft || !ss || !state) return;
+    try {
+      var tr = state.tr.map(function (t) {
+        var o = {};
+        T_FIELDS.forEach(function (k) { o[k] = (!CFG.draftPassport && (k === 'pass' || k === 'exp')) ? '' : String(t[k] || ''); });
+        return o;
+      });
+      if (!tr.some(slotFilled)) { ss.removeItem(DRAFT_KEY); return; }
+      ss.setItem(DRAFT_KEY, JSON.stringify({ v: 1, pkg: state.pkg.id, count: state.count, saved: Date.now(), tr: tr }));
+    } catch (e) { /* storage full or blocked: skip */ }
+  }
+  function saveDraftSoon() { if (!CFG.draft || !state) return; clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 300); }
+  function clearDraft() {
+    clearTimeout(draftTimer); draftTimer = null;
+    var ss = draftStore(); try { if (ss) ss.removeItem(DRAFT_KEY); } catch (e) { /* ignore */ }
+  }
+  function loadDraft() {
+    var ss = draftStore(); if (!CFG.draft || !ss) return;
+    try {
+      var d = JSON.parse(ss.getItem(DRAFT_KEY) || 'null');
+      if (!d || d.v !== 1 || !Array.isArray(d.tr)) return;
+      if (CFG.draftMaxAgeHours && Date.now() - d.saved > CFG.draftMaxAgeHours * 36e5) { ss.removeItem(DRAFT_KEY); return; }
+      var any = false, isDate = /^\d{4}-\d{2}-\d{2}$/;
+      d.tr.slice(0, state.tr.length).forEach(function (s, i) {
+        if (!s || typeof s !== 'object') return;
+        var t = state.tr[i];                                   // storage can be edited by anyone: check every value
+        t.given = String(s.given || '').slice(0, 80);
+        t.sur = String(s.sur || '').slice(0, 80);
+        t.dob = isDate.test(s.dob) ? s.dob : '';
+        t.nat = NATS.indexOf(s.nat) > -1 ? s.nat : '';
+        if (CFG.draftPassport) { t.pass = String(s.pass || '').slice(0, 30); t.exp = isDate.test(s.exp) ? s.exp : ''; }
+        if (slotFilled(t)) any = true;
+      });
+      if (!any) return;
+      state.restored = true;
+      var n = parseInt(d.count, 10);
+      if (n) state.count = Math.max(state.pkg.min, Math.min(state.pkg.max, n));
+    } catch (e) { /* ignore a damaged draft */ }
+  }
 
   /* ---------- read the package from its card ---------- */
   function readPackage(btn) {
@@ -79,6 +130,7 @@
   function open(pkg, trigger) {
     if (overlay) return;
     state = newState(pkg); lastFocus = trigger || document.activeElement;
+    loadDraft();
     overlay = document.createElement('div');
     overlay.className = 'tv-overlay';
     overlay.innerHTML = '<div class="tv-dialog" role="dialog" aria-modal="true" aria-labelledby="tv-title">' + heroHTML() +
@@ -88,6 +140,8 @@
     overlay.addEventListener('click', onClick);
     overlay.addEventListener('input', onInput);
     overlay.addEventListener('change', onChange);
+    overlay.addEventListener('input', saveDraftSoon);       // runs after onInput has updated the state
+    overlay.addEventListener('change', saveDraftSoon);
     overlay.addEventListener('focusin', onFocus);
     overlay.addEventListener('focusout', onFocus);
     document.addEventListener('keydown', onKey);
@@ -99,6 +153,7 @@
   function close() {
     if (!overlay) return;
     document.removeEventListener('keydown', onKey);
+    if (state && state.step !== 'done') saveDraft();
     overlay.remove(); overlay = null; state = null;
     document.documentElement.classList.remove('tv-lock');
     if (lastFocus && lastFocus.focus) lastFocus.focus();
@@ -145,6 +200,8 @@
     var p = state.pkg, ranged = p.max > p.min, h = '<h3 class="tv-h">Your Travel Party</h3>' +
       '<p class="tv-sub">Enter each traveler\u2019s details exactly as they appear on their passport.</p>';
     if (state.banner) h += '<div class="tv-banner" role="alert">' + esc(state.banner) + '</div>';
+    if (state.restored) h += '<div class="tv-draft" role="status"><span>We restored the traveler details you entered earlier. They are kept in this browser tab only.</span>' +
+      '<button type="button" class="tv-draft-x" data-act="cleardraft">Clear saved details</button></div>';
     h += '<div class="tv-slotbar"><span>' + state.count + (state.count === 1 ? ' traveler slot' : ' traveler slots') + ' \u00B7 ' +
       (ranged ? 'this package fits ' + p.min + ' to ' + p.max : 'fixed for this package') + '</span>';
     if (ranged) h += '<div class="tv-count"><button type="button" class="tv-circ" data-act="dec" aria-label="Remove a traveler"' + (state.count <= p.min ? ' disabled' : '') + '>\u2212</button><b aria-live="polite">' + state.count +
@@ -379,8 +436,13 @@
       case 'print': window.print(); break;
       case 'closereceipt': close(); break;
       case 'save': var on = el.getAttribute('aria-pressed') !== 'true'; el.setAttribute('aria-pressed', on); el.classList.toggle('is-on', on); break;
-      case 'inc': state.count = Math.min(state.pkg.max, state.count + 1); render(true); break;
-      case 'dec': state.count = Math.max(state.pkg.min, state.count - 1); render(true); break;
+      case 'cleardraft':
+        clearDraft(); state.restored = false; state.errors = {}; state.banner = '';
+        state.tr = newState(state.pkg).tr; render(true);
+        var f0 = $('#tv-body input'); if (f0) f0.focus({ preventScroll: true });
+        break;
+      case 'inc': state.count = Math.min(state.pkg.max, state.count + 1); saveDraftSoon(); render(true); break;
+      case 'dec': state.count = Math.max(state.pkg.min, state.count - 1); saveDraftSoon(); render(true); break;
       case 'prev': state.mi = Math.max(0, state.mi - 1); render(true); break;
       case 'next':
         if (el.disabled) break;
@@ -396,7 +458,7 @@
       case 'pay':
         state.errors = validateBilling();
         if (Object.keys(state.errors).length) { state.banner = 'Please fix the highlighted fields.'; render(false); focusFirstError(); return; }
-        state.banner = ''; var booking = buildBooking(); state.step = 'done'; render(false); CFG.onSubmit(booking); showReceipt(); break;
+        state.banner = ''; var booking = buildBooking(); clearDraft(); state.step = 'done'; render(false); CFG.onSubmit(booking); showReceipt(); break;
     }
   }
   function clearErr(el) {

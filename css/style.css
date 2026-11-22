@@ -87,9 +87,10 @@ body {
     left: 50%;
     top: 100%;
     width: 100%;
-    min-width: 80px;
-    height: 12px;
-    background: url('../images/ornament.png') center / contain no-repeat;
+    height: 2px;
+    margin-top: 4px;
+    background: #C9A85C;
+    border-radius: 2px;
     opacity: 0;
     transform: translateX(-50%);
     transition: opacity 0.3s;
@@ -200,16 +201,6 @@ body {
 .search-btn:focus-visible {
     outline: 2px solid #F9F8F3;
     outline-offset: 3px;
-}
-
-.search-btn::after {
-    content: "\2192";
-    display: inline-block;
-    transition: transform 0.25s ease;
-}
-
-.search-btn:hover::after {
-    transform: translateX(4px);
 }
 
 .authbtn {
