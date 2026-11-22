@@ -78,30 +78,25 @@
                     <ul class="ct-list">
                         <li>
                             <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-                            <span><span class="ct-k">Email</span><span class="ct-v">[EMAIL ADDRESS]</span></span>
+                            <span><span class="ct-k">Email</span><span class="ct-v">teyventure.travel@gmail.com</span></span>
                         </li>
                         <li>
                             <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-                            <span><span class="ct-k">Phone / WhatsApp</span><span class="ct-v">[PHONE NUMBER]</span></span>
+                            <span><span class="ct-k">Phone / WhatsApp</span><span class="ct-v">+63 917 482 6391</span></span>
                         </li>
                         <li>
                             <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-                            <span><span class="ct-k">Office</span><span class="ct-v">[OFFICE ADDRESS]</span></span>
+                            <span><span class="ct-k">Office</span><span class="ct-v">TeyVenture Main Office, Teyvat</span></span>
                         </li>
                         <li>
                             <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-                            <span><span class="ct-k">Office hours</span><span class="ct-v">[OFFICE HOURS]</span></span>
+                            <span><span class="ct-k">Office hours</span><span class="ct-v">Monday – Friday, 9:00 AM – 5:00 PM</span></span>
                         </li>
                     </ul>
                     <!-- Optional map: paste a Google Maps embed here once the office address is final.
                          <iframe class="ct-map" title="TeyVenture office map" src="..." loading="lazy"></iframe> -->
 
-                    <div class="ct-socials" aria-label="Social media">
-                        <a href="#" aria-label="Facebook"><img src="images/facebook.png" alt=""></a>
-                        <a href="#" aria-label="Email us"><img src="images/Email.png" alt=""></a>
-                        <a href="#" aria-label="Instagram"><img src="images/instagram.png" alt=""></a>
-                        <a href="#" aria-label="WhatsApp"><img src="images/whatsapp.png" alt=""></a>
-                    </div>
+                    
 
                     <div class="ct-next">
                         <h4>What happens next</h4>
@@ -110,7 +105,27 @@
                             <li>We reply to the email you gave us. Typical reply time: [REPLY TIME].</li>
                             <li>We answer your questions or, for a custom trip, draft an itinerary and refine it with you.</li>
                         </ol>
-                    </div>
+                            <p class="ct-social-label">Contact us across different platforms:</p>
+
+                            <div class="ct-socials" aria-label="Social media">
+                                <a href="#" aria-label="Facebook">
+                                    <img src="images/facebook.png" alt="Facebook">
+                                </a>
+
+                                <a href="#" aria-label="Email">
+                                    <img src="images/email.png" alt="Email">
+                                </a>
+
+                                <a href="#" aria-label="Instagram">
+                                    <img src="images/instagram.png" alt="Instagram">
+                                </a>
+
+                                <a href="#" aria-label="WhatsApp">
+                                    <img src="images/whatsapp.png" alt="WhatsApp">
+                                </a>
+                            </div>
+                        </div>  
+                    
 
                     <p class="ct-note">Already know the package you want? Browse the destinations and book online.
                         <a href="home.html#destinations">Browse destinations</a></p>
@@ -341,16 +356,35 @@
                         <button type="submit" class="inquirebtn ct-submit" id="ct-submit">Send inquiry</button>
                     </form>
 
-                    <div class="ct-success" id="ct-success" role="status" tabindex="-1" hidden>
-                        <span class="ct-tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-                        <h3 id="ct-s-title">Inquiry sent</h3>
-                        <p id="ct-s-text"></p>
-                        <p class="ct-pill">Reference <b id="ct-s-ref"></b></p>
-                        <div class="ct-s-actions">
-                            <button type="button" class="ct-again" id="ct-again">Send another inquiry</button>
-                            <a href="home.html" class="ct-home">Back to home</a>
-                        </div>
-                    </div>
+                    <div class="ct-success-overlay" id="ct-success-overlay" hidden>
+    <div class="ct-success-modal">
+        <button type="button" class="ct-modal-close" id="ct-modal-close"
+                aria-label="Close confirmation">
+            &times;
+        </button>
+
+        <div class="ct-success" id="ct-success" role="status" tabindex="-1" hidden>
+            <span class="ct-tick">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.4" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12.5l4.5 4.5L19 7.5"/>
+                </svg>
+            </span>
+
+            <h3 id="ct-s-title">Inquiry sent</h3>
+            <p id="ct-s-text"></p>
+            <p class="ct-pill">Reference <b id="ct-s-ref"></b></p>
+
+            <div class="ct-s-actions">
+                <button type="button" class="ct-again" id="ct-again">
+                    Send another inquiry
+                </button>
+                <a href="home.html" class="ct-home">Back to home</a>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
 
             </div>
