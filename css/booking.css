@@ -1,8 +1,3 @@
-/* ==========================================================
-   TeyVenture booking pop-up  (opens from the package cards)
-   Steps: Travelers -> Departure -> Billing and Payments
-   ========================================================== */
-
 .tv-overlay {
   position: fixed;
   inset: 0;
@@ -69,7 +64,7 @@
   font-family: 'Poppins',sans-serif;
 }
 
-/* ---------- hero ---------- */
+/* hero */
 .tv-hero {
   position: relative;
   flex: none;
@@ -191,7 +186,7 @@
   font-weight: 600;
 }
 
-/* ---------- step tracker ---------- */
+/* step tracker */
 .tv-steps {
   flex: none;
   display: flex;
@@ -270,7 +265,7 @@
   opacity: 1;
 }
 
-/* ---------- scrolling body ---------- */
+/* scrolling body */
 .tv-body {
   flex: 1 1 auto;
   min-height: 0;
@@ -320,7 +315,7 @@
   font-size: 13px;
 }
 
-/* ---------- step 1: travelers ---------- */
+/* travelers */
 .tv-slotbar {
   display: flex;
   align-items: center;
@@ -448,7 +443,7 @@
   color: #B3261E;
 }
 
-/* ---------- step 2: calendar ---------- */
+/* calendar */
 .tv-titlerow {
   display: flex;
   align-items: center;
@@ -654,7 +649,7 @@
   stroke-linejoin: round;
 }
 
-/* "Guaranteed departure · 2 travelers" */
+/* "Guaranteed departures*/
 .tv-note {
   flex: 0 1 150px;
   font-size: 13px;
@@ -666,7 +661,7 @@
   color: #D4E1EE;
 }
 
-/* "8 places available" */
+/* available slots */
 .tv-stat {
   flex: 1 1 180px;
 }
@@ -710,7 +705,7 @@
   cursor: pointer;
 }
 
-/* ---------- step 3: billing ---------- */
+/* billing */
 .tv-pay {
   display: grid;
   grid-template-columns: 270px minmax(0,1fr);
@@ -1568,4 +1563,40 @@ html.tv-lock {
   .tv-rcard .tv-vbtns {
     display: none !important;
   }
+}
+
+/* Saved-draft notice (step 1) */
+.tv-draft {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0 0 14px;
+  padding: 10px 16px;
+  border: 1.5px solid #C9A85C;
+  border-radius: 14px;
+  background: #FDFAF2;
+  color: #3B5D7E;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.tv-draft-x {
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: #8F6A1C;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.tv-draft-x:hover {
+  color: #24476B;
+}
+.tv-draft-x:focus-visible {
+  outline: 2px solid #24476B;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
