@@ -315,6 +315,14 @@
     ]
   };
 
+  /* Line icons for the day summary (24x24, stroke uses currentColor) */
+  var SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">';
+  var ICON = {
+    meals: SVG + '<path d="M3.5 12.5h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 20.5h6"/><path d="M12 8.5c-1-1.2 1-2.2 0-3.5"/></svg>',
+    stay: SVG + '<circle cx="7.5" cy="16.5" r="3.5"/><path d="M10 14 19.5 4.5"/><path d="m16 8 2.5 2.5"/><path d="m18.5 5.5 2 2"/></svg>',
+    transport: SVG + '<path d="M12 2.5c.8 0 1.4 1 1.4 2.4V9l7.6 4.3v2L13.400 13v4.200l2 1.500v1.800L12 19.500l-3.400.9v-1.800l2-1.500V13L3 15.300v-2L10.600 9V4.900c0-1.400.6-2.400 1.400-2.400z"/></svg>'
+  };
+
   function make(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -328,21 +336,25 @@
     body.textContent = "";
 
     var sum = make("div", "itin-sum");
-    sum.appendChild(make("p", "itin-dayno", "DAY " + (index + 1)));
-    sum.appendChild(make("h4", "", d.t));
+    var head = make("div", "itin-sum-head");
+    head.appendChild(make("p", "itin-dayno", "DAY " + (index + 1)));
+    head.appendChild(make("h4", "", d.t));
+    sum.appendChild(head);
     var grid = make("div", "itin-sum-grid");
     [
-      ["accommodation.png", "Stay", d.stay],
-      ["transportation.png", "Transport", d.tr],
-      ["meals.png", "Meals", d.ml]
+      ["meals", "Meals", d.ml],
+      ["stay", "Stay", d.stay],
+      ["transport", "Transport", d.tr]
     ].forEach(function (c) {
       var cell = make("div", "itin-sum-cell");
-      var img = make("img");
-      img.src = "images/" + c[0];
-      img.alt = "";
-      cell.appendChild(img);
-      cell.appendChild(make("b", "", c[1]));
-      cell.appendChild(make("span", "", c[2]));
+      var ico = make("span", "itin-ico");
+      ico.setAttribute("aria-hidden", "true");
+      ico.innerHTML = ICON[c[0]]; /* static markup defined above, no user data */
+      cell.appendChild(ico);
+      var txt = make("div", "itin-sum-txt");
+      txt.appendChild(make("b", "", c[1]));
+      txt.appendChild(make("span", "", c[2]));
+      cell.appendChild(txt);
       grid.appendChild(cell);
     });
     sum.appendChild(grid);
