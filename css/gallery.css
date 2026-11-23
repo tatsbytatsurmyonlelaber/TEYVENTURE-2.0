@@ -1,0 +1,155 @@
+/* Location gallery popup (opens when a featured stop picture is clicked) */
+
+.stop-gallery {
+    cursor: pointer;
+}
+
+.gallery-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.92);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-modal.open {
+    display: flex;
+}
+
+.gallery-title {
+    margin-bottom: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #C9A85C;
+}
+
+.gallery-stage {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.gallery-main {
+    display: block;
+    max-width: 70vw;
+    max-height: 62vh;
+    box-sizing: border-box;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #C9A85C;
+    border-radius: 24px;
+    animation: galleryFade 0.35s ease;
+}
+
+@keyframes galleryFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.gallery-arrow,
+.gallery-close {
+    background: transparent;
+    border: 2px solid #C9A85C;
+    border-radius: 50%;
+    color: #C9A85C;
+    font-size: 26px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.gallery-arrow {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+}
+
+.gallery-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+}
+
+.gallery-arrow:hover,
+.gallery-close:hover {
+    background: #C9A85C;
+    color: #1B2B44;
+}
+
+.gallery-count {
+    margin-top: 14px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.gallery-thumbs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.gallery-thumb {
+    width: 56px;
+    height: 74px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.gallery-thumb:hover {
+    opacity: 1;
+}
+
+.gallery-thumb.active {
+    border-color: #C9A85C;
+    opacity: 1;
+}
+
+/* If a stop has only one picture, hide the arrows and thumbnails */
+.gallery-modal.single .gallery-arrow,
+.gallery-modal.single .gallery-thumbs {
+    visibility: hidden;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .gallery-title {
+        font-size: 18px;
+    }
+
+    .gallery-stage {
+        gap: 8px;
+    }
+
+    .gallery-main {
+        max-width: 66vw;
+        max-height: 55vh;
+    }
+
+    .gallery-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+
+    .gallery-thumb {
+        width: 44px;
+        height: 58px;
+    }
+}

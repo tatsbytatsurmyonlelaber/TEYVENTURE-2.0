@@ -1,0 +1,195 @@
+/* Sticky navbar, back-to-top button, scroll reveal.
+   Load this right after style.css. */
+
+/* ---------- sticky navbar ---------- */
+
+/* only when nav.js is running, so the page still works without it */
+html.nav-js .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease,
+                transform 0.35s ease, border-color 0.35s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.nav-spacer {
+    flex: none;
+}
+
+html.nav-js .navbar .logo img {
+    transition: width 0.35s ease;
+}
+
+html.nav-js .navbar.is-scrolled {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background: rgba(27, 43, 68, 0.94);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
+    border-bottom-color: rgba(201, 168, 92, 0.4);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+html.nav-js .navbar.is-scrolled .logo img {
+    width: 150px;
+}
+
+html.nav-js .navbar.is-hidden {
+    transform: translateY(-100%);
+}
+
+/* measuring the normal height: no animation, please */
+html.nav-js .navbar.is-measuring,
+html.nav-js .navbar.is-measuring .logo img {
+    transition: none;
+}
+
+/* anchor links should not land under the fixed bar */
+html {
+    scroll-padding-top: 90px;
+}
+
+/* ---------- back to top ---------- */
+
+.to-top {
+    position: fixed;
+    right: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    z-index: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1.5px solid #C9A85C;
+    border-radius: 50%;
+    background: #8F6A1C;
+    color: #F9F8F3;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.to-top svg {
+    width: 22px;
+    height: 22px;
+}
+
+.to-top.is-shown {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.to-top:hover,
+.to-top:focus-visible {
+    background: #C9A85C;
+    color: #1B2B44;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+.to-top:focus-visible {
+    outline: 2px solid #F9F8F3;
+    outline-offset: 3px;
+}
+
+/* ---------- scroll reveal ---------- */
+/* nav.js adds .reveal only to things below the fold, then removes it again
+   once the fade is done, so normal hover effects keep working. */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+    transition-delay: var(--rv-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.reveal.reveal-left {
+    transform: translateX(-48px);
+}
+
+.reveal.reveal-right {
+    transform: translateX(48px);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* itinerary: stops fade in when a day tab is opened */
+@keyframes rvItem {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+
+.rv-item {
+    animation: rvItem 0.45s ease backwards;
+    animation-delay: var(--rv-delay, 0ms);
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 1000px) {
+    html.nav-js .navbar.is-scrolled .logo img {
+        width: 130px;
+    }
+}
+
+@media (max-width: 700px) {
+    html {
+        scroll-padding-top: 20px;   /* the bar slides away while scrolling down */
+    }
+
+    html.nav-js .navbar.is-scrolled {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        gap: 8px;
+    }
+
+    html.nav-js .navbar.is-scrolled .logo img {
+        width: 110px;
+    }
+
+    .to-top {
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    html.nav-js .navbar,
+    html.nav-js .navbar .logo img,
+    .to-top {
+        transition: none;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .rv-item {
+        animation: none;
+    }
+}
