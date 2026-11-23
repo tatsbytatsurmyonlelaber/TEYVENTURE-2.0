@@ -31,7 +31,7 @@
     --tv-off-bg-dark: #24364F;      /* disabled on navy */
     --tv-off-text-dark: #7F8DA3;
 
-    --btn-radius: 12px;
+    --btn-radius: 30px;
     --btn-ring: var(--tv-navy);     /* focus ring: navy on light backgrounds */
 }
 

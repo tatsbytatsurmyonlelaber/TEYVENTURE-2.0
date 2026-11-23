@@ -50,9 +50,8 @@
 
             <div class="hero container">
                 <div class="dest-text">
-                    <p class="dest-tagline">We&rsquo;d love to hear from you</p>
                     <h1 class="contact-hero-title">CONTACT US</h1>
-                    <p class="dest-desc">Ask us anything, or tell us about the trip you have in mind and we&rsquo;ll build it around you.</p>
+                    <p class="dest-tagline">We&rsquo;d love to hear from you</p>
                 </div>
             </div>
 
@@ -72,6 +71,7 @@
 
                 <!-- left: how to reach us -->
                 <aside class="ct-info" aria-label="Contact details">
+                  <div class="ct-info-in">
                     <h3>Talk to the team</h3>
                     <p>Prefer to reach us directly? Use any of these.</p>
 
@@ -102,33 +102,24 @@
                         <h4>What happens next</h4>
                         <ol class="ct-steps">
                             <li>You send us your inquiry.</li>
-                            <li>We reply to the email you gave us. Typical reply time: [REPLY TIME].</li>
+                            <li>We reply to the email you gave us. Typical reply time: within 24–48 hours (business days).</li>
                             <li>We answer your questions or, for a custom trip, draft an itinerary and refine it with you.</li>
                         </ol>
-                            <p class="ct-social-label">Contact us across different platforms:</p>
+                    </div>
 
-                            <div class="ct-socials" aria-label="Social media">
-                                <a href="#" aria-label="Facebook">
-                                    <img src="images/facebook.png" alt="Facebook">
-                                </a>
-
-                                <a href="#" aria-label="Email">
-                                    <img src="images/email.png" alt="Email">
-                                </a>
-
-                                <a href="#" aria-label="Instagram">
-                                    <img src="images/instagram.png" alt="Instagram">
-                                </a>
-
-                                <a href="#" aria-label="WhatsApp">
-                                    <img src="images/whatsapp.png" alt="WhatsApp">
-                                </a>
-                            </div>
-                        </div>  
-                    
+                    <div class="ct-connect">
+                        <p class="ct-social-label">Contact us across different platforms:</p>
+                        <div class="ct-socials" aria-label="Social media">
+                            <a href="#" aria-label="Facebook"><img src="images/Facebook logo.svg" alt="Facebook"></a>
+                            <a href="#" aria-label="Email"><img src="images/email.svg" alt="Email"></a>
+                            <a href="#" aria-label="Instagram"><img src="images/instagram.svg" alt="Instagram"></a>
+                            <a href="#" aria-label="WhatsApp"><img src="images/whatsapp.svg" alt="WhatsApp"></a>
+                        </div>
+                    </div>
 
                     <p class="ct-note">Already know the package you want? Browse the destinations and book online.
                         <a href="home.html#destinations">Browse destinations</a></p>
+                  </div>
                 </aside>
 
                 <!-- right: the form -->
@@ -341,6 +332,7 @@
                         </div>
 
                         <!-- ===== consent + send ===== -->
+                        <div class="ct-foot">
                         <div class="ct-f ct-consent">
                             <label class="ct-chk" for="ct-consent">
                                 <input type="checkbox" id="ct-consent" name="consent" required aria-describedby="ct-consent-err">
@@ -354,6 +346,7 @@
                         </div>
 
                         <button type="submit" class="inquirebtn ct-submit" id="ct-submit">Send inquiry</button>
+                        </div>
                     </form>
 
                     <div class="ct-success-overlay" id="ct-success-overlay" hidden>
