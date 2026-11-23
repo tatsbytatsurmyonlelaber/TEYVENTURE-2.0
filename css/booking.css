@@ -138,6 +138,62 @@
   stroke: #24476B;
 }
 
+/* hero buttons (save + close): hover, press and keyboard focus */
+.tv-ib {
+  transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.tv-ib svg {
+  transition: stroke .18s ease, transform .25s ease;
+}
+
+.tv-ib:focus-visible {
+  outline: 3px solid #C9A85C;
+  outline-offset: 2px;
+}
+
+.tv-ib:active {
+  transform: scale(.92);
+  box-shadow: 0 1px 4px rgba(20,38,59,.3);
+}
+
+.tv-ib[data-act="close"]:active {
+  background: #FBE3E1;
+}
+
+@media (hover: hover) {
+  .tv-ib:hover {
+    background: #F4EEDD;
+    box-shadow: 0 4px 14px rgba(20,38,59,.35);
+    transform: translateY(-1px);
+  }
+
+  .tv-ib[data-act="close"]:hover {
+    background: #B3261E;
+    box-shadow: 0 4px 14px rgba(179,38,30,.45);
+  }
+
+  .tv-ib[data-act="close"]:hover svg {
+    stroke: #fff;
+    transform: rotate(90deg);
+  }
+
+  .tv-ib[data-act="save"]:hover svg {
+    fill: rgba(201,168,92,.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-ib,
+  .tv-ib svg {
+    transition: none;
+  }
+
+  .tv-ib[data-act="close"]:hover svg {
+    transform: none;
+  }
+}
+
 .tv-htitle {
   position: absolute;
   left: 28px;
@@ -570,6 +626,29 @@
   background: #24476B;
   border: 1.5px solid #24476B;
   color: #fff;
+}
+
+/* return date and the days between departure and return */
+.tv-trip {
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1F3A5A;
+  background: #E3EBF4;
+  border: 1.5px solid #9DB4CC;
+}
+
+.tv-trip.is-end {
+  background: #fff;
+  border: 2px solid #24476B;
+}
+
+.tv-sw--trip {
+  background: #E3EBF4;
+  border-color: #9DB4CC;
 }
 
 .tv-day.is-focus {

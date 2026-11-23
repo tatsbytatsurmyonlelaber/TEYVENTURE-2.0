@@ -50,6 +50,28 @@
   function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973; return h; }
   function total() { return state.pkg.perPax ? state.pkg.price * state.count : state.pkg.price; }
 
+  /* ---------- validation rules ---------- */
+  // Names: letters (any language), spaces, hyphens, apostrophes and full stops only. No digits or symbols.
+  var NAME_BAD, NAME_OK;
+  try {
+    NAME_BAD = new RegExp("[^\\p{L}\\p{M}\\s'\u2019.\\-]", 'gu');
+    NAME_OK = new RegExp("^[\\p{L}\\p{M}][\\p{L}\\p{M}\\s'\u2019.\\-]*$", 'u');
+  } catch (err) {                                           // very old browsers without unicode property escapes
+    NAME_BAD = /[^A-Za-z\u00C0-\u024F\s'\u2019.\-]/g;
+    NAME_OK = /^[A-Za-z\u00C0-\u024F][A-Za-z\u00C0-\u024F\s'\u2019.\-]*$/;
+  }
+  var NAME_HINT = 'Letters only: numbers and symbols are not allowed';
+  var MAX_FILE_MB = 5, PROOF_EXT = /\.(jpe?g|png|webp|gif|heic|pdf)$/i;
+  function cleanName(v) { return String(v).replace(/\s+/g, ' ').replace(/^\s+/, ''); }
+  function letterCount(s) { return s.replace(/[\s'\u2019.\-]/g, '').length; }
+  function validISO(s) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+    var a = s.split('-').map(Number), d = new Date(Date.UTC(a[0], a[1] - 1, a[2]));
+    return d.getUTCFullYear() === a[0] && d.getUTCMonth() === a[1] - 1 && d.getUTCDate() === a[2];
+  }
+  function shiftYears(n) { var d = new Date(); d.setFullYear(d.getFullYear() + n); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
+  function tomorrowISO() { var d = new Date(); d.setDate(d.getDate() + 1); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
+
   /* ---------- draft: keep the traveler details for this browser tab ---------- */
   var DRAFT_KEY = 'teyventure-booking-draft', T_FIELDS = ['given', 'sur', 'dob', 'nat', 'pass', 'exp'], draftTimer = null;
   function draftStore() { try { return window.sessionStorage; } catch (e) { return null; } }
@@ -123,7 +145,7 @@
   function newState(pkg) {
     var tr = []; for (var i = 0; i < 10; i++) tr.push({ given: '', sur: '', dob: '', nat: '', pass: '', exp: '' });
     return { pkg: pkg, step: 1, count: pkg.min, tr: tr, mi: 0, sel: null, focus: null, wl: {}, method: 'card', wallet: 'apple',
-      card: { name: '', number: '', exp: '', cvc: '' }, sameAddr: true, terms: false, proof: '', errors: {}, banner: '', ref: '' };
+      card: { name: '', number: '', exp: '', cvc: '' }, terms: false, proof: '', proofErr: '', errors: {}, banner: '', ref: '' };
   }
 
   /* ---------- open / close ---------- */
@@ -144,6 +166,7 @@
     overlay.addEventListener('change', saveDraftSoon);
     overlay.addEventListener('focusin', onFocus);
     overlay.addEventListener('focusout', onFocus);
+    overlay.addEventListener('focusout', onBlur);
     document.addEventListener('keydown', onKey);
     var hi = overlay.querySelector('.tv-hero > img'); if (hi) hi.addEventListener('error', function () { hi.remove(); });
     render(false);
@@ -219,24 +242,57 @@
       if (f[2] === 'select') {
         c = '<select' + a + '><option value="">Select country</option>' + NATS.map(function (n) { return '<option' + (t.nat === n ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select>';
       } else {
-        var lim = k === 'dob' ? ' max="' + todayISO() + '"' : (k === 'exp' ? ' min="' + todayISO() + '"' : '');
-        c = '<input' + a + ' type="' + f[2] + '" value="' + esc(t[k]) + '"' + lim + (f[2] === 'text' ? ' autocomplete="off"' : '') + '>';
+        var lim = k === 'dob' ? ' min="' + shiftYears(-120) + '" max="' + todayISO() + '"' : (k === 'exp' ? ' min="' + tomorrowISO() + '" max="' + shiftYears(15) + '"' : '');
+        var tx = k === 'pass' ? ' maxlength="9" autocapitalize="characters" spellcheck="false" placeholder="e.g. P1234567A"' : (k === 'given' || k === 'sur') ? ' maxlength="50" autocapitalize="words"' : '';
+        c = '<input' + a + ' type="' + f[2] + '" value="' + esc(t[k]) + '"' + lim + tx + (f[2] === 'text' ? ' autocomplete="off"' : '') + '>';
       }
       h += '<div class="tv-f"><label for="' + id + '">' + f[1] + ' <span class="tv-req" aria-hidden="true">*</span></label>' + c + (err ? '<span class="tv-err" id="' + id + '-e">' + esc(err) + '</span>' : '') + '</div>';
     });
     return h + '</div></div>';
   }
-  function validateTravelers() {
-    var e = {}, today = todayISO();
-    for (var i = 0; i < state.count; i++) {
-      var t = state.tr[i];
-      if (!t.given.trim()) e[i + '-given'] = 'Required';
-      if (!t.sur.trim()) e[i + '-sur'] = 'Required';
-      if (!t.dob) e[i + '-dob'] = 'Required'; else if (t.dob > today) e[i + '-dob'] = 'Enter a valid date';
-      if (!t.nat) e[i + '-nat'] = 'Required';
-      if (!t.pass.trim()) e[i + '-pass'] = 'Required'; else if (t.pass.trim().length < 6) e[i + '-pass'] = 'Passport number looks too short';
-      if (!t.exp) e[i + '-exp'] = 'Required'; else if (t.exp <= today) e[i + '-exp'] = 'This passport has expired';
+  function nameError(v, what) {
+    v = v.trim();
+    if (!v) return 'Required';
+    if (!NAME_OK.test(v)) return /^[\s'\u2019.\-]/.test(v) ? 'Must start with a letter' : NAME_HINT;
+    if (letterCount(v) < 2) return 'Enter at least 2 letters';
+    if (v.length > 50) return what + ' is too long (50 characters max)';
+    if (/(['\u2019.\-])\1/.test(v) || /['\u2019.\-]\s*['\u2019.\-]/.test(v)) return 'Check for repeated punctuation';
+    return '';
+  }
+  // One rule per field, used when typing, leaving a field, and pressing Continue.
+  function travelerError(i, k) {
+    var t = state.tr[i], today = todayISO(), v = String(t[k] || '').trim();
+    switch (k) {
+      case 'given': return nameError(t.given, 'Given name');
+      case 'sur': return nameError(t.sur, 'Surname');
+      case 'dob':
+        if (!t.dob) return 'Required';
+        if (!validISO(t.dob)) return 'Enter a valid date';
+        if (t.dob > today) return 'Date of birth cannot be in the future';
+        if (t.dob < shiftYears(-120)) return 'Enter a valid date of birth';
+        if (i === 0 && t.dob > shiftYears(-18)) return 'The lead traveler must be 18 or older';
+        return '';
+      case 'nat': return !t.nat ? 'Required' : NATS.indexOf(t.nat) < 0 ? 'Choose a country from the list' : '';
+      case 'pass':
+        if (!v) return 'Required';
+        if (!/^[A-Za-z0-9]+$/.test(v)) return 'Letters and numbers only, no spaces or symbols';
+        if (v.length < 6 || v.length > 9) return 'Passport number must be 6 to 9 characters';
+        if (!/\d/.test(v)) return 'Passport number must include at least one digit';
+        for (var j = 0; j < i; j++) if (String(state.tr[j].pass).trim().toUpperCase() === v.toUpperCase()) return 'Same passport number as ' + (j === 0 ? 'the lead traveler' : 'traveler ' + (j + 1));
+        return '';
+      case 'exp':
+        if (!t.exp) return 'Required';
+        if (!validISO(t.exp)) return 'Enter a valid date';
+        if (t.exp <= today) return 'This passport has expired';
+        if (t.exp > shiftYears(15)) return 'Check the expiry date';
+        if (t.dob && validISO(t.dob) && t.exp <= t.dob) return 'Expiry must be after the date of birth';
+        return '';
     }
+    return '';
+  }
+  function validateTravelers() {
+    var e = {}, keys = ['given', 'sur', 'dob', 'nat', 'pass', 'exp'];
+    for (var i = 0; i < state.count; i++) keys.forEach(function (k) { var m = travelerError(i, k); if (m) e[i + '-' + k] = m; });
     return e;
   }
 
@@ -273,8 +329,14 @@
       '<strong aria-live="polite">' + MONTHS[cur.m] + ' ' + cur.y + '</strong><button type="button" class="tv-nav" data-act="next" aria-label="Next month"' + (state.mi === ms.length - 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="tv-grid">';
     DAYS.forEach(function (d) { h += '<span class="tv-wd">' + d.toUpperCase() + '</span>'; });
     for (var i = 0; i < first; i++) h += '<span class="tv-plain"></span>';
+    var sc = chosen(), trip = sc && sc.st === 'ok';
     for (var d = 1; d <= dim; d++) {
-      var pl = placesFor(cur.y, cur.m, d);
+      var pl = placesFor(cur.y, cur.m, d), dt0 = Date.UTC(cur.y, cur.m, d);
+      if (trip && dt0 > sc.t && dt0 <= sc.r) {            // return date and the days in between
+        var isEnd = dt0 === sc.r;
+        h += '<span class="tv-trip' + (isEnd ? ' is-end' : '') + '" aria-label="' + esc(fmt(dt0) + (isEnd ? ', return date' : ', during your trip')) + '">' + d + '</span>';
+        continue;
+      }
       if (pl === undefined || Date.UTC(cur.y, cur.m, d) < Date.now() + CFG.minLeadDays * 864e5) { h += '<span class="tv-plain">' + d + '</span>'; continue; }
       var key = cur.y + '-' + p2(cur.m + 1) + '-' + p2(d), st = statusOf(pl), on = state.sel === key;
       var label = fmt(Date.UTC(cur.y, cur.m, d)) + ', ' + (st === 'sold' ? 'sold out' : st === 'short' ? 'not enough places for your group' : pl + ' places available');
@@ -282,7 +344,8 @@
         '" data-act="pick" data-key="' + key + '" aria-pressed="' + on + '" aria-label="' + esc(label) + '">' + d + '</button>';
     }
     h += '</div><div class="tv-legend"><span><i class="tv-sw tv-sw--ok"></i>Available</span><span><i class="tv-sw tv-sw--short"></i>Not enough places for your group</span>' +
-      '<span><i class="tv-sw tv-sw--sold"></i>Sold out</span><span><i class="tv-sw tv-sw--sel"></i>Selected</span></div></div>';
+      '<span><i class="tv-sw tv-sw--sold"></i>Sold out</span><span><i class="tv-sw tv-sw--sel"></i>Selected</span>' +
+      '<span><i class="tv-sw tv-sw--trip"></i>Your trip</span></div></div>';
     var c = chosen();
     if (!c) return h + '<div class="tv-detail" aria-live="polite"><span class="tv-hint">Select a date on the calendar to choose your departure.</span></div>';
     var head = c.st === 'sold' ? 'Sold out' : c.st === 'short' ? (c.places === 1 ? '1 place left' : c.places + ' places left') : c.places + ' places available';
@@ -334,8 +397,7 @@
         fld('tv-cname', 'Name on card', 'type="text" data-c="name" autocomplete="cc-name" placeholder="As shown on your card" value="' + esc(c.name) + '"', 'c-name') +
         fld('tv-cnum', 'Card number', 'type="text" data-c="number" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" value="' + esc(c.number) + '"', 'c-number') +
         '<div class="tv-fields">' + fld('tv-cexp', 'Expiry date', 'type="text" data-c="exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" value="' + esc(c.exp) + '"', 'c-exp') +
-        fld('tv-ccvc', 'Security code', 'type="text" data-c="cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="CVC" value="' + esc(c.cvc) + '"', 'c-cvc') + '</div>' +
-        '<label class="tv-chk"><input type="checkbox" data-flag="sameAddr"' + (state.sameAddr ? ' checked' : '') + '>Billing address is the same as the lead traveler</label>';
+        fld('tv-ccvc', 'Security code', 'type="text" data-c="cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="CVC" value="' + esc(c.cvc) + '"', 'c-cvc') + '</div>';
     } else if (m === 'wallet') {
       var ap = state.wallet === 'apple';
       h += '<h3>Pay with a digital wallet</h3><p>Choose a wallet. You\u2019ll confirm the payment in the next step.</p>' +
@@ -347,7 +409,7 @@
       h += '<h3>Pay by bank transfer</h3><p>Send the exact amount to the account below and include your reference code so we can match your payment.</p><div class="tv-bank">' +
         '<div class="tv-row"><span>Bank</span><b>' + esc(b.name) + '</b></div><div class="tv-row"><span>Account name</span><b>' + esc(b.accountName) + '</b></div><div class="tv-row"><span>Account number</span><b>' + esc(b.accountNumber) + '</b></div>' +
         '<div class="tv-row"><span>Reference code</span><b>' + esc(refCode()) + '</b></div><hr><div class="tv-row tv-row--base"><span>Amount</span><b class="tv-big">' + peso(total()) + '</b></div></div>' +
-        '<div class="tv-drop"><label for="tv-proof">Upload proof of payment (optional)</label><input id="tv-proof" type="file" accept="image/*,.pdf" data-proof>' + (state.proof ? '<span>Selected: ' + esc(state.proof) + '</span>' : '') + '</div>' +
+        '<div class="tv-drop"><label for="tv-proof">Upload proof of payment (optional)</label><input id="tv-proof" type="file" accept="image/*,.pdf" data-proof' + (state.errors.proof ? ' aria-invalid="true" aria-describedby="tv-proof-e"' : '') + '>' + (state.proof ? '<span>Selected: ' + esc(state.proof) + '</span>' : '') + (state.errors.proof ? '<span class="tv-err" id="tv-proof-e">' + esc(state.errors.proof) + '</span>' : '') + '</div>' +
         '<p>Please complete your transfer by ' + esc(b.deadline) + '.</p>';
     }
     return h + termsHTML() + '</section></div>';
@@ -360,16 +422,45 @@
     set('tv-pv-name', (c.name || 'YOUR NAME').toUpperCase()); set('tv-pv-exp', c.exp || 'MM/YY'); set('tv-pv-cvc', c.cvc || DOT + DOT + DOT);
   }
   function luhn(n) { var s = 0, alt = false; for (var i = n.length - 1; i >= 0; i--) { var d = +n[i]; if (alt) { d *= 2; if (d > 9) d -= 9; } s += d; alt = !alt; } return s % 10 === 0; }
-  function validateBilling() {
-    var e = {}, c = state.card;
-    if (state.method === 'card') {
-      var n = c.number.replace(/\s/g, '');
-      if (!c.name.trim()) e['c-name'] = 'Required';
-      if (!n) e['c-number'] = 'Required'; else if (n.length < 13 || !luhn(n)) e['c-number'] = 'Check the card number';
-      var m = c.exp.match(/^(\d{2})\/(\d{2})$/), now = new Date();
-      if (!c.exp) e['c-exp'] = 'Required'; else if (!m || +m[1] < 1 || +m[1] > 12 || new Date(2000 + +m[2], +m[1], 1) <= now) e['c-exp'] = 'Check the expiry date';
-      if (!c.cvc) e['c-cvc'] = 'Required'; else if (c.cvc.length < 3) e['c-cvc'] = '3 or 4 digits';
+  function isAmex(n) { return /^3[47]/.test(n); }
+  function cardError(k) {
+    var c = state.card, n = c.number.replace(/\s/g, '');
+    switch (k) {
+      case 'name':
+        var m0 = nameError(c.name, 'Name');
+        return m0 === 'Enter at least 2 letters' ? 'Enter the name as shown on the card' : m0;
+      case 'number':
+        if (!n) return 'Required';
+        if (!/^\d+$/.test(n)) return 'Digits only';
+        if (isAmex(n) ? n.length !== 15 : (n.length < 13 || n.length > 16)) return isAmex(n) ? 'American Express cards have 15 digits' : 'Card number must be 13 to 16 digits';
+        if (/^(\d)\1+$/.test(n) || !luhn(n)) return 'This card number is not valid';
+        return '';
+      case 'exp':
+        if (!c.exp) return 'Required';
+        var m = c.exp.match(/^(\d{2})\/(\d{2})$/), now = new Date();
+        if (!m) return 'Use the format MM/YY';
+        if (+m[1] < 1 || +m[1] > 12) return 'Month must be 01 to 12';
+        if (new Date(2000 + +m[2], +m[1], 1) <= now) return 'This card has expired';
+        if (2000 + +m[2] > now.getFullYear() + 20) return 'Check the expiry year';
+        return '';
+      case 'cvc':
+        if (!c.cvc) return 'Required';
+        var need = isAmex(n) ? 4 : 3;
+        return c.cvc.length !== need ? (need === 4 ? 'American Express uses a 4-digit code' : 'Security code must be 3 digits') : '';
     }
+    return '';
+  }
+  function proofError(file) {
+    if (!file) return '';
+    if (!PROOF_EXT.test(file.name) && !/^image\//.test(file.type) && file.type !== 'application/pdf') return 'Upload an image (JPG, PNG) or a PDF';
+    if (file.size > MAX_FILE_MB * 1048576) return 'File is too large (' + MAX_FILE_MB + ' MB max)';
+    if (file.size === 0) return 'This file is empty';
+    return '';
+  }
+  function validateBilling() {
+    var e = {};
+    if (state.method === 'card') ['name', 'number', 'exp', 'cvc'].forEach(function (k) { var m = cardError(k); if (m) e['c-' + k] = m; });
+    if (state.method === 'bank' && state.proofErr) e.proof = state.proofErr;
     if (!state.terms) e.terms = 'Please accept the terms to continue';
     return e;
   }
@@ -380,7 +471,7 @@
     return {   // card numbers are deliberately NOT included: use a payment provider for real card payments
       reference: refCode(), package: { id: p.id, title: p.title, destination: p.destination, duration: p.duration },
       travelers: state.tr.slice(0, state.count).map(function (t) { return { givenNames: t.given.trim(), surname: t.sur.trim(), dateOfBirth: t.dob, nationality: t.nat, passportNumber: t.pass.trim(), passportExpiry: t.exp }; }),
-      departure: { date: iso(d.t), returnDate: d.retISO }, payment: { method: method, total: total(), currency: 'PHP', billingSameAsLeadTraveler: state.sameAddr, proofFileName: state.proof },
+      departure: { date: iso(d.t), returnDate: d.retISO }, payment: { method: method, total: total(), currency: 'PHP', proofFileName: state.proof },
       termsAccepted: state.terms
     };
   }
@@ -448,12 +539,12 @@
         if (el.disabled) break;
         state.banner = '';
         if (state.step === 1) { state.errors = validateTravelers(); if (Object.keys(state.errors).length) { state.banner = 'Please complete the highlighted fields.'; render(false); focusFirstError(); return; } }
-        if (state.step === 2) { var c = chosen(); if (!c || c.st !== 'ok') return; if (passportIssue(c)) { render(true); return; } }
+        if (state.step === 2) { var c = chosen(); if (!c) { state.banner = 'Please select a departure date.'; render(true); return; } if (c.st !== 'ok') return; if (passportIssue(c)) { render(true); return; } }
         state.step++; state.errors = {}; render(false); $('#tv-body').focus({ preventScroll: true }); break;
       case 'back': state.banner = ''; if (state.step === 1) close(); else { state.step--; state.errors = {}; render(false); } break;
       case 'pick': state.sel = el.getAttribute('data-key'); render(true); var dt = $('.tv-detail'); if (dt) dt.scrollIntoView({ block: 'nearest' }); break;
       case 'waitlist': var c2 = chosen(); state.wl[c2.key] = !state.wl[c2.key]; render(true); break;
-      case 'method': state.method = el.getAttribute('data-m'); state.errors = {}; state.banner = ''; render(true); break;
+      case 'method': state.method = el.getAttribute('data-m'); state.errors = {}; state.proofErr = ''; state.proof = ''; state.banner = ''; render(true); break;
       case 'wallet': state.wallet = el.getAttribute('data-w'); render(true); break;
       case 'pay':
         state.errors = validateBilling();
@@ -464,22 +555,77 @@
   function clearErr(el) {
     el.removeAttribute('aria-invalid'); var m = document.getElementById(el.id + '-e'); if (m) m.remove();
   }
+  // show / clear a message under a field without re-rendering the whole step
+  function showErr(el, key, msg) {
+    clearErr(el); state.errors[key] = msg;
+    el.setAttribute('aria-invalid', 'true'); el.setAttribute('aria-describedby', el.id + '-e');
+    el.insertAdjacentHTML('afterend', '<span class="tv-err" id="' + el.id + '-e">' + esc(msg) + '</span>');
+  }
+  function setVal(el, v) {
+    if (el.value === v) return false;
+    var pos = el.selectionStart, diff = el.value.length - v.length;
+    el.value = v;
+    try { if (pos != null) el.setSelectionRange(Math.max(0, pos - diff), Math.max(0, pos - diff)); } catch (x) { /* some inputs have no caret */ }
+    return true;
+  }
+  function errKey(el) { return el.hasAttribute('data-t') ? el.getAttribute('data-t') + '-' + el.getAttribute('data-k') : el.hasAttribute('data-c') ? 'c-' + el.getAttribute('data-c') : ''; }
   function onInput(e) {
-    var el = e.target, v = el.value;
-    if (el.hasAttribute('data-t')) { state.tr[+el.getAttribute('data-t')][el.getAttribute('data-k')] = v; delete state.errors[el.getAttribute('data-t') + '-' + el.getAttribute('data-k')]; clearErr(el); return; }
+    var el = e.target, v = el.value, stripped = false;
+    if (el.hasAttribute('data-t')) {
+      var ti = +el.getAttribute('data-t'), tk = el.getAttribute('data-k');
+      if (tk === 'given' || tk === 'sur') { var nv = cleanName(v.replace(NAME_BAD, '')); stripped = nv !== cleanName(v) ; v = nv; if (setVal(el, v)) { /* value changed */ } }
+      if (tk === 'pass') { var pv = v.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 9); stripped = pv.length !== v.replace(/\s/g, '').length && v.replace(/[A-Za-z0-9]/g, '').length > 0; v = pv; setVal(el, v); }
+      state.tr[ti][tk] = v; delete state.errors[ti + '-' + tk]; clearErr(el);
+      if (stripped) showErr(el, ti + '-' + tk, tk === 'pass' ? 'Letters and numbers only' : NAME_HINT);
+      return;
+    }
     if (el.hasAttribute('data-c')) {
       var k = el.getAttribute('data-c');
+      if (k === 'name') { var cn = cleanName(v.replace(NAME_BAD, '')).slice(0, 50); stripped = cn !== cleanName(v); v = cn; }
       if (k === 'number') { v = (v.replace(/\D/g, '').slice(0, 16).match(/.{1,4}/g) || []).join(' '); }
-      if (k === 'exp') { v = v.replace(/\D/g, '').slice(0, 4); if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2); }
+      if (k === 'exp') {
+        var d = v.replace(/\D/g, '').slice(0, 4);
+        if (d.length === 1 && +d > 1 && e.inputType !== 'deleteContentBackward') d = '0' + d;   // typing 5 becomes 05
+        v = d.length > 2 ? d.slice(0, 2) + '/' + d.slice(2) : d;
+      }
       if (k === 'cvc') v = v.replace(/\D/g, '').slice(0, 4);
-      el.value = v; state.card[k] = v; delete state.errors['c-' + k]; clearErr(el); updatePreview();
+      setVal(el, v); state.card[k] = v; delete state.errors['c-' + k]; clearErr(el); updatePreview();
+      if (stripped) showErr(el, 'c-' + k, NAME_HINT);
     }
+  }
+  // when the person leaves a field: tidy it and check it (empty fields wait until Continue / Pay)
+  function onBlur(e) {
+    var el = e.target; if (!el.isConnected || !state) return;
+    var key = errKey(el); if (!key) return;
+    var msg;
+    if (el.hasAttribute('data-t')) {
+      var i = +el.getAttribute('data-t'), k = el.getAttribute('data-k');
+      if (i >= state.count) return;
+      if (k === 'given' || k === 'sur') { var nv = cleanName(el.value).trim(); el.value = nv; state.tr[i][k] = nv; }
+      if (!el.value) return;
+      msg = travelerError(i, k);
+    } else {
+      var ck = el.getAttribute('data-c');
+      if (ck === 'name') { var cv = cleanName(el.value).trim(); el.value = cv; state.card[ck] = cv; }
+      if (!el.value) return;
+      msg = cardError(ck);
+    }
+    if (msg) showErr(el, key, msg); else { delete state.errors[key]; clearErr(el); }
   }
   function onChange(e) {
     var el = e.target;
-    if (el.hasAttribute('data-t')) { state.tr[+el.getAttribute('data-t')][el.getAttribute('data-k')] = el.value; delete state.errors[el.getAttribute('data-t') + '-' + el.getAttribute('data-k')]; clearErr(el); }
+    if (el.hasAttribute('data-t')) {
+      var ci = +el.getAttribute('data-t'), ck = el.getAttribute('data-k');
+      state.tr[ci][ck] = el.value; delete state.errors[ci + '-' + ck]; clearErr(el);
+      if (el.value && (ck === 'dob' || ck === 'exp' || ck === 'nat')) { var cm = travelerError(ci, ck); if (cm) showErr(el, ci + '-' + ck, cm); }
+    }
     else if (el.hasAttribute('data-flag')) { state[el.getAttribute('data-flag')] = el.checked; if (el.getAttribute('data-flag') === 'terms') { delete state.errors.terms; el.removeAttribute('aria-invalid'); var m = el.closest('.tv-panel').querySelector('.tv-err:last-child'); if (m && !m.id) m.remove(); } }
-    else if (el.hasAttribute('data-proof')) { state.proof = el.files && el.files[0] ? el.files[0].name : ''; render(true); }
+    else if (el.hasAttribute('data-proof')) {
+      var f = el.files && el.files[0], pe = proofError(f);
+      state.proofErr = pe; state.proof = f && !pe ? f.name : ''; delete state.errors.proof;
+      if (pe) state.errors.proof = pe;
+      render(true);
+    }
   }
   function onFocus(e) {
     if (e.target.id !== 'tv-ccvc') return;
