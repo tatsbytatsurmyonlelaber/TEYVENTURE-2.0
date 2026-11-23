@@ -1,15 +1,3 @@
-/* ==========================================================
-   TeyVenture buttons  (lagoon teal accent)
-   Load this LAST, after every other stylesheet.
-
-   Primary   teal   : main action  (Login, Search, Inquire, Next, Pay, Send)
-   Secondary navy   : quiet action (Send another inquiry, Back home)
-   Outline   gold   : cancel / alternate (Go back, Print, Clear search)
-
-   Every state follows the style sheet: default, hover, pressed,
-   keyboard focus ring, disabled.
-   ========================================================== */
-
 :root {
     --tv-navy: #0B1F3A;
     --tv-gold: #C9A227;
@@ -31,8 +19,8 @@
     --tv-off-bg-dark: #24364F;      /* disabled on navy */
     --tv-off-text-dark: #7F8DA3;
 
-    --btn-radius: 30px;
-    --btn-ring: var(--tv-navy);     /* focus ring: navy on light backgrounds */
+    --btn-radius: 12px;
+    --btn-ring: var(--tv-navy); 
 }
 
 /* on dark backgrounds the focus ring is gold */
@@ -44,7 +32,7 @@
     --btn-ring: var(--tv-gold);
 }
 
-/* ---------- shared shape and motion ---------- */
+/*  shared shape and motion - */
 
 .btn,
 .authbtn,
@@ -69,10 +57,10 @@
 
 .tv-dialog .tv-vbtn,
 .tv-rcard .tv-vbtn {
-    font-weight: 700;       /* these use the Cinzel caps style */
+    font-weight: 700;
 }
 
-/* generic class for new buttons: <a class="btn btn-primary"> */
+/* generic class for buttons */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -86,10 +74,8 @@
     cursor: pointer;
 }
 
-/* ==========================================================
-   PRIMARY  (teal)
-   ========================================================== */
 
+/* primary  button */
 .btn-primary,
 .authbtn,
 .inquirebtn,
@@ -147,7 +133,7 @@
     filter: brightness(0);
 }
 
-/* "Send inquiry" is disabled while it is sending: keep it teal, show the spinner */
+/* disabled button */
 .ct-submit.is-sending,
 .ct-submit.is-sending[disabled] {
     background: var(--tv-teal);
@@ -163,10 +149,7 @@
     border-top-color: var(--tv-navy);
 }
 
-/* ==========================================================
-   SECONDARY  (navy)
-   ========================================================== */
-
+/* secondary button */
 .btn-secondary,
 .ct-again,
 .ct-home {
@@ -201,9 +184,7 @@
     cursor: not-allowed;
 }
 
-/* ==========================================================
-   OUTLINE  (gold) on light backgrounds
-   ========================================================== */
+/* button outline */
 
 .btn-outline,
 .tv-ghost,
@@ -241,9 +222,7 @@
     cursor: not-allowed;
 }
 
-/* ==========================================================
-   OUTLINE  (gold) on navy backgrounds: add class "btn-outline-dark"
-   ========================================================== */
+/* button outline on dark areas */
 
 .btn-outline-dark {
     background: transparent;
@@ -275,14 +254,18 @@
     cursor: not-allowed;
 }
 
-/* ---------- exceptions ---------- */
-
-/* the home search button stays a pill */
-.search-btn {
+.search-btn,
+.authbtn {
     border-radius: 999px;
 }
 
-/* ---------- reduced motion ---------- */
+.authbtn-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/*  reduced motion  */
 
 @media (prefers-reduced-motion: reduce) {
     .btn,
