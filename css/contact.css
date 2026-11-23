@@ -2,16 +2,33 @@
 .contact-hero {
     height: 64vh;
     min-height: 480px;
-    background: url('../images/faqbg.png') center / cover no-repeat;
+    background: url('../images/Contactbg.png') center / cover no-repeat;
 }
 
 .contact-hero .hero {
     padding-bottom: 0;
+    justify-content: center;
+    text-align: center;
+}
+
+.contact-hero .dest-text {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.contact-hero .dest-tagline {
+    margin: 10px 0 0;
+    text-align: center;
+    font-size: 20px;
 }
 
 .contact-hero-title {
     margin-top: 6px;
-    font-size: 84px;
+    text-align: center;
+    font-size: 72px;
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: 3px;
@@ -23,7 +40,7 @@
 .contact-section {
     position: relative;
     padding: 90px 0 110px;
-    background: linear-gradient(180deg, #24476B 0%, #0b0f54 100%);
+    background: linear-gradient(180deg, #F4EDDC 0%, #EADFC4 100%);
     color: #F9F8F3;
     scroll-margin-top: 0;
 }
@@ -37,16 +54,17 @@
 
 .contact-title {
     font-size: 35px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 2px;
     color: #C9A85C;
     margin-bottom: 10px;
+    font-family: 'GenFont', sans-serif;
 }
 
 .contact-head p {
     font-size: 16px;
     line-height: 1.6;
-    color: rgba(249, 248, 243, 0.9);
+    color: #4A5D72;
 }
 
 .ct-frame {
@@ -54,27 +72,36 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0;
-    border: 2px solid #C9A85C;
-    border-radius: 16px;
+    border: 3px solid #C9A85C;
+    border-radius: 30px;
     overflow: hidden;
+    overflow: clip;
 }
 
 .ct-card {
     display: grid;
     grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.5fr);
+    align-items: stretch;
     overflow: hidden;
+    overflow: clip;
     border-radius: 10px;
     background: #F9F8F3;
 }
 
 /* contact details on left side */
 .ct-info {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
     padding: 40px 32px;
     background: #24476B;
     color: #F9F8F3;
+}
+
+/* stays in view while the longer Custom itinerary form scrolls */
+.ct-info-in {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .ct-info h3,
@@ -156,13 +183,12 @@
     gap: 14px;
     margin-top: 0;
 }
-
 .ct-socials a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 46px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: #F9F8F3;
     border: 2px solid #C9A85C;
@@ -171,34 +197,29 @@
 }
 
 .ct-socials a img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
 }
 .ct-socials a:hover {
     background: #C9A85C;
 }
 
-.ct-socials img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-}
 .ct-next {
     padding: 18px;
     border-top: none;
     border-radius: 8px;
     background: rgba(249, 248, 243, 0.10);
 }
-.ct-next .ct-socials {
-    margin-top: 30px;
+.ct-connect {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .ct-social-label {
+    margin: 0;
     font-size: 13px;
-    margin-top: 38px;
-    margin-bottom: 0;
-    padding-top: 18px;
     color: rgba(249, 248, 243, 0.92);
 }
 .ct-steps {
@@ -233,7 +254,9 @@
     color: #E5D3A7;
 }
 .ct-note {
-    margin-top: auto;
+    margin-top: 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(229, 211, 167, 0.35);
     font-size: 14px;
     line-height: 1.6;
     color: rgba(249, 248, 243, 0.92);
@@ -251,12 +274,15 @@
 
 /* right form */
 .ct-main {
-    padding: 36px 38px 42px;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 38px 38px;
     color: #1F3A5A;
 }
 
 .ct-form {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 18px;
 }
@@ -271,8 +297,18 @@
 
 .ct-sec {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 18px;
+}
+
+/* last field of the open section (the message / notes box) takes the leftover height */
+.ct-sec > .ct-f:last-child {
+    flex: 1;
+}
+
+.ct-sec > .ct-f:last-child textarea {
+    flex: 1;
 }
 
 .ct-req-note {
@@ -710,12 +746,21 @@
     overflow: hidden;
 }
 
+/* consent + send */
+.ct-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 2px;
+    padding-top: 20px;
+    border-top: 1px solid #E6DCC2;
+}
+
 /* submit button */
 .ct-submit {
-    align-self: flex-start;
-    height: 50px;
+    align-self: stretch;
+    height: 52px;
     padding: 0 40px;
-    margin-top: 4px;
     font-size: 15px;
 }
 
@@ -861,8 +906,8 @@
         padding: 32px 26px;
     }
 
-    .ct-note {
-        margin-top: 0;
+    .ct-info-in {
+        position: static;
     }
 }
 
@@ -872,7 +917,7 @@
     }
 
     .contact-hero-title {
-        font-size: 48px;
+        font-size: 40px;
     }
 
     .contact-section {
