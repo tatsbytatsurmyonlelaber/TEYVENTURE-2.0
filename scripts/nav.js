@@ -1,13 +1,3 @@
-/* ==========================================================
-   TeyVenture page behavior (loaded on every page)
-   1. Sticky navbar that turns solid and compact on scroll
-      (on phones it slides away while reading and returns on scroll up)
-   2. Active-section highlight in the navbar (scroll spy)
-   3. Back-to-top button
-   4. Scroll-reveal for cards and sections (IntersectionObserver)
-   5. Itinerary: stops fade in each time a day tab is opened
-   Everything respects prefers-reduced-motion.
-   ========================================================== */
 (function () {
     'use strict';
 
@@ -16,12 +6,12 @@
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var phone = window.matchMedia('(max-width: 700px)');
 
-    /* ---------- 1. sticky navbar ---------- */
+    /* sticky navbar */
     var spacer = null;
 
-    function measure() {
-        // The navbar is fixed, so a spacer keeps the hero from jumping up.
+    // The navbar is fixed, so a spacer keeps the hero from jumping up.
         // Measure the navbar in its normal (not scrolled) look.
+    function measure() {
         var wasScrolled = nav.classList.contains('is-scrolled');
         nav.classList.add('is-measuring');
         nav.classList.remove('is-scrolled');
@@ -48,9 +38,9 @@
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     }
 
-    /* ---------- 2. scroll spy ---------- */
-    var spyLinks = [];       // { a: link, el: section it points to }
-    var origActive = [];     // the link(s) marked active in the HTML (the page itself)
+    /* scroll spy */
+    var spyLinks = [];    
+    var origActive = [];   
     var spyOn = null;
 
     (function setupSpy() {
@@ -103,7 +93,7 @@
         }
     }
 
-    /* ---------- 3. back to top ---------- */
+    /* back to top */
     var topBtn = document.createElement('button');
     topBtn.type = 'button';
     topBtn.className = 'to-top';
@@ -113,14 +103,13 @@
 
     topBtn.addEventListener('click', function (e) {
         window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-        // keyboard users: put focus back at the top of the page
         if (e.detail === 0) {
             var logo = document.querySelector('.logo');
             if (logo) logo.focus({ preventScroll: true });
         }
     });
 
-    /* ---------- one scroll handler for all of the above ---------- */
+    /* one scroll handler for all of the above */
     var lastY = window.pageYOffset;
     var ticking = false;
 
@@ -155,16 +144,13 @@
     }
     onScroll();
 
-    /* ---------- 4. scroll reveal ---------- */
+    /* scroll reveal */
     var REVEAL = [
-        // home
         '.about-heading', '.about-content',
         '.destinations-content > h1', '.destinations-content > p', '.destination-slider',
         '.director-card', '.director-content',
         '.faq-title', '.faq-item',
-        // destination pages
         '.dab-card', '.dest-stops-head', '.dest-stop', '.pkg-top', '.trv-cell', '.pkg-itin',
-        // contact
         '.contact-head', '.ct-card'
     ].join(',');
 
@@ -211,7 +197,7 @@
         });
     }
 
-    /* ---------- 5. itinerary: fade the stops in when a day is opened ---------- */
+    /* itinerary: fade the stops in when a day is opened  */
     if (!reduceMotion && 'MutationObserver' in window) {
         Array.prototype.forEach.call(document.querySelectorAll('.itin-body'), function (body) {
             new MutationObserver(function () {
