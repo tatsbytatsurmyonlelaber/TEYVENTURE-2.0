@@ -1,7 +1,4 @@
-/* Sticky navbar, back-to-top button, scroll reveal.
-   Load this right after style.css. */
-
-/* ---------- sticky navbar ---------- */
+/* ---------- sticky navbar */
 
 /* only when nav.js is running, so the page still works without it */
 html.nav-js .navbar {

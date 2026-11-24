@@ -533,7 +533,7 @@
   padding: 18px 20px 16px;
   border: 1.5px solid #C9A85C;
   border-radius: 24px;
-  background: #FDFAF2;
+  background: #F4F2EE;
   margin-bottom: 14px;
 }
 
@@ -576,83 +576,180 @@
   cursor: default;
 }
 
+/* ---- departure calendar: tall cards, dark start / return, one continuous band between ---- */
 .tv-grid {
   display: grid;
   grid-template-columns: repeat(7,minmax(0,1fr));
-  gap: 6px;
+  column-gap: 0;
+  row-gap: 8px;
 }
 
 .tv-wd {
-  padding: 4px 0;
+  padding: 4px 0 6px;
   text-align: center;
   font: 600 11px 'Poppins',sans-serif;
   letter-spacing: .08em;
-  color: #4A5D72;
+  color: #6B7480;
 }
 
-.tv-plain {
-  height: 42px;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  color: #5B6572;
+.tv-blank {
+  height: 66px;
 }
 
-.tv-day {
-  height: 42px;
-  padding: 0;
+.tv-plain,
+.tv-day,
+.tv-trip {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  height: 66px;
+  min-width: 0;
+  padding: 14px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font: 500 16px 'Poppins',sans-serif;
+  color: #1F1F1F;
+}
+
+.tv-dn {
+  line-height: 1.2;
+}
+
+.tv-pip {
+  width: 7px;
+  height: 7px;
+  margin: auto 0 12px;
+  border-radius: 50%;
+  background: #1F1F1F;
+}
+
+/* the white card behind every day */
+.tv-plain::before,
+.tv-day::before,
+.tv-trip.is-end::before {
+  content: "";
+  position: absolute;
+  inset: 0 3px;
+  z-index: -1;
   border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #1F3A5A;
-  background: #E9F5EE;
-  border: 1.5px solid #1F6B46;
+  background: #fff;
+  transition: background-color .15s ease, box-shadow .15s ease;
 }
 
-.tv-day.is-short {
-  background: #FBF0D9;
-  border: 1.5px dashed #8A5A14;
+/* days that cannot be booked */
+.tv-plain {
+  color: #A3A9B1;
+}
+
+.tv-plain::before {
+  background: rgba(255,255,255,.55);
+}
+
+/* days that can be picked */
+.tv-day {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tv-day .tv-pip {
+  background: #1F6B46;
+}
+
+.tv-day.is-short .tv-pip {
+  background: #C28A2B;
 }
 
 .tv-day.is-sold {
-  background: #ECEEF1;
-  border: 1.5px solid #8B95A1;
-  color: #5B6572;
+  color: #8B95A1;
+}
+
+.tv-day.is-sold .tv-dn {
   text-decoration: line-through;
 }
 
-.tv-day.is-sel {
-  background: #24476B;
-  border: 1.5px solid #24476B;
-  color: #fff;
+.tv-day.is-sold .tv-pip {
+  background: #B4BBC4;
 }
 
-/* return date and the days between departure and return */
-.tv-trip {
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1F3A5A;
-  background: #E3EBF4;
-  border: 1.5px solid #9DB4CC;
+.tv-day:focus-visible {
+  outline: 2px solid #C9A85C;
+  outline-offset: -2px;
+  border-radius: 16px;
 }
 
+@media (hover: hover) {
+  .tv-day:hover::before {
+    background: #F6F1E4;
+    box-shadow: 0 2px 8px rgba(31,31,31,.12);
+  }
+}
+
+.tv-day:active::before {
+  background: #EDE6D3;
+}
+
+/* chosen but not bookable (short / sold out): outlined only */
+.tv-day.is-focus::before {
+  box-shadow: inset 0 0 0 2px #1F1F1F;
+}
+
+/* departure and return: dark cards with a white dot */
+.tv-day.is-sel,
 .tv-trip.is-end {
+  color: #fff;
+  font-weight: 600;
+}
+
+.tv-day.is-sel::before,
+.tv-trip.is-end::before {
+  inset: 0 2px;
+  background: #1F1F1F;
+  box-shadow: none;
+}
+
+.tv-day.is-sel .tv-pip,
+.tv-trip.is-end .tv-pip {
   background: #fff;
-  border: 2px solid #24476B;
 }
 
-.tv-sw--trip {
-  background: #E3EBF4;
-  border-color: #9DB4CC;
+/* the beige band behind the days in between */
+.tv-trip:not(.is-end) {
+  background: #DBD5CD;
 }
 
-.tv-day.is-focus {
-  box-shadow: 0 0 0 2px #24476B;
+.tv-trip.is-rs:not(.is-end) {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.tv-trip.is-re:not(.is-end) {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+/* half a band behind the dark cards so it looks joined */
+.tv-day.is-sel.has-band::after,
+.tv-trip.is-end:not(.is-rs)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -2;
+  background: #DBD5CD;
+}
+
+.tv-day.is-sel.has-band::after {
+  left: 50%;
+  right: 0;
+}
+
+.tv-trip.is-end:not(.is-rs)::after {
+  left: 0;
+  right: 50%;
 }
 
 .tv-legend {
@@ -1492,26 +1589,35 @@ html.tv-lock {
 }
 
 .tv-sw {
-  border: 1.5px solid transparent;
+  border: 1.5px solid #E5DFD0;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center 70%;
+  background-size: 7px 7px;
 }
 
 .tv-sw--ok {
-  background: #E9F5EE;
-  border-color: #1F6B46;
+  background-image: radial-gradient(circle, #1F6B46 0 3.5px, transparent 3.6px);
 }
 
 .tv-sw--short {
-  background: #FBF0D9;
-  border: 1.5px dashed #8A5A14;
+  background-image: radial-gradient(circle, #C28A2B 0 3.5px, transparent 3.6px);
 }
 
 .tv-sw--sold {
-  background: #ECEEF1;
-  border-color: #8B95A1;
+  background-image: radial-gradient(circle, #B4BBC4 0 3.5px, transparent 3.6px);
 }
 
 .tv-sw--sel {
-  background: #24476B;
+  background-color: #1F1F1F;
+  border-color: #1F1F1F;
+  background-image: radial-gradient(circle, #fff 0 3.5px, transparent 3.6px);
+}
+
+.tv-sw--trip {
+  background-color: #DBD5CD;
+  border-color: #DBD5CD;
+  background-image: radial-gradient(circle, #1F1F1F 0 3.5px, transparent 3.6px);
 }
 
 /* ---------- small screens ---------- */
