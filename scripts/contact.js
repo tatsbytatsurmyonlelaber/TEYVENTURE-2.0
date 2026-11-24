@@ -1,19 +1,10 @@
-/* ==========================================================
-   TeyVenture contact page
-   Two inquiry types in one form: "general" and "custom" itinerary.
-   - validates on blur and on submit (only the fields of the chosen type)
-   - dates, trip length, traveler steppers, children's ages
-   - keeps a draft for the browser tab, prefills from the URL
-   URL options:  contact.html?type=custom&dest=liyue
-                 contact.html?package=LIYU-02&title=Harbor%20Escape
-   ========================================================== */
 (function () {
   'use strict';
 
   var form = document.getElementById('contact-form');
   if (!form) return;
 
-  /* ---------- things you will want to edit ---------- */
+  /* things you will want to edit */
   var DEFAULTS = {
     endpoint: '',        // your form service / server URL. Empty = demo mode (nothing is sent).
     onSubmit: null,      // or: function (data) { return fetch(...); }  (must return a promise)
@@ -24,7 +15,7 @@
   };
   var CFG = Object.assign({}, DEFAULTS, window.TEYVENTURE_CONTACT || {});
 
-  /* ---------- which fields belong to which inquiry ---------- */
+  /* which fields belong to which inquiry */
   var COMMON = ['name', 'email', 'phone', 'consent'];
   var BY_TYPE = {
     general: ['topic', 'message'],
@@ -44,7 +35,7 @@
   var secCustom = document.getElementById('ct-sec-custom');
   var sending = false;
 
-  /* ---------- helpers ---------- */
+  /* helpers */
   function p2(n) { return String(n).padStart(2, '0'); }
   function isoOf(d) { return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
   function today() { return isoOf(new Date()); }
@@ -72,7 +63,7 @@
     };
   }
 
-  /* ---------- rules: each returns an error message, or '' when fine ---------- */
+  /* rules: each returns an error message, or '' when fine */
   var RULES = {
     name: function (v) {
       v = v.trim();
@@ -131,7 +122,7 @@
 
   function activeFields() { return COMMON.concat(BY_TYPE[type()]); }
 
-  /* ---------- show / clear one field's state ---------- */
+  /* show / clear one field's state */
   function validate(n) {
     var rule = RULES[n];
     if (!rule) return '';
@@ -170,11 +161,11 @@
     });
   }
 
-  /* ---------- banner ---------- */
+  /* banner */
   function showBanner(text) { banner.textContent = text; banner.hidden = false; }
   function hideBanner() { banner.hidden = true; banner.textContent = ''; }
 
-  /* ---------- inquiry type ---------- */
+  /* inquiry type */
   function applyType(fromUser) {
     var t = type();
     secGeneral.hidden = t !== 'general';
@@ -191,7 +182,7 @@
     }
   }
 
-  /* ---------- dates ---------- */
+  /* dates */
   function applyFlexible() {
     var flex = get('flexible');
     document.getElementById('ct-start-req').hidden = flex;
@@ -209,7 +200,7 @@
     }
   }
 
-  /* ---------- children's ages ---------- */
+  /* children's ages */
   function applyChildren() {
     var n = parseInt(get('children'), 10);
     var wrap = document.getElementById('ct-childAges-wrap');
@@ -218,7 +209,7 @@
     else { recheck('childAges'); }
   }
 
-  /* ---------- counters ---------- */
+  /* counters */
   function updateCounts() {
     Array.prototype.forEach.call(form.querySelectorAll('[data-count-for]'), function (el) {
       var f = ctl(el.getAttribute('data-count-for'));
@@ -228,7 +219,7 @@
     });
   }
 
-  /* ---------- attached package (from the destination pages) ---------- */
+  /* attached package (from the destination pages) */
   function setPackage(code, title) {
     var pill = document.getElementById('ct-pkg');
     code = String(code || '').replace(/[^\w\-]/g, '').slice(0, 20);
@@ -240,7 +231,7 @@
     pill.hidden = !code;
   }
 
-  /* ---------- draft for this browser tab ---------- */
+  /* draft for this browser tab */
   var SKIP = { website: 1, consent: 1, package: 1 };
   function saveDraft() {
     try {
@@ -270,7 +261,7 @@
   }
   function clearDraft() { try { sessionStorage.removeItem(CFG.draftKey); } catch (e) { /* ignore */ } }
 
-  /* ---------- sending ---------- */
+  /* sending */
   function collect() {
     var t = type();
     var topic = ctl('topic');
@@ -331,7 +322,7 @@
     form.setAttribute('aria-busy', on ? 'true' : 'false');
   }
 
- function showSuccess(data) {
+  function showSuccess(data) {
     var t = data.type;
 
     document.getElementById('ct-s-title').textContent = TEXT[t].done;
@@ -357,7 +348,7 @@
     applyChildren();
     updateTrip();
     updateCounts();
-}
+  }
 
   function submit() {
     var data = collect();
@@ -372,7 +363,7 @@
       .then(function () { setSending(false); });
   }
 
-  /* ---------- events ---------- */
+  /* events */
   // Check a text-like field when the person leaves it
   form.addEventListener('focusout', function (e) {
     var n = e.target && e.target.name;
@@ -440,13 +431,12 @@
 
     hideBanner();
     ctl('name').focus();
-}
+  }
 
-document.getElementById('ct-again').addEventListener('click', closeSuccessModal);
+  document.getElementById('ct-again').addEventListener('click', closeSuccessModal);
+  document.getElementById('ct-modal-close').addEventListener('click', closeSuccessModal);
 
-document.getElementById('ct-modal-close').addEventListener('click', closeSuccessModal);
-
-  /* ---------- start ---------- */
+  /* start */
   ctl('startDate').min = today();
   ctl('startDate').max = yearsAhead(CFG.maxYearsAhead);
   ctl('endDate').min = today();

@@ -1,12 +1,3 @@
-/* TeyVenture itinerary panel
-   Each destination page has <div class="pkg-itin" data-dest="liyue">.
-   This file holds the day-by-day data and builds the day tabs and stops.
-
-   Stop format: [period, time, name, duration, type, description]
-   period: m = morning, a = afternoon, e = evening, n = night
-   type:   G guided, M meal included, O meal on your own, T transfer,
-           F free time, H hotel, S self-guided
-*/
 (function () {
   "use strict";
 

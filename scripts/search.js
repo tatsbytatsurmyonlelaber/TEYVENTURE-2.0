@@ -1,10 +1,10 @@
-/* ==========================================================
+/* 
    TeyVenture home search
    Duration + budget + travel date -> matching packages.
    - empty fields are ignored; fill in any one, two or all three
    - results appear under the search bar and link to the destination page
    Keep DATA in sync with the package cards on the destination pages.
-   ========================================================== */
+    */
 (function () {
     'use strict';
 
@@ -15,7 +15,7 @@
     var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-    /* ---------- settings (same values as booking.js) ---------- */
+    /*  settings (same values as booking.js) */
     var DEFAULTS = {
         minLeadDays: 14,       // earliest bookable departure, in days from today
         monthsAhead: 10,       // how far the booking calendar goes
@@ -25,7 +25,7 @@
     };
     var CFG = Object.assign({}, DEFAULTS, window.TEYVENTURE_BOOKING || {});
 
-    /* ---------- package data ---------- */
+    /*package data */
     // d = days, n = nights. s = solo package, g = group packages [code, name, people, price]
     var DATA = [
         { id: 'mondstadt', name: 'Mondstadt', page: 'mondstadt.html', d: 3, n: 2,
@@ -85,7 +85,7 @@
         });
     });
 
-    /* ---------- helpers ---------- */
+    /*  helpers  */
     var els = {
         duration: document.getElementById('duration'),
         price: document.getElementById('price'),
@@ -93,7 +93,7 @@
         submit: form.querySelector('.search-btn')
     };
 
-    /* ---------- pop-up (built the first time it is needed) ---------- */
+    /*  pop-up (built the first time it is needed)  */
     var box = null, dialog, listEl, summaryEl, emptyEl, closeBtn, opener = null;
 
     function build() {
@@ -187,7 +187,7 @@
         return { start: start, end: end };
     }
 
-    /* ---------- parsing the three fields ---------- */
+    /*  parsing the three fields  */
     // "5", "3-7", "3 to 7 days", "3 - 7"  ->  { min, max }
     function parseDuration(text) {
         var nums = (text.match(/\d+/g) || []).map(Number);
@@ -234,7 +234,7 @@
         return null;
     }
 
-    /* ---------- errors ---------- */
+    /*  errors  */
     function setError(input, msg) {
         var id = input.id + '-err';
         var box = document.getElementById(id);
@@ -251,7 +251,7 @@
         if (msg) input.setAttribute('aria-describedby', id); else input.removeAttribute('aria-describedby');
     }
 
-    /* ---------- search ---------- */
+    /*  search  */
     function run() {
         var dur = null, prc = null, dat = null, bad = null;
         [['duration', parseDuration], ['price', parsePrice]].forEach(function (f) {
@@ -327,7 +327,7 @@
         els.duration.focus();
     }
 
-    /* ---------- wire up ---------- */
+    /*  wire up  */
     form.addEventListener('submit', function (e) { e.preventDefault(); run(); });
 
     // date picker: only offer bookable days
