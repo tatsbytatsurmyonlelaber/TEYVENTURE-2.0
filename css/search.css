@@ -91,7 +91,7 @@ html.sr-lock {
 
 .sr-title-main {
     margin: 0 44px 4px 0;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-title);
     font-size: 26px;
     letter-spacing: 2px;
     color: #24476B;
@@ -202,10 +202,10 @@ html.sr-lock {
 }
 
 .sr-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 23px;
+    font-family: var(--font-title);
+    font-size: 18px;
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 
 .sr-meta {

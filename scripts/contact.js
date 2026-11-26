@@ -226,7 +226,7 @@
     title = String(title || '').slice(0, 60);
     document.getElementById('ct-package').value = code;
     if (code) {
-      document.getElementById('ct-pkg-name').textContent = title ? title + ' (' + code + ')' : code;
+      document.getElementById('ct-pkg-name').textContent = title || 'Selected package';
     }
     pill.hidden = !code;
   }

@@ -25,7 +25,7 @@
 
 .gallery-title {
     margin-bottom: 14px;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-title);
     font-size: 28px;
     letter-spacing: 2px;
     text-align: center;

@@ -16,24 +16,32 @@ html {
     font-display: swap;
 }
 
+/* Typography: three roles, one place to change them.
+   headline = GenFont (custom), title = Lora, body = DM Sans */
+:root {
+    --font-headline: 'GenFont', 'Lora', serif;
+    --font-title: 'Lora', serif;
+    --font-body: 'DM Sans', sans-serif;
+}
+
 body,
 p,
 li,
+nav,
 button,
-nav {
-    font-family: 'Poppins', sans-serif;
+input,
+select,
+textarea {
+    font-family: var(--font-body);
 }
 
 h1 {
-    font-family: 'GenFont', serif;
+    font-family: var(--font-headline);
+    font-weight: 500;   /* GenFont only ships a 500 weight; avoids faux bold */
 }
 
-h2 {
-    font-family: 'Cinzel', serif;
-}
-
-h3, h4 {
-    font-family: 'Cormorant Garamond', serif;
+h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
 }
 
 body {
@@ -74,8 +82,8 @@ body {
     padding: 8px 0;
     color: white;
     text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;            /* same as the Sign In button */
+    font-weight: 700;
     letter-spacing: 0.5px;
     transition: color 0.3s, transform 0.3s;
 }
@@ -88,7 +96,7 @@ body {
     top: 100%;
     width: 100%;
     height: 2px;
-    margin-top: 4px;
+    margin-top: -4px;           /* golden line sits closer to the link text */
     background: #C9A85C;
     border-radius: 2px;
     opacity: 0;
@@ -235,6 +243,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: brightness(0.75);   /* darkens the video itself, on top of .landing-shadow */
 }
 
 .landing-shadow {
@@ -245,9 +254,9 @@ body {
     height: 100%;
     /* darker at the top (navbar) and bottom (search bar) so text stays readable on bright video */
     background:
-        linear-gradient(to bottom, rgba(10, 16, 32, 0.45) 0%, rgba(10, 16, 32, 0) 22%),
-        linear-gradient(to top, rgba(10, 16, 32, 0.6) 0%, rgba(10, 16, 32, 0) 55%),
-        rgba(20, 75, 85, 0.35);
+        linear-gradient(to bottom, rgba(10, 16, 32, 0.55) 0%, rgba(10, 16, 32, 0) 25%),
+        linear-gradient(to top, rgba(10, 16, 32, 0.72) 0%, rgba(10, 16, 32, 0) 60%),
+        rgba(20, 75, 85, 0.45);
 }
 
 .landing-content {
@@ -267,7 +276,8 @@ body {
 }
 
 .hero-text {
-    flex: 1;
+    flex: 0 1 auto;
+    width: fit-content;        /* as wide as the title, so the paragraph can match it */
     max-width: 1000px;
     padding-left: 35px;
     padding-right: 30px;
@@ -276,13 +286,15 @@ body {
 .hero-text h1 {
     color: #C9A85C;
     font-size: 65px;
+    font-weight: 700;
     line-height: 1.1;
     margin-bottom: 18px;
     text-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
 }
 
 .hero-text p {
-    max-width: 750px;
+    width: 0;                  /* takes no part in sizing the block... */
+    min-width: 100%;           /* ...then stretches to exactly the title's width */
     color: #F9F8F3;
     font-size: 18px;
     line-height: 1.5;
@@ -395,15 +407,6 @@ body {
     background: #F9F8F3;
 }
 
-.about-logo {
-    position: absolute;
-    top: 0;
-    left: 2%;
-    width: 280px;
-    height: auto;
-    z-index: 1;
-}
-
 .about-section .container {
     position: relative;
     width: 92%;
@@ -499,9 +502,10 @@ body {
 }
 
 .destinations h1 {
+    font-family: var(--font-title);
     color: #C9A85C;
     font-size: 40px;
-    font-weight: 400;
+    font-weight: 700;
     text-align: center;
 }
 
@@ -613,7 +617,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #E5D3A7;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-title);
     font-size: 18px;
     font-weight: 700;
     text-align: center;
@@ -703,7 +707,7 @@ body {
 
 .dh-name {
     color: #E5D3A7;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-title);
     font-size: 22px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -714,7 +718,7 @@ body {
 .dh-desc {
     margin-top: 10px;
     color: ivory;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     font-size: 11px;
     font-weight: 400;
     line-height: 1.5;
@@ -738,76 +742,116 @@ body {
     background: rgba(0, 0, 0, 0.6);
 }
 
-/* Thin gold outline. The picture shows through the gap between the
-   outline and the light box (the light box is the ::before below). */
+/* thin gold outline, white box right up against it */
 .faq-container {
     position: relative;
+    display: grid;
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap: 28px;
     width: 85%;
     max-width: 1850px;
     margin: 0 auto;
-    padding: 44px 48px 48px;
-    border: 2px solid #c9a85c;
+    padding: 30px;
+    border: 1px solid #c9a85c;
     border-radius: 16px;
+    background: #fff;
 }
 
-/* light inner panel, sits inside the dark frame */
-.faq-container::before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    bottom: 8px;
-    left: 8px;
-    background: #e3e2de;
-    border-radius: 10px;
-    z-index: 0;
+/* left: navy intro panel */
+.faq-intro {
+    --btn-ring: #C9A85C;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 38px 30px 34px;
+    background: linear-gradient(to bottom, #24476B, #1B2B44);
+    border-radius: 22px;
 }
 
 .faq-title {
-    position: relative;
-    z-index: 1;
-    font-size: 35px;
-    font-weight: 500;
-    letter-spacing: 2px;
+    font-family: var(--font-title);
+    font-size: clamp(24px, 2.2vw, 34px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+    white-space: nowrap;          /* keeps it on the two lines set in the HTML */
     color: #C9A85C;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
 }
 
-.faq-logo {
-    position: absolute;
-    top: -110px;
-    right: -55px;
-    width: 220px;
-    z-index: 2;
+.faq-lead {
+    max-width: 26ch;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #F9F8F3;
 }
 
+/* feature bullets under the lead */
+.faq-features {
+    align-self: stretch;
+    margin: 0 0 36px;
+    padding: 24px 0 0 20px;
+    border-top: 1px solid rgba(201, 168, 92, 0.35);
+    list-style: disc;
+    color: #F9F8F3;
+}
+
+.faq-features li {
+    padding-left: 6px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.faq-features li + li {
+    margin-top: 12px;
+}
+
+.faq-features li::marker {
+    color: #C9A85C;
+}
+
+.faq-cta {
+    margin-top: auto;
+    align-self: stretch;
+}
+
+.faq-intro .faq-lead {
+    margin-bottom: 36px;
+}
+
+/* right: one column of cards */
 .faq-grid {
     position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     gap: 14px;
+    min-width: 0;
 }
 
 .faq-item {
-    border: 2px solid #24476B;
-    border-radius: 14px;
+    --faq-pad: 24px;
+    --faq-badge: 36px;
+    --faq-gap: 18px;
+    border: 1px solid #24476B;
+    border-radius: 18px;
     overflow: hidden;
     background: #F9F8F3;
-    color: #3B5D7E;
+    color: #24476B;               /* answer text */
 }
 
 .faq-item summary {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    padding: 18px 24px;
+    gap: var(--faq-gap);
+    padding: 18px var(--faq-pad);
     font-size: 17px;
-    font-weight: 500;
+    font-weight: 600;
+    line-height: 1.4;
     cursor: pointer;
-    background: #24476B;
-    color: #F9F8F3;
+    color: #1B2B44;
     list-style: none;
 }
 
@@ -815,22 +859,95 @@ body {
     display: none;
 }
 
-.faq-item summary::after {
-    content: "+";
-    flex-shrink: 0;
-    font-size: 26px;
-    font-weight: 400;
-    line-height: 1;
+.faq-item summary:focus-visible {
+    outline: 2px solid #C9A85C;
+    outline-offset: -5px;
 }
 
-.faq-item[open] summary::after {
-    content: "\2212";
+/* round badge with a + (closed) or - (open), drawn from two thin bars */
+.faq-item summary::before {
+    content: "";
+    flex: none;
+    width: var(--faq-badge);
+    height: var(--faq-badge);
+    border-radius: 50%;
+    color: #24476B;
+    background:
+        linear-gradient(currentColor, currentColor) center / 14px 2px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 2px 14px no-repeat,
+        #E4E9EF;
+    transition: background-size 0.25s ease, background-color 0.25s ease;
 }
 
+.faq-item[open] summary::before {
+    background:
+        linear-gradient(currentColor, currentColor) center / 14px 2px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 2px 0 no-repeat,
+        #C9A85C;
+}
+
+/* answer lines up under the question, past the badge */
 .faq-item p {
-    padding: 16px 20px 18px;
+    margin: 0;
+    padding: 0 var(--faq-pad) 22px calc(var(--faq-pad) + var(--faq-badge) + var(--faq-gap));
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
+    animation: faqIn 0.3s ease;
+}
+
+@keyframes faqIn {
+    from { opacity: 0; transform: translateY(-6px); }
+}
+
+@media (max-width: 900px) {
+    .faq-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 24px 18px;
+    }
+
+    .faq-intro {
+        padding: 28px 24px;
+    }
+
+    .faq-intro .faq-lead {
+        margin-bottom: 24px;
+    }
+
+    .faq-features {
+        margin-bottom: 24px;
+    }
+
+    .faq-cta {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 700px) {
+    .faq-item {
+        --faq-pad: 16px;
+        --faq-badge: 32px;
+        --faq-gap: 14px;
+    }
+
+    .faq-item summary {
+        font-size: 15px;
+        padding: 14px var(--faq-pad);
+    }
+
+    .faq-title {
+        font-size: 26px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .faq-item p {
+        animation: none;
+    }
+
+    .faq-item summary::before {
+        transition: none;
+    }
 }
 
 
@@ -841,7 +958,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 28px 20px 22px;
-    background: #0b0f54;
+    background: linear-gradient(to bottom, #24476B, #1B2B44);
     color: #F9F8F3;
     text-align: center;
 }
@@ -919,11 +1036,216 @@ body {
     letter-spacing: 2px;
 }
 
+/* NEW FOOTER (home): all navy, GenFont wordmark, Lora titles.
+   Old .footer rules above are kept for pages still using the old markup. */
+
+.site-footer {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #24476B, #1B2B44);
+}
+
+.site-footer .about-sparkle {
+    z-index: 0;
+}
+
+.sf-box {
+    position: relative;
+    z-index: 1;
+    padding: 44px 5% 28px;
+    color: #F9F8F3;
+}
+
+.sf-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.sf-logo {
+    font-family: var(--font-headline);
+    font-size: clamp(40px, 5.6vw, 80px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 2px;
+    color: #C9A85C;
+    text-decoration: none;
+}
+
+.sf-tagline {
+    font-family: var(--font-title);
+    font-size: clamp(17px, 2vw, 28px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 2.5px;
+    text-align: right;
+    text-transform: uppercase;
+    color: #C9A85C;
+}
+
+.sf-rule {
+    height: 1px;
+    margin: 30px 0;
+    background: rgba(201, 168, 92, 0.5);
+}
+
+.sf-middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.sf-news-title {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sf-form {
+    display: flex;
+    width: 100%;
+    max-width: 380px;
+    margin-top: 12px;
+}
+
+.sf-form input {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 10px 0 0 10px;
+    background: #fff;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: #1B2B44;
+}
+
+.sf-form button {
+    flex: none;
+    width: 52px;
+    height: 48px;
+    border: 0;
+    border-radius: 0 10px 10px 0;
+    background: #C9A85C;
+    font-size: 22px;
+    color: #1B2B44;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sf-form button:hover {
+    background: #E5D3A7;
+}
+
+.sf-note {
+    max-width: 38ch;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(249, 248, 243, 0.65);
+}
+
+.sf-links {
+    display: flex;
+}
+
+.sf-links ul {
+    min-width: 190px;
+    padding: 0 30px;
+    border-left: 1px solid rgba(201, 168, 92, 0.5);
+    list-style: none;
+}
+
+.sf-links li + li {
+    margin-top: 8px;
+}
+
+.sf-links a {
+    font-family: var(--font-title);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #F9F8F3;
+    text-decoration: none;
+}
+
+.sf-links a:hover {
+    color: #C9A85C;
+}
+
+.sf-bottom {
+    text-align: center;
+}
+
+.sf-copy {
+    font-size: 12px;
+    color: rgba(249, 248, 243, 0.65);
+}
+
+.sf-form button svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    stroke: #fff;
+}
+
+@media (max-width: 1300px) {
+    .sf-middle {
+        flex-direction: column;
+    }
+
+    .sf-links {
+        width: 100%;
+    }
+
+    .sf-links ul {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .sf-box {
+        padding: 34px 24px 24px;
+    }
+
+    .sf-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .sf-tagline {
+        text-align: left;
+    }
+
+    .sf-rule {
+        margin: 24px 0;
+    }
+
+    .sf-links {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sf-links ul {
+        padding: 0 0 0 16px;
+    }
+
+}
+
 /* DESTINATION PAGES */
 /* Landing page text */
 
 .dest-text {
-    max-width: 760px;
+    width: 100%;
+    text-align: center;
 }
 
 .dest-tagline {
@@ -944,7 +1266,7 @@ body {
 }
 
 .dest-desc {
-    max-width: 480px;
+    max-width: 700px;
     margin-top: 18px;
     font-size: 17px;
     line-height: 1.6;
@@ -1176,6 +1498,7 @@ body {
 }
 
 .pkg-title {
+    font-family: var(--font-title);
     margin-top: 2px;
     font-size: 60px;
     letter-spacing: 3px;
@@ -1184,6 +1507,7 @@ body {
 }
 
 .pkg-sub {
+    font-family: var(--font-title);
     margin-top: 4px;
     font-size: 14px;
     font-weight: 500;
@@ -1300,6 +1624,7 @@ body {
 }
 
 .pkg-amount {
+    font-family: var(--font-title);
     margin: 2px 0;
     font-size: 38px;
     font-weight: 600;
@@ -1386,6 +1711,7 @@ body {
 }
 
 .grp-title {
+    font-family: var(--font-title);
     margin-top: 4px;
     font-size: 40px;
     color: #24476B;
@@ -1543,11 +1869,7 @@ body {
     }
 
     .about-section {
-        padding: 140px 0 70px;
-    }
-
-    .about-logo {
-        width: 120px;
+        padding: 70px 0 70px;
     }
 
     .about-section .container {
@@ -1567,16 +1889,6 @@ body {
 
     .destination-card {
         flex: 0 0 calc((100% - 48px) / 3);
-    }
-
-    .faq-title {
-        font-size: 30px;
-    }
-
-    .faq-logo {
-        width: 120px;
-        top: -65px;
-        right: -25px;
     }
 
 
@@ -1662,11 +1974,7 @@ body {
     }
 
     .about-section {
-        padding: 110px 0 50px;
-    }
-
-    .about-logo {
-        width: 90px;
+        padding: 50px 0 50px;
     }
 
     .about-heading h1 {
@@ -1697,25 +2005,6 @@ body {
 
     .destinations h2 {
         font-size: 30px;
-    }
-
-    .faq-container {
-        padding: 28px 22px 32px;
-    }
-
-    .faq-item summary {
-        font-size: 15px;
-        padding: 14px 16px;
-    }
-
-    .faq-title {
-        font-size: 20px;
-    }
-
-    .faq-logo {
-        width: 90px;
-        top: -50px;
-        right: -15px;
     }
 
 
@@ -1912,7 +2201,7 @@ body {
 
 .director-label {
     display: block;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-title);
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 4px;
@@ -2052,10 +2341,10 @@ body {
 }
 
 .itin-head h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: max(15px, calc(30 * var(--u)));
-    font-weight: 500;
-    letter-spacing: 0.34em;
+    font-family: var(--font-title);
+    font-size: max(13px, calc(24 * var(--u)));
+    font-weight: 600;
+    letter-spacing: 0.2em;
     line-height: 1.1;
     color: #2A4A6E;
 }
@@ -2075,7 +2364,7 @@ body {
     border: 2px solid #CFA32E;
     border-radius: max(10px, calc(22 * var(--u)));
     background: transparent;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     font-size: max(11px, calc(22 * var(--u)));
     font-weight: 600;
     letter-spacing: 0.16em;
@@ -2465,7 +2754,7 @@ body {
 }
 
 .trv-badge,
-.trv-code {
+.trv-cap {
     position: absolute;
     top: 2.6cqw;
     display: flex;
@@ -2487,25 +2776,19 @@ body {
     font-weight: 700;
 }
 
-.trv-code {
+.trv-cap {
     right: 2.6cqw;
-    font-size: max(9px, 2.2cqw);
-    letter-spacing: 0.12em;
+    font-size: max(10px, 2.9cqw);
+    font-weight: 700;
     color: #24476B;
-}
-
-.trv-code i {
-    width: 1.5px;
-    height: 1.1em;
-    background: #C9A85C;
 }
 
 .trv-title {
     margin: 4.4cqw 5.5cqw 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: max(24px, 7.2cqw);
+    font-family: var(--font-title);
+    font-size: max(19px, 5.6cqw);
     font-weight: 700;
-    line-height: 1.04;
+    line-height: 1.15;
     letter-spacing: 0;
     color: #24476B;
 }
@@ -2536,6 +2819,7 @@ body {
 }
 
 .trv-amount {
+    font-family: var(--font-title);
     display: flex;
     align-items: baseline;
     gap: 1.4cqw;
@@ -2646,7 +2930,7 @@ body {
 }
 
 .dab-title {
-    font-family: 'GenFont', serif;
+    font-family: var(--font-headline);
     font-size: 56px;
     font-weight: 700;
     line-height: 1.05;
