@@ -16,7 +16,7 @@
   var CFG = Object.assign({}, DEFAULTS, window.TEYVENTURE_CONTACT || {});
 
   /* which fields belong to which inquiry */
-  var COMMON = ['name', 'email', 'phone', 'consent'];
+  var COMMON = ['name', 'email', 'phone'];
   var BY_TYPE = {
     general: ['topic', 'message'],
     custom: ['destinations', 'startDate', 'endDate', 'adults', 'children', 'childAges']
@@ -26,7 +26,7 @@
     custom: { submit: 'Request my itinerary', done: 'Itinerary request sent', lead: 'We\u2019ll start planning your trip and reply to' }
   };
   var GROUPS = { destinations: true, interests: true };   // chip groups (fieldsets)
-  var CHECKS = { consent: true, flexible: true };         // single checkboxes
+  var CHECKS = {};                                        // single checkboxes
 
   var banner = document.getElementById('ct-banner');
   var submitBtn = document.getElementById('ct-submit');
@@ -85,7 +85,6 @@
       if (/^\+\d{8,15}$/.test(n)) return '';         // international
       return 'Use a Philippine mobile like 0917 123 4567, or an international number starting with +.';
     },
-    consent: function (on) { return on ? '' : 'Tick this box so we can reply to you.'; },
 
     /* general */
     topic: function (v) { return v ? '' : 'Choose what your inquiry is about.'; },
@@ -99,14 +98,14 @@
     /* custom itinerary */
     destinations: function (a) { return a.length ? '' : 'Choose at least one destination, or tick \u201CNot sure yet\u201D.'; },
     startDate: function (v) {
-      if (!v) return get('flexible') ? '' : 'Pick your arrival date, or tick \u201CMy dates are flexible\u201D.';
+      if (!v) return 'Pick your arrival date.';
       if (v < today()) return 'Pick today or a later date.';
       if (v > yearsAhead(CFG.maxYearsAhead)) return 'Pick a date within the next ' + CFG.maxYearsAhead + ' years.';
       return '';
     },
     endDate: function (v) {
       var s = get('startDate');
-      if (!v) return get('flexible') ? '' : 'Pick your departure date, or tick \u201CMy dates are flexible\u201D.';
+      if (!v) return 'Pick your departure date.';
       if (v < today()) return 'Pick today or a later date.';
       if (v > yearsAhead(CFG.maxYearsAhead)) return 'Pick a date within the next ' + CFG.maxYearsAhead + ' years.';
       if (s && v < s) return 'Departure can\u2019t be before arrival.';
@@ -149,7 +148,12 @@
     return !!c && (c.getAttribute('aria-invalid') === 'true' || c.classList.contains('is-bad'));
   }
   function recheck(n) { if (isBad(n)) validate(n); }
-  function focusTarget(n) { var c = ctl(n); return GROUPS[n] ? c.querySelector('input') : c; }
+  function focusTarget(n) {
+    var c = ctl(n);
+    var t = GROUPS[n] ? c.querySelector('input') : c;
+    return t._tvTrigger || t;   // custom date picker / combo box button (pickers.js)
+  }
+  function syncPickers() { if (window.TVPickers) window.TVPickers.syncAll(); }
 
   function clearErrors(names) {
     names.forEach(function (n) {
@@ -183,12 +187,6 @@
   }
 
   /* dates */
-  function applyFlexible() {
-    var flex = get('flexible');
-    document.getElementById('ct-start-req').hidden = flex;
-    document.getElementById('ct-end-req').hidden = flex;
-    recheck('startDate'); recheck('endDate');
-  }
   function updateTrip() {
     var s = get('startDate'), e = get('endDate'), out = document.getElementById('ct-trip');
     ctl('endDate').min = s && s > today() ? s : today();
@@ -226,13 +224,13 @@
     title = String(title || '').slice(0, 60);
     document.getElementById('ct-package').value = code;
     if (code) {
-      document.getElementById('ct-pkg-name').textContent = title ? title + ' (' + code + ')' : code;
+      document.getElementById('ct-pkg-name').textContent = title || 'Selected package';
     }
     pill.hidden = !code;
   }
 
   /* draft for this browser tab */
-  var SKIP = { website: 1, consent: 1, package: 1 };
+  var SKIP = { website: 1, package: 1 };
   function saveDraft() {
     try {
       var d = {};
@@ -271,7 +269,6 @@
       email: get('email').trim(),
       phone: get('phone').replace(/[\s\-().]/g, ''),
       package: ctl('package').value,
-      consent: true,
       sentAt: new Date().toISOString()
     };
     if (t === 'general') {
@@ -281,7 +278,6 @@
       d.message = get('message').trim();
     } else {
       d.destinations = checked('destinations');
-      d.flexibleDates = get('flexible');
       d.startDate = get('startDate');
       d.endDate = get('endDate');
       d.adults = parseInt(get('adults'), 10);
@@ -344,10 +340,10 @@
     setPackage('', '');
     clearErrors(COMMON.concat(BY_TYPE.general, BY_TYPE.custom));
     applyType(false);
-    applyFlexible();
     applyChildren();
     updateTrip();
     updateCounts();
+    syncPickers();
   }
 
   function submit() {
@@ -366,7 +362,11 @@
   /* events */
   // Check a text-like field when the person leaves it
   form.addEventListener('focusout', function (e) {
-    var n = e.target && e.target.name;
+    var t = e.target;
+    if (!t) return;
+    var pick = t.closest && t.closest('.ct-pick');           // custom date picker / combo box
+    if (pick && pick.contains(e.relatedTarget)) return;      // focus is still inside the widget
+    var n = pick ? pick.getAttribute('data-for') : t.name;
     if (n && RULES[n] && !GROUPS[n] && !CHECKS[n] && activeFields().indexOf(n) > -1) validate(n);
   });
 
@@ -374,13 +374,12 @@
     var t = e.target, n = t && t.name;
     if (!n) return;
     if (n === 'type') { applyType(true); saveDraft(); return; }
-    if (n === 'flexible') applyFlexible();
     if (n === 'startDate') { updateTrip(); if (get('endDate')) validate('endDate'); recheck('startDate'); }
     if (n === 'endDate') updateTrip();
     if (n === 'children') applyChildren();
     if (RULES[n]) recheck(n);          // once a field shows an error, re-check while it is fixed
     if (n === 'message' || n === 'notes') updateCounts();
-    if (n !== 'consent') saveDraft();
+    saveDraft();
     if (!banner.hidden && !sending) hideBanner();
   }
   form.addEventListener('input', onEdit);
@@ -464,8 +463,8 @@
   } catch (e) { /* ignore */ }
 
   applyType(false);
-  applyFlexible();
   applyChildren();
   updateTrip();
   updateCounts();
+  syncPickers();
 })();

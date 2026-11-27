@@ -309,7 +309,7 @@
                 '<span class="sr-photo"><img src="images/' + esc(IMG[p.code] || '') + '" alt="" loading="lazy" onerror="this.remove()">' +
                     '<span class="sr-tag">' + p.dest.d + ' days / ' + p.dest.n + ' nights</span></span>' +
                 '<span class="sr-body">' +
-                    '<span class="sr-dest">' + esc(p.dest.name) + ' \u00B7 ' + esc(p.code) + '</span>' +
+                    '<span class="sr-dest">' + esc(p.dest.name) + '</span>' +
                     '<span class="sr-title">' + esc(p.title) + '</span>' +
                     '<span class="sr-meta">' + esc(p.who) + '</span>' +
                     '<span class="sr-price">' + peso(p.price) + ' <small>' + p.unit + '</small></span>' +

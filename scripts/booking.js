@@ -260,26 +260,24 @@
     if (!card) return null;
 
     var solo = card.classList.contains('trv-solo');
-    var badge = txt(card.querySelector('.trv-badge'));
+    var badge = txt(card.querySelector('.trv-badge'));       // "4 DAYS / 3 NIGHTS"
+    var cap = txt(card.querySelector('.trv-cap'));           // "SOLO", "2 PERSONS", "3-5 PERSONS"
     var amount = card.querySelector('.trv-amount');
     var price = parseInt((amount && amount.firstChild ? amount.firstChild.textContent : '').replace(/[^\d]/g, ''), 10) || 0;
     var per = txt(amount && amount.querySelector('small')).toUpperCase();
-    var id = (card.querySelector('.trv-code') ? card.querySelector('.trv-code').textContent : '')
-      .replace(/\s+/g, '')
-      .replace(/^SOLO/, '');
+    var id = (card.getAttribute('data-code') || '').replace(/\s+/g, '');   // hidden package id
     var min = 1;
     var max = 1;
 
     if (!solo) {
-      var m = badge.match(/(\d+)(?:\s*-\s*(\d+))?/);
+      var m = cap.match(/(\d+)(?:\s*-\s*(\d+))?/);
       if (m) {
         min = parseInt(m[1], 10);
         max = m[2] ? parseInt(m[2], 10) : min;
       }
     }
 
-    var soloBadge = txt(document.querySelector('.trv-solo .trv-badge'));
-    var d = (solo ? badge : soloBadge).match(/(\d+)\s*DAYS?\s*\/\s*(\d+)\s*NIGHTS?/i);
+    var d = badge.match(/(\d+)\s*DAYS?\s*\/\s*(\d+)\s*NIGHTS?/i);
     var days = d ? +d[1] : 4;
     var nights = d ? +d[2] : 3;
     var img = card.querySelector('.trv-media img');
@@ -288,7 +286,7 @@
       id: id,
       title: txt(card.querySelector('.trv-title')),
       destination: txt(document.querySelector('.pkg-title')),
-      code: (solo ? 'SOLO \u00B7 ' : '') + id,
+      who: solo ? 'Solo' : cap.charAt(0) + cap.slice(1).toLowerCase(),
       price: price,
       perPax: /PAX/.test(per),
       min: min,
@@ -410,7 +408,7 @@
       '</div>' +
 
       '<div class="tv-htitle">' +
-        '<span class="tv-dest">' + esc(p.destination) + ' \u00B7 ' + esc(p.code) + '</span>' +
+        '<span class="tv-dest">' + esc(p.destination) + ' \u00B7 ' + esc(p.who) + '</span>' +
         '<h2 id="tv-title">' + esc(p.title) + '</h2>' +
       '</div>' +
 

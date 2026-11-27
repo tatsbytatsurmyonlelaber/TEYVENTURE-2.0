@@ -54,14 +54,14 @@
   box-shadow: 0 30px 80px -20px rgba(10,20,40,.6);
   animation: tvPop .3s ease;
   color: #1F3A5A;
-  font-family: 'Poppins',sans-serif;
+  font-family: var(--font-body);
   overflow: hidden;
 }
 
 .tv-dialog button,
 .tv-dialog input,
 .tv-dialog select {
-  font-family: 'Poppins',sans-serif;
+  font-family: var(--font-body);
 }
 
 /* hero */
@@ -98,7 +98,7 @@
   border-radius: 999px;
   background: #fff;
   border: 1.5px solid #C9A85C;
-  font: 600 12px 'Poppins',sans-serif;
+  font: 600 12px var(--font-body);
   color: #1F3A5A;
 }
 
@@ -203,16 +203,16 @@
 
 .tv-dest {
   display: block;
-  font: 500 11px 'Poppins',sans-serif;
+  font: 500 11px var(--font-body);
   letter-spacing: .14em;
   color: #E3C887;
   margin-bottom: 2px;
 }
 
 .tv-htitle h2 {
-  font-family: 'Cormorant Garamond',serif;
+  font-family: var(--font-title);
   font-weight: 600;
-  font-size: clamp(26px,4.4vw,38px);
+  font-size: clamp(21px,3.6vw,30px);
   line-height: 1.1;
   color: #fff;
   margin: 0;
@@ -225,7 +225,7 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  font: 600 14px 'Poppins',sans-serif;
+  font: 600 14px var(--font-body);
 }
 
 .tv-rate svg {
@@ -260,7 +260,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font: 500 16px 'Cormorant Garamond',serif;
+  font: 600 15px var(--font-body);
   color: #EEF3FA;
   white-space: nowrap;
 }
@@ -285,7 +285,7 @@
   color: #24476B;
   display: grid;
   place-items: center;
-  font: 600 15px 'Poppins',sans-serif;
+  font: 600 15px var(--font-body);
 }
 
 /* the step you are on: same circle plus a soft gold ring */
@@ -346,9 +346,9 @@
 }
 
 .tv-h {
-  font-family: 'Cormorant Garamond',serif;
+  font-family: var(--font-title);
   font-weight: 600;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 1.2;
   color: #24476B;
   margin: 0 0 4px;
@@ -396,7 +396,7 @@
 .tv-count b {
   min-width: 28px;
   text-align: center;
-  font: 600 24px 'Cormorant Garamond',serif;
+  font: 600 20px var(--font-body);
   color: #24476B;
 }
 
@@ -430,7 +430,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 14px;
-  font: 600 19px 'Cormorant Garamond',serif;
+  font: 600 15px var(--font-title);
   color: #24476B;
 }
 
@@ -442,7 +442,7 @@
   color: #fff;
   display: grid;
   place-items: center;
-  font: 600 13px 'Poppins',sans-serif;
+  font: 600 13px var(--font-body);
 }
 
 .tv-fields {
@@ -545,7 +545,7 @@
 }
 
 .tv-calhead strong {
-  font: 600 22px 'Cormorant Garamond',serif;
+  font: 600 17px var(--font-title);
   color: #24476B;
 }
 
@@ -587,7 +587,7 @@
 .tv-wd {
   padding: 4px 0 6px;
   text-align: center;
-  font: 600 11px 'Poppins',sans-serif;
+  font: 600 11px var(--font-body);
   letter-spacing: .08em;
   color: #6B7480;
 }
@@ -611,7 +611,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font: 500 16px 'Poppins',sans-serif;
+  font: 500 16px var(--font-body);
   color: #1F1F1F;
 }
 
@@ -795,7 +795,7 @@
 
 .tv-dk {
   display: block;
-  font: 500 10px 'Poppins',sans-serif;
+  font: 500 10px var(--font-body);
   letter-spacing: .08em;
   color: #4A5D72;
 }
@@ -803,7 +803,7 @@
 .tv-dv {
   display: block;
   margin-top: 2px;
-  font: 600 20px 'Cormorant Garamond',serif;
+  font: 600 16px var(--font-body);
   color: #5B6572;
 }
 
@@ -950,7 +950,7 @@
 }
 
 .tv-cap {
-  font: 600 11px 'Poppins',sans-serif;
+  font: 600 11px var(--font-body);
   letter-spacing: .08em;
   color: #4A5D72;
 }
@@ -978,7 +978,7 @@
   border: 1.5px solid #D9CFB4;
   border-radius: 18px;
   background: #fff;
-  font-family: 'Cormorant Garamond',serif;
+  font-family: var(--font-body);
   color: #24476B;
 }
 
@@ -1090,7 +1090,7 @@
 }
 
 .tv-brand {
-  font: 600 15px 'Cormorant Garamond',serif;
+  font: 600 13px var(--font-title);
   color: #E3C887;
 }
 
@@ -1102,7 +1102,7 @@
 }
 
 .tv-lb {
-  font: 500 9px 'Poppins',sans-serif;
+  font: 500 9px var(--font-body);
   letter-spacing: .1em;
   color: #E3C887;
 }
@@ -1153,9 +1153,9 @@
 }
 
 .tv-panel h3 {
-  font-family: 'Cormorant Garamond',serif;
+  font-family: var(--font-title);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   color: #24476B;
   margin: 0;
 }
@@ -1233,7 +1233,7 @@
 }
 
 .tv-bank .tv-big {
-  font: 700 22px 'Cormorant Garamond',serif;
+  font: 700 18px var(--font-title);
   color: #24476B;
 }
 
@@ -1333,7 +1333,7 @@
 
 .tv-done .tv-done-title {
   margin: 4px 0 0;
-  font: 700 28px/1.2 'Cinzel',serif;
+  font: 700 28px/1.2 var(--font-title);
   letter-spacing: .02em;
   color: #1F3A5A;
 }
@@ -1379,12 +1379,12 @@
   box-shadow: 0 30px 80px -20px rgba(10,20,40,.6);
   animation: tvPop .35s ease;
   color: #1F3A5A;
-  font-family: 'Poppins',sans-serif;
+  font-family: var(--font-body);
   text-align: center;
 }
 
 .tv-rcard button {
-  font-family: 'Poppins',sans-serif;
+  font-family: var(--font-body);
 }
 
 .tv-rcard button:focus-visible {
@@ -1415,7 +1415,7 @@
 
 .tv-rtitle {
   margin: 0;
-  font: 700 24px/1.2 'Cinzel',serif;
+  font: 700 24px/1.2 var(--font-title);
   letter-spacing: .02em;
   color: #1F3A5A;
 }
@@ -1478,7 +1478,7 @@
 }
 
 .tv-rr--pay b {
-  font: 700 15px 'Cinzel',serif;
+  font: 700 15px var(--font-body);
   color: #1F9D78;
 }
 
@@ -1504,7 +1504,7 @@
   gap: 10px;
   padding: 0 16px;
   border-radius: 999px;
-  font: 700 13px 'Cinzel',serif;
+  font: 700 13px var(--font-body);
   letter-spacing: .06em;
   text-transform: uppercase;
   cursor: pointer;

@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | TeyVenture Travel</title>
     <meta name="description" content="Send TeyVenture a general inquiry or request a custom itinerary for your trip across Teyvat.">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/contact.css">
-    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/buttons.css">   
 </head>
 <body id="top">
 
-    <!-- HERO -->
-    <section class="landingpage contact-hero">
+    <!-- HERO (home landing page layout, with a still background) -->
+    <section class="landingpage ct-landing">
 
         <div class="landing-shadow"></div>
 
@@ -29,8 +29,6 @@
                 <div class="nav-titles">
                     <a href="home.html">HOME</a>
                     <a href="home.html#about">ABOUT</a>
-                    <a href="contact.html" class="active" aria-current="page">INQUIRE</a>
-                    <a href="home.html#faq">FAQs</a>
                     <div class="nav-dropdown">
                         <a href="home.html#destinations">DESTINATION <span class="arrow">&#9662;</span></a>
                         <div class="dropdown-menu">
@@ -43,119 +41,75 @@
                             <a href="snezhnaya.html">Snezhnaya</a>
                         </div>
                     </div>
+                    <a href="contact.html" class="active" aria-current="page">INQUIRE</a>
+                    <a href="home.html#faq">FAQs</a>
                 </div>
 
                 <a href="login.html" class="authbtn"><svg class="authbtn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Sign In</a>
             </nav>
 
             <div class="hero container">
-                <div class="dest-text">
-                    <h1 class="contact-hero-title">CONTACT US</h1>
-                    <p class="dest-tagline">We&rsquo;d love to hear from you</p>
+                <div class="hero-text ct-hero-text">
+                    <h1>TELL US ABOUT YOUR TRIP.</h1>
+                    <p>
+                        Whether you have a question or a whole journey in mind,
+                        share it with us and we will help you plan the rest.
+                    </p>
                 </div>
             </div>
-
         </div>
     </section>
 
     <!-- INQUIRY -->
     <section class="contact-section" id="inquiry" aria-labelledby="inquiry-title">
 
-        <div class="contact-head">
-            <h2 class="contact-title" id="inquiry-title">SEND AN INQUIRY</h2>
-            <p>Choose the kind of help you need. It only takes a few minutes.</p>
-        </div>
+        <div class="ct-wrap">
 
-        <div class="ct-frame">
-            <div class="ct-card">
+            <div class="ct-main">
 
-                <!-- left: how to reach us -->
-                <aside class="ct-info" aria-label="Contact details">
-                  <div class="ct-info-in">
-                    <h3>Talk to the team</h3>
-                    <p>Prefer to reach us directly? Use any of these.</p>
+                <form class="ct-form" id="contact-form" novalidate>
 
-                    <ul class="ct-list">
-                        <li>
-                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-                            <span><span class="ct-k">Email</span><span class="ct-v">teyventure.travel@gmail.com</span></span>
-                        </li>
-                        <li>
-                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-                            <span><span class="ct-k">Phone / WhatsApp</span><span class="ct-v">+63 917 482 6391</span></span>
-                        </li>
-                        <li>
-                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-                            <span><span class="ct-k">Office</span><span class="ct-v">TeyVenture Main Office, Teyvat</span></span>
-                        </li>
-                        <li>
-                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-                            <span><span class="ct-k">Office hours</span><span class="ct-v">Monday – Friday, 9:00 AM – 5:00 PM</span></span>
-                        </li>
-                    </ul>
-                    <!-- Optional map: paste a Google Maps embed here once the office address is final.
-                         <iframe class="ct-map" title="TeyVenture office map" src="..." loading="lazy"></iframe> -->
-
-                    
-
-                    <div class="ct-next">
-                        <h4>What happens next</h4>
-                        <ol class="ct-steps">
-                            <li>You send us your inquiry.</li>
-                            <li>We reply to the email you gave us. Typical reply time: within 24–48 hours (business days).</li>
-                            <li>We answer your questions or, for a custom trip, draft an itinerary and refine it with you.</li>
-                        </ol>
+                    <div class="ct-pkg" id="ct-pkg" hidden>
+                        <span>Asking about <b id="ct-pkg-name"></b></span>
+                        <button type="button" id="ct-pkg-x" aria-label="Remove package from this inquiry">&times;</button>
                     </div>
+                    <input type="hidden" name="package" id="ct-package">
 
-                    <div class="ct-connect">
-                        <p class="ct-social-label">Contact us across different platforms:</p>
-                        <div class="ct-socials" aria-label="Social media">
-                            <a href="#" aria-label="Facebook"><img src="images/Facebook logo.svg" alt="Facebook"></a>
-                            <a href="#" aria-label="Email"><img src="images/email.svg" alt="Email"></a>
-                            <a href="#" aria-label="Instagram"><img src="images/instagram.svg" alt="Instagram"></a>
-                            <a href="#" aria-label="WhatsApp"><img src="images/whatsapp.svg" alt="WhatsApp"></a>
+                    <!-- toggle -->
+                    <fieldset class="ct-types">
+                        <legend class="ct-sr">What can we help with?</legend>
+                        <div class="ct-type-grid">
+                            <label class="ct-type">
+                                <input type="radio" name="type" value="general" checked>
+                                <span class="ct-type-box">General inquiry</span>
+                            </label>
+                            <label class="ct-type">
+                                <input type="radio" name="type" value="custom">
+                                <span class="ct-type-box">Custom itinerary</span>
+                            </label>
                         </div>
-                    </div>
+                    </fieldset>
 
-                    <p class="ct-note">Already know the package you want? Browse the destinations and book online.
-                        <a href="home.html#destinations">Browse destinations</a></p>
-                  </div>
-                </aside>
+                    <p class="ct-intro">
+                        <span class="ct-t-general">Ask us about packages, prices, bookings, or payments and we will reply by email.</span>
+                        <span class="ct-t-custom">Tell us how you travel and we will draft a trip that fits you, not a brochure.</span>
+                    </p>
 
-                <!-- right: the form -->
-                <div class="ct-main">
+                    <!-- the card -->
+                    <div class="ct-formcard">
 
-                    <form class="ct-form" id="contact-form" novalidate>
-
-                        <div class="ct-pkg" id="ct-pkg" hidden>
-                            <span>Asking about <b id="ct-pkg-name"></b></span>
-                            <button type="button" id="ct-pkg-x" aria-label="Remove package from this inquiry">&times;</button>
+                        <div class="ct-card-head">
+                            <h2 id="inquiry-title">
+                                <span class="ct-t-general">General inquiry</span>
+                                <span class="ct-t-custom">Custom itinerary</span>
+                            </h2>
+                            <p class="ct-card-desc">
+                                <span class="ct-t-general">Send general questions, concerns, or requests about the agency, travel packages, services, and other information.</span>
+                                <span class="ct-t-custom">Request a personalized travel plan based on your preferred destinations, travel dates, activities, budget, and group size.</span>
+                            </p>
                         </div>
-                        <input type="hidden" name="package" id="ct-package">
-
-                        <fieldset class="ct-types">
-                            <legend>What can we help with?</legend>
-                            <div class="ct-type-grid">
-                                <label class="ct-type">
-                                    <input type="radio" name="type" value="general" checked>
-                                    <span class="ct-type-box">
-                                        <span class="ct-type-name">General inquiry</span>
-                                        <span class="ct-type-desc">Questions about packages, booking, payments, or anything else.</span>
-                                    </span>
-                                </label>
-                                <label class="ct-type">
-                                    <input type="radio" name="type" value="custom">
-                                    <span class="ct-type-box">
-                                        <span class="ct-type-name">Custom itinerary</span>
-                                        <span class="ct-type-desc">Share your dates, group, and interests and we&rsquo;ll design a trip for you.</span>
-                                    </span>
-                                </label>
-                            </div>
-                        </fieldset>
 
                         <div class="ct-banner" id="ct-banner" role="alert" hidden></div>
-
-                        <p class="ct-req-note">Fields marked <span class="ct-req" aria-hidden="true">*</span><span class="ct-sr">with an asterisk</span> are required.</p>
 
                         <!--  details for both types -->
                         <div class="ct-row">
@@ -184,7 +138,7 @@
                                 <div class="ct-f">
                                     <label for="ct-topic">Topic <span class="ct-req" aria-hidden="true">*</span></label>
                                     <select id="ct-topic" name="topic" required aria-describedby="ct-topic-err">
-                                        <option value="">Choose a topic</option>
+                                        <option value="" hidden>Choose a topic</option>
                                         <option value="package">Package or pricing question</option>
                                         <option value="booking">Booking or payment help</option>
                                         <option value="group">Group or corporate trip</option>
@@ -222,7 +176,7 @@
                         <!--  custom itinerary  -->
                         <div class="ct-sec" id="ct-sec-custom" hidden>
 
-                            <fieldset class="ct-group" id="ct-destinations" aria-describedby="ct-destinations-err">
+                            <fieldset class="ct-group" id="ct-destinations" aria-describedby="ct-destinations-err" data-placeholder="Choose destinations">
                                 <legend>Where do you want to go? <span class="ct-req" aria-hidden="true">*</span></legend>
                                 <div class="ct-chips">
                                     <label class="ct-chip"><input type="checkbox" name="destinations" value="mondstadt"><span>Mondstadt</span></label>
@@ -239,21 +193,17 @@
 
                             <div class="ct-row">
                                 <div class="ct-f">
-                                    <label for="ct-startDate">Arrival date <span class="ct-req" id="ct-start-req" aria-hidden="true">*</span></label>
+                                    <label for="ct-startDate">Arrival date <span class="ct-req" aria-hidden="true">*</span></label>
                                     <input type="date" id="ct-startDate" name="startDate" aria-describedby="ct-startDate-err">
                                     <p class="ct-err" id="ct-startDate-err" hidden></p>
                                 </div>
                                 <div class="ct-f">
-                                    <label for="ct-endDate">Departure date <span class="ct-req" id="ct-end-req" aria-hidden="true">*</span></label>
+                                    <label for="ct-endDate">Departure date <span class="ct-req" aria-hidden="true">*</span></label>
                                     <input type="date" id="ct-endDate" name="endDate" aria-describedby="ct-endDate-err">
                                     <p class="ct-err" id="ct-endDate-err" hidden></p>
                                 </div>
                             </div>
                             <div class="ct-datebar">
-                                <label class="ct-chk" for="ct-flexible">
-                                    <input type="checkbox" id="ct-flexible" name="flexible">
-                                    <span>My dates are flexible</span>
-                                </label>
                                 <p class="ct-trip" id="ct-trip" aria-live="polite"></p>
                             </div>
 
@@ -288,7 +238,7 @@
                                 <div class="ct-f">
                                     <label for="ct-budget">Budget per person (optional)</label>
                                     <select id="ct-budget" name="budget">
-                                        <option value="">Select a range</option>
+                                        <option value="" hidden>Select a range</option>
                                         <option value="under-15k">Under &#8369;15,000</option>
                                         <option value="15k-25k">&#8369;15,000 to &#8369;25,000</option>
                                         <option value="25k-40k">&#8369;25,000 to &#8369;40,000</option>
@@ -308,7 +258,7 @@
                                 </div>
                             </div>
 
-                            <fieldset class="ct-group" id="ct-interests">
+                            <fieldset class="ct-group" id="ct-interests" data-placeholder="Choose activities">
                                 <legend>What do you enjoy? (optional)</legend>
                                 <div class="ct-chips">
                                     <label class="ct-chip"><input type="checkbox" name="interests" value="culture"><span>Culture and history</span></label>
@@ -331,25 +281,19 @@
                             </div>
                         </div>
 
-                        <!-- consent + send -->
+                        <!-- send -->
                         <div class="ct-foot">
-                        <div class="ct-f ct-consent">
-                            <label class="ct-chk" for="ct-consent">
-                                <input type="checkbox" id="ct-consent" name="consent" required aria-describedby="ct-consent-err">
-                                <span>I agree that TeyVenture may contact me about this inquiry. <span class="ct-req" aria-hidden="true">*</span></span>
-                            </label>
-                            <p class="ct-err" id="ct-consent-err" hidden></p>
-                        </div>
-
                         <div class="ct-hp" aria-hidden="true">
                             <label>Leave this field empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
                         </div>
 
                         <button type="submit" class="inquirebtn ct-submit" id="ct-submit">Send inquiry</button>
                         </div>
-                    </form>
 
-                    <div class="ct-success-overlay" id="ct-success-overlay" hidden>
+                    </div>
+                </form>
+
+                <div class="ct-success-overlay" id="ct-success-overlay" hidden>
     <div class="ct-success-modal">
         <button type="button" class="ct-modal-close" id="ct-modal-close"
                 aria-label="Close confirmation">
@@ -378,71 +322,163 @@
         </div>
     </div>
 </div>
-                </div>
-
             </div>
+
+
         </div>
     </section>
 
     <!-- QUICK ANSWERS (same look as the home FAQ) -->
-    <section class="faq-section" id="quick-answers">
+    <section class="faq-section" id="quick-answers" aria-labelledby="qa-title">
+
         <div class="faq-shadow"></div>
+
         <div class="faq-container">
-            <h2 class="faq-title">QUICK ANSWERS</h2>
-            <img class="faq-logo" src="images/faqheaderlogo.png" alt="">
+
+            <aside class="faq-intro" aria-label="Contact details">
+                <h2 class="faq-title" id="qa-title">Quick answers</h2>
+                <p class="faq-lead">Prefer to reach us directly? Use any of these.</p>
+
+                <ul class="ct-list">
+                        <li>
+                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+                            <span><span class="ct-k">Email</span><span class="ct-v">teyventure.travel@gmail.com</span></span>
+                        </li>
+                        <li>
+                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+                            <span><span class="ct-k">Phone / WhatsApp</span><span class="ct-v">+63 917 482 6391</span></span>
+                        </li>
+                        <li>
+                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+                            <span><span class="ct-k">Office</span><span class="ct-v">TeyVenture Main Office, Teyvat</span></span>
+                        </li>
+                        <li>
+                            <span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                            <span><span class="ct-k">Office hours</span><span class="ct-v">Monday – Friday, 9:00 AM – 5:00 PM</span></span>
+                        </li>
+                    </ul>
+
+                <div class="ct-connect">
+                        <p class="ct-social-label">Contact us across different platforms:</p>
+                        <div class="ct-socials" aria-label="Social media">
+                            <a href="#" aria-label="Facebook"><img src="images/Facebook logo.svg" alt="Facebook"></a>
+                            <a href="#" aria-label="Email"><img src="images/email.svg" alt="Email"></a>
+                            <a href="#" aria-label="Instagram"><img src="images/instagram.svg" alt="Instagram"></a>
+                            <a href="#" aria-label="WhatsApp"><img src="images/whatsapp.svg" alt="WhatsApp"></a>
+                        </div>
+                    </div>
+            </aside>
+
             <div class="faq-grid">
+
+
                 <details class="faq-item" name="cfaq">
                     <summary>Is sending an inquiry the same as booking?</summary>
                     <p>No. An inquiry only starts the conversation, and nothing is charged. When you are ready to book, open a destination page and use the booking button on the package you want.</p>
                 </details>
+
                 <details class="faq-item" name="cfaq">
                     <summary>What is the difference between a general inquiry and a custom itinerary?</summary>
                     <p>Use a general inquiry for questions about packages, prices, bookings, or payments. Use a custom itinerary request when you want a trip planned around your own dates, group size, budget, and interests.</p>
                 </details>
+
                 <details class="faq-item" name="cfaq">
                     <summary>What should I include in a custom itinerary request?</summary>
                     <p>The more we know, the better the plan: where you want to go, your dates (or a flexible window), who is travelling, a rough budget, and what you enjoy. Special needs such as dietary requirements or mobility go in the notes.</p>
                 </details>
+
                 <details class="faq-item" name="cfaq">
                     <summary>I saw a package I like. Can I ask about it?</summary>
                     <p>Yes. Press the arrow button on any package card and this page opens with that package already attached to your inquiry. You can switch to a custom itinerary if you want to change it.</p>
                 </details>
+
+                <details class="faq-item" name="cfaq">
+                    <summary>What happens after I send my inquiry?</summary>
+                    <p>We reply to the email you gave us, usually within 24 to 48 hours on business days. We then answer your questions or, for a custom trip, draft an itinerary and refine it with you.</p>
+                </details>
+
+                <details class="faq-item" name="cfaq">
+                    <summary>Can I change or cancel a booking through this form?</summary>
+                    <p>Yes. Choose General inquiry, pick &ldquo;Change or cancel an existing booking&rdquo; as the topic, and include your booking reference in the message. Cancellation terms are in the <a href="home.html#faq">frequently asked questions</a>.</p>
+                </details>
+
+                <p class="contact-more">Already know the package you want? <a href="home.html#destinations">Browse destinations</a> and book online.</p>
+
             </div>
-            <p class="contact-more">Looking for pricing, group bookings, or cancellations? See all the <a href="home.html#faq">frequently asked questions</a>.</p>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer id="contact" class="site-footer">
+        <svg class="about-sparkle" style="top:22px;left:46%;--s:16px;animation-delay:0s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#C9A85C"/></svg>
+        <svg class="about-sparkle sc" style="top:40px;left:3%;--s:12px;animation-delay:1.1s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#E5D3A7"/></svg>
+        <svg class="about-sparkle sc" style="top:18px;right:3%;--s:20px;animation-delay:0.6s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#C9A85C"/></svg>
+        <svg class="about-sparkle sc" style="top:46%;left:2%;--s:14px;animation-delay:1.7s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#C9A85C"/></svg>
+        <svg class="about-sparkle sm-hide" style="top:52%;left:38%;--s:12px;animation-delay:2.2s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#E5D3A7"/></svg>
+        <svg class="about-sparkle sm-hide" style="bottom:70px;right:30%;--s:16px;animation-delay:0.3s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#C9A85C"/></svg>
+        <svg class="about-sparkle" style="bottom:20px;left:22%;--s:14px;animation-delay:1.4s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#E5D3A7"/></svg>
+        <svg class="about-sparkle sc" style="bottom:26px;right:4%;--s:18px;animation-delay:1.9s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5Z" fill="#C9A85C"/></svg>
+        <div class="sf-box">
 
-        <a href="home.html" class="footer-logo">
-            <span class="footer-line-top"></span>
-            <img src="images/logo.png" alt="TeyVenture logo">
-        </a>
+            <div class="sf-top">
+                <a href="home.html#top" class="sf-logo">TEYVENTURE</a>
+                <p class="sf-tagline">Where every nation.<br>Tells a story.</p>
+            </div>
 
-        <p class="footer-tagline">Discover places. Create memories.</p>
+            <div class="sf-rule"></div>
 
-        <div class="footer-links">
-            <a href="home.html">Home</a>
-            <a href="home.html#destinations">Destination</a>
-            <a href="home.html#about">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="home.html#faq">FAQs</a>
+            <div class="sf-middle">
+
+                <div class="sf-newsletter">
+                    <h2 class="sf-news-title">Subscribe to our newsletter</h2>
+                    <form class="sf-form" action="#" novalidate onsubmit="event.preventDefault()">
+                        <input type="email" name="email" placeholder="Email*" aria-label="Email address" autocomplete="email">
+                        <button type="submit" aria-label="Subscribe"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></button>
+                    </form>
+                    <p class="sf-note">By subscribing, you agree to receive TeyVenture travel updates.</p>
+                </div>
+
+                <nav class="sf-links" aria-label="Footer">
+                    <ul>
+                        <li><a href="home.html#top">Home</a></li>
+                        <li><a href="home.html#about">About Us</a></li>
+                        <li><a href="home.html#destinations">Destinations</a></li>
+                        <li><a href="home.html#faq">FAQs</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="mondstadt.html">Mondstadt</a></li>
+                        <li><a href="liyue.html">Liyue</a></li>
+                        <li><a href="inazuma.html">Inazuma</a></li>
+                        <li><a href="sumeru.html">Sumeru</a></li>
+                        <li><a href="natlan.html">Natlan</a></li>
+                        <li><a href="fontaine.html">Fontaine</a></li>
+                        <li><a href="snezhnaya.html">Snezhnaya</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="contact.html">Inquire</a></li>
+                        <li><a href="login.html">Sign In</a></li>
+                        <li><a href="home.html#faq">Cancellation Policy</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Email</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">WhatsApp</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="sf-rule"></div>
+
+            <div class="sf-bottom">
+                <p class="sf-copy">&copy; 2026 TEYVENTURE. All Rights Reserved.</p>
+            </div>
+
         </div>
-
-        <div class="footer-socials">
-            <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="images/Email.png" alt="Email"></a>
-            <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
-            <a href="#"><img src="images/whatsapp.png" alt="WhatsApp"></a>
-        </div>
-
-        <div class="footer-divider"></div>
-
-        <p class="footer-copy">&copy; 2026 TEYVENTURE. All Rights Reserved.</p>
-
     </footer>
 
+    <script src="scripts/pickers.js"></script>
     <script src="scripts/contact.js"></script>
     <script src="scripts/nav.js"></script>
 
