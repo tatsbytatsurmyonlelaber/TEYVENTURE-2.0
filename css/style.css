@@ -752,7 +752,7 @@ body {
     max-width: 1850px;
     margin: 0 auto;
     padding: 30px;
-    border: 1px solid #c9a85c;
+    border: 1px solid #C9A85C;
     border-radius: 16px;
     background: #fff;
 }
@@ -1088,6 +1088,7 @@ body {
     height: 1px;
     margin: 30px 0;
     background: rgba(201, 168, 92, 0.5);
+    border: 1.5px solid rgba(201, 168, 92, 0.5);
 }
 
 .sf-middle {
